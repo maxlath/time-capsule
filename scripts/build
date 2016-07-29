@@ -1,8 +1,11 @@
 echo 'building...'
 
-browserify src/js/popup/popup.js > extension/popup/popup.js &
-node-sass src/scss/popup.scss > extension/popup/popup.css &
+# Redirect stderr to stdout (2>&1) while stdout is redirect on the built file (>)
+# letting only stderr being piped (|) to both the terminal (/dev/tty)
+# and ./node_modules/.bin/notify
+# Send the whole process to a subshell (&)
 
-wait
+browserify src/js/popup/popup.js 2>&1 > extension/popup/popup.build.js | tee /dev/tty | notify &
+browserify src/js/background/background.js 2>&1 > extension/background/background.build.js | tee /dev/tty | notify &
 
-echo 'done building'
+node-sass src/scss/popup.scss 2>&1 > extension/popup/popup.build.css | tee /dev/tty | notify &

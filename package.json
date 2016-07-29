@@ -12,7 +12,9 @@
   "license": "MIT",
   "devDependencies": {
     "browserify": "^13.1.0",
+    "node-notifier": "^4.6.0",
     "node-sass": "^3.8.0",
     "onchange": "^2.5.0"
-  }
+  },
+  "dependencies": {}
 }
