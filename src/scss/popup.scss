@@ -1,0 +1,46 @@
+html {
+  font-family: sans-serif;
+  background: #f0f0f0;
+  min-width: 100px;
+  margin: 0;
+}
+
+body {
+  background: #f0f0f0;
+  margin: 0 auto;
+  padding: 2px;
+  height: inherit;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.browse-every, .option, .settings{
+  padding: 0.5em 1em 0.5em 1em;
+  margin: 0.2em;
+}
+
+.browse-every{
+  font-weight: bold;
+}
+
+.option, .settings{
+  cursor: pointer;
+  padding: 0.5em 1em 0.5em 1em;
+  transition: background-color 2s;
+}
+
+.option{
+  background-color: #ccc;
+  &:hover{
+    background-color: #8f8;
+  }
+}
+
+.settings{
+  font-weight: bold;
+  background-color: #777;
+  color: white;
+  &:hover{
+    background-color: #333;
+  }
+}

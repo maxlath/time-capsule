@@ -1,0 +1,41 @@
+{
+  "description": {
+    "message": "Charge automatiquement les sites que vous voulez visiter périodiquement (une fois par heure, semaine, mois…). Peut aussi servir de rappel en chargeant une page Web une fois par mois par exemple."
+  },
+  "browse_every": {
+    "message": "Visiter tou(te)s les :"
+  },
+  "1_day": {
+    "message": "1 jour"
+  },
+  "days": {
+    "message": "$num$ jours",
+    "placeholders": {
+      "num": {
+        "content": "$1"
+      }
+    }
+  },
+  "1_week": {
+    "message": "1 semaine"
+  },
+  "weeks": {
+    "message": "$num$ semaines",
+    "placeholders": {
+      "num": {
+        "content": "$1"
+      }
+    }
+  },
+  "1_year": {
+    "message": "1 an"
+  },
+  "years": {
+    "message": "les $num$ ans",
+    "placeholders": {
+      "num": {
+        "content": "$1"
+      }
+    }
+  }
+}

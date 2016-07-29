@@ -1,0 +1,41 @@
+{
+  "description": {
+    "message": "Browse sites you want to check periodically (every hour, day, week, month and so on). You can also use for reminding pages, for example, by browsing every month."
+  },
+  "browse_every": {
+    "message": "Browse every:"
+  },
+  "1_day": {
+    "message": "1 day"
+  },
+  "days": {
+    "message": "$num$ days",
+    "placeholders": {
+      "num": {
+        "content": "$1"
+      }
+    }
+  },
+  "1_week": {
+    "message": "1 week"
+  },
+  "weeks": {
+    "message": "$num$ weeks",
+    "placeholders": {
+      "num": {
+        "content": "$1"
+      }
+    }
+  },
+  "1_year": {
+    "message": "1 year"
+  },
+  "years": {
+    "message": "$num$ years",
+    "placeholders": {
+      "num": {
+        "content": "$1"
+      }
+    }
+  }
+}

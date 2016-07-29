@@ -1,0 +1,18 @@
+{
+  "name": "browse-periodically-2",
+  "version": "1.0.0",
+  "description": "A reboot of the awesome Browse Periodically",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "scripts/build",
+    "watch": "npm run build && onchange ./src -- npm run build"
+  },
+  "author": "maxlath",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "node-sass": "^3.8.0",
+    "onchange": "^2.5.0"
+  }
+}

@@ -1,0 +1,8 @@
+echo 'building...'
+
+browserify src/js/popup/popup.js > extension/popup/popup.js &
+node-sass src/scss/popup.scss > extension/popup/popup.css &
+
+wait
+
+echo 'done building'
