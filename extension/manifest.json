@@ -9,6 +9,7 @@
     "92": "icons/browse-periodically-92.png"
   },
   "permissions": [
+    "bookmarks",
     "storage",
     "tabs"
   ],

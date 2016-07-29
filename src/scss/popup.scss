@@ -14,33 +14,41 @@ body {
   white-space: nowrap;
 }
 
-.browse-every, .option, .settings{
+@mixin bg-hover($bg, $bg-hover){
+  background-color: $bg;
+  &:hover{
+    background-color: $bg-hover;
+  }
+}
+
+.browse-every, .option, .settings, .remove{
   padding: 0.5em 1em 0.5em 1em;
   margin: 0.2em;
+}
+
+.option, .settings, .remove{
+  cursor: pointer;
+  padding: 0.5em 1em 0.5em 1em;
+  transition: background-color 2s;
 }
 
 .browse-every{
   font-weight: bold;
 }
 
-.option, .settings{
-  cursor: pointer;
-  padding: 0.5em 1em 0.5em 1em;
-  transition: background-color 2s;
+.option{
+  @include bg-hover(#ccc, #8f8)
 }
 
-.option{
-  background-color: #ccc;
-  &:hover{
-    background-color: #8f8;
-  }
+.remove, .settings{
+  font-weight: bold;
+  color: white;
+}
+
+.remove{
+  @include bg-hover(#d88, #d44)
 }
 
 .settings{
-  font-weight: bold;
-  background-color: #777;
-  color: white;
-  &:hover{
-    background-color: #333;
-  }
+  @include bg-hover(#777, #333)
 }

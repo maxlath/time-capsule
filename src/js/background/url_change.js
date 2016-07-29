@@ -6,7 +6,7 @@ window.storage = storage
 module.exports = function (url) {
   storage.get(url)
   .then(parsePageData)
-  .catch(_.Error('onPageUpdate err'))
+  .catch(_.ErrorRethrow('onPageUpdate err'))
 }
 
 const parsePageData = function (data) {
@@ -18,11 +18,9 @@ const parsePageData = function (data) {
 }
 
 const pageFound = function (data) {
-  console.log('found page data', data)
   icon.enable(data.days)
 }
 
 const pageDataNotFound = function (url) {
-  console.log('not found')
   icon.disable()
 }
