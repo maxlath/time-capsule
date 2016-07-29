@@ -8,9 +8,9 @@ const setIcon = function (substring) {
 }
 
 module.exports = {
-  enable: function (text) {
+  enable: function (frequency) {
     setIcon('')
-    chrome.browserAction.setBadgeText({ text: text })
+    chrome.browserAction.setBadgeText({ text: frequency.replace('-', ' ') })
   },
   disable: function () {
     setIcon('disabled-')

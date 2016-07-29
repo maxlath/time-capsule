@@ -1,7 +1,6 @@
 const _ = require('../lib/utils')
 const icon = require('../lib/icon')
 const storage = require('../lib/storage')
-window.storage = storage
 
 module.exports = function (url) {
   storage.get(url)

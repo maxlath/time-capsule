@@ -31,7 +31,6 @@ const matchingNode = (node) => node.title === folderName
 
 const createFolderIfMissing = function (match) {
   if (match) {
-    console.log('bookmark folder exist')
     return match
   } else {
     return create({ title: folderName })

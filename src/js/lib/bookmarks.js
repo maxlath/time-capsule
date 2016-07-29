@@ -9,16 +9,20 @@ const init = require('./bookmarks_init')
 const _ = require('../lib/utils')
 
 const API = {
-  _ready: false
+  removeById: remove
 }
 
 module.exports = API
 
 init()
-.then(function (folder) {
+.then((folder) => {
   let { id:folderId } = folder
 
-  API.add = function (url, title) {
+  console.log('folderId', folderId)
+
+  API.folder = folderId
+
+  API.add = (url, title) => {
     // console.log('added bookmark', url)
     return create({
       parentId: folderId,
@@ -28,14 +32,4 @@ init()
     .catch(_.ErrorRethrow('bookmark add err'))
   }
 
-  API.removeByUrl = function (url) {
-    // console.log('remove bookmark', url)
-    return search({url: url})
-    .then((res) => remove(res[0].id) )
-    .catch(_.ErrorRethrow('bookmark remove err'))
-  }
-
-  API.removeById = remove
-
-  API._ready = true
 })
