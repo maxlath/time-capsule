@@ -14,7 +14,7 @@
   ],
   "browser_action": {
     "default_icon": {
-     "32" : "icons/browse-periodically-32.png"
+      "32" : "icons/browse-periodically-32.png"
     },
     "default_title": "Browse Periodically 2",
     "default_popup": "popup/popup.html",
