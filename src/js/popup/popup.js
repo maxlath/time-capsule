@@ -1,9 +1,10 @@
 const i18n = chrome.i18n.getMessage.bind(chrome.i18n)
 const element = require('../lib/element')
-const icon = require('./icon')
 const options = require('./options')
-const tabs = require('./tabs')
-const storage = require('./storage')
+const icon = require('../lib/icon')
+const storage = require('../lib/storage')
+const tabs = require('../lib/tabs')
+const _ = require('../lib/utils')
 
 var container = document.querySelector('.container')
 
@@ -16,16 +17,19 @@ element({
 
 selectOption = function (e) {
   var days = e.target.attributes['data-days'].value
-  chrome.browserAction.setBadgeText({ text: days })
-  icon.enable()
+  icon.enable(days)
+  saveCurrentUrlPeriodicity(days)
 }
 
 const saveCurrentUrlPeriodicity = function (days) {
-  getUrl(function (url) {
-    storage.set(url, {
-      days: days
+  tabs.getUrl()
+  .then(function (url) {
+    return storage.set(url, {
+      days: days,
+      creation: new Date().getTime()
     })
   })
+  .catch(_.Error('saveCurrentUrlPeriodicity err'))
 }
 
 options.forEach(function (option) {
@@ -40,5 +44,3 @@ options.forEach(function (option) {
     onClick: selectOption
   })
 })
-
-icon.disable()

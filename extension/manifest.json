@@ -20,5 +20,8 @@
     "default_popup": "popup/popup.html",
     "browser_style": true
   },
+  "background": {
+    "scripts": ["background/background.build.js"]
+  },
   "default_locale": "en"
 }

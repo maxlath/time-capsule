@@ -1,4 +1,4 @@
-const promisify = require('./promisify_chrome')
+const promisify = require('../lib/promisify_chrome')
 
 get = promisify(chrome.storage.sync.get, chrome.storage.sync)
 set = promisify(chrome.storage.sync.set, chrome.storage.sync)
