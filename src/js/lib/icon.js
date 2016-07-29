@@ -8,9 +8,9 @@ const setIcon = function (substring) {
 }
 
 module.exports = {
-  enable: function (days) {
+  enable: function (text) {
     setIcon('')
-    chrome.browserAction.setBadgeText({ text: days })
+    chrome.browserAction.setBadgeText({ text: text })
   },
   disable: function () {
     setIcon('disabled-')

@@ -1,8 +1,27 @@
-const i18n = chrome.i18n.getMessage.bind(chrome.i18n)
-
-module.exports = [
-  { days: 1, label: i18n('1_day') },
-  { days: 3, label: i18n('days', ['3']) },
-  { days: 7, label: i18n('1_week') },
-  { days: 28, label: i18n('weeks', ['4']) }
-]
+module.exports = {
+  hours: {
+    letter: 'H',
+    options: [ 1, 2, 3, 6, 12, 18 ],
+    daysFactor: 1/24
+  },
+  days: {
+    letter: 'D',
+    options: [ 1, 2, 3, 4, 6, 9 ],
+    daysFactor: 1
+  },
+  weeks: {
+    letter: 'W',
+    options: [ 1, 2, 3, 6, 10, 25 ],
+    daysFactor: 7
+  },
+  months: {
+    letter: 'M',
+    options: [ 1, 2, 3, 4, 6, 9 ],
+    daysFactor: 356.25/12
+  },
+  years: {
+    letter: 'Y',
+    options: [ 1, 2, 3, 4, 5, 10],
+    daysFactor: 356.25
+  }
+}

@@ -2,40 +2,26 @@
   "description": {
     "message": "Charge automatiquement les sites que vous voulez visiter périodiquement (une fois par heure, semaine, mois…). Peut aussi servir de rappel en chargeant une page Web une fois par mois par exemple."
   },
+  "hour": { "message": "heure" },
+  "hours": { "message": "heures" },
+  "day": { "message": "jour" },
+  "days": { "message": "jours" },
+  "week": { "message": "semaine" },
+  "weeks": { "message": "semaines" },
+  "month": { "message": "mois" },
+  "months": { "message": "mois" },
+  "year": { "message": "an" },
+  "years": { "message": "ans" },
+  "remove": { "message": "supprimer" },
+  "settings": { "message": "règlages" },
   "browse_every": {
     "message": "Visiter tou(te)s les :"
   },
-  "1_day": {
-    "message": "1 jour"
-  },
-  "days": {
-    "message": "$num$ jours",
+  "browse_every_time_unit": {
+    "message": "Visiter tou(te)s les $num$ $unit$",
     "placeholders": {
-      "num": {
-        "content": "$1"
-      }
-    }
-  },
-  "1_week": {
-    "message": "1 semaine"
-  },
-  "weeks": {
-    "message": "$num$ semaines",
-    "placeholders": {
-      "num": {
-        "content": "$1"
-      }
-    }
-  },
-  "1_year": {
-    "message": "1 an"
-  },
-  "years": {
-    "message": "les $num$ ans",
-    "placeholders": {
-      "num": {
-        "content": "$1"
-      }
+      "num": { "content": "$1" },
+      "unit": { "content": "$2" }
     }
   }
 }

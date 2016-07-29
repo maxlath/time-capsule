@@ -14,6 +14,12 @@ body {
   white-space: nowrap;
 }
 
+ul, ul li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
 @mixin bg-hover($bg, $bg-hover){
   background-color: $bg;
   &:hover{
@@ -21,19 +27,20 @@ body {
   }
 }
 
-.browse-every, .option, .settings, .remove{
+.browse-every, .settings, .remove{
   padding: 0.5em 1em 0.5em 1em;
   margin: 0.2em;
 }
 
 .option, .settings, .remove{
   cursor: pointer;
-  padding: 0.5em 1em 0.5em 1em;
   transition: background-color 2s;
+  border-radius: 1px;
 }
 
 .browse-every{
   font-weight: bold;
+  font-size: 1.2em;
 }
 
 .option{
@@ -45,10 +52,32 @@ body {
   color: white;
 }
 
+
 .remove{
   @include bg-hover(#d88, #d44)
 }
 
 .settings{
   @include bg-hover(#777, #333)
+}
+
+.category{
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  .header{
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  ul{
+    width: 17em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  li.option{
+    font-size: 1em;
+    padding: 0.2em 0 0.2em 0;
+    width: 2.5em;
+    margin: 0.2em 0 0.2em 0;
+  }
 }

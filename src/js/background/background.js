@@ -9,5 +9,5 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => urlChange(tab.url)
 chrome.tabs.onActivated.addListener((activeInfo) => {
   tabs.getUrl()
   .then(urlChange)
-  .catch(_.ErrorRethrow('onPageUpdate err'))
+  .catch(_.ErrorRethrow('onActivated'))
 })

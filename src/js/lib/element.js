@@ -1,6 +1,9 @@
 module.exports = function (params) {
-  var el = document.createElement(params.el)
-  var { className, text, onClick, attributes, appendTo } = params
+  var { tagName, id, className, text, onClick, attributes, appendTo } = params
+  var el = document.createElement(tagName)
+  if (id) {
+    el.id = id
+  }
   if (className) {
     el.setAttribute('class', className)
   }
@@ -18,7 +21,6 @@ module.exports = function (params) {
   }
   if (appendTo) {
     appendTo.appendChild(el)
-  } else {
-    return el
   }
+  return el
 }

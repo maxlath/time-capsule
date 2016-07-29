@@ -6,9 +6,9 @@ const _ = require('../lib/utils')
 
 module.exports = {
   select: function (e) {
-    const days = e.target.attributes['data-days'].value
-    icon.enable(days)
-    saveCurrentUrlPeriodicity(days)
+    const frequency = e.target.attributes['data-frequency'].value
+    icon.enable(frequency)
+    saveCurrentUrlPeriodicity(frequency)
     .then(window.close)
   },
   remove: function () {
@@ -31,26 +31,26 @@ module.exports = {
 }
 
 
-const saveCurrentUrlPeriodicity = function (days) {
+const saveCurrentUrlPeriodicity = function (frequency) {
   return tabs.getSelected()
   .then(function (data) {
     let { url, title } = data
     return storage.get(url)
     .then((currentData) => {
       if (currentData && currentData.bookmark) {
-        return setPeriodicityData(url, days, currentData.bookmark)
+        return setPeriodicityData(url, frequency, currentData.bookmark)
       } else {
         return bookmarks.add(url, title)
-        .then((bookmarkData) => setPeriodicityData(url, days, bookmarkData.id))
+        .then((bookmarkData) => setPeriodicityData(url, frequency, bookmarkData.id))
       }
     })
   })
   .catch(_.ErrorRethrow('saveCurrentUrlPeriodicity err'))
 }
 
-const setPeriodicityData = function (url, days, bookmarkId) {
+const setPeriodicityData = function (url, frequency, bookmarkId) {
   let data = {
-    days: days,
+    frequency: frequency,
     creation: new Date().getTime(),
     bookmark: bookmarkId
   }
