@@ -11,6 +11,7 @@ const actions = require('./actions')
 
 const containerEl = document.querySelector('.container')
 
+// build span.browse-every
 element({
   tagName: 'span',
   className: 'browse-every',
@@ -18,6 +19,10 @@ element({
   appendTo: containerEl
 })
 
+// build every div#${category} and their children
+// - span.header
+// - ul
+//   - li.option + click event listener
 const optionsContainers = {}
 const categoriesList = Object.keys(options)
 
@@ -63,12 +68,13 @@ categoriesList.forEach((category) => {
         title: getTitle(num, category)
       },
       appendTo: optionsContainers[category],
-      // use delegated events to set only 1 event listner instead of 30
+      // TODO: use delegated events to set only 1 event listner instead of 30
       onClick: actions.select
     })
   }
 })
 
+// build div.remove  + click event listener
 const removeEl = element({
   tagName: 'div',
   className: 'remove',
@@ -76,11 +82,12 @@ const removeEl = element({
   appendTo: containerEl
 })
 
+removeEl.addEventListener('click', actions.remove)
+
+// build div.settings
 const settingsEl = element({
   tagName: 'div',
   className: 'settings',
   text: i18n('settings'),
   appendTo: containerEl
 })
-
-removeEl.addEventListener('click', actions.remove)
