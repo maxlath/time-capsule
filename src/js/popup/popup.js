@@ -1,5 +1,5 @@
 const i18n = chrome.i18n.getMessage.bind(chrome.i18n)
-const element = require('../lib/element')
+const buildElement = require('../lib/element')
 const options = require('./options')
 const icon = require('../lib/icon')
 const storage = require('../lib/storage')
@@ -13,7 +13,7 @@ const getColor = require('./colors')
 const containerEl = document.querySelector('.container')
 
 // build span.browse-every
-element({
+buildElement({
   tagName: 'span',
   className: 'browse-every',
   text: i18n('browse_every'),
@@ -28,21 +28,21 @@ const optionsContainers = {}
 const categoriesList = Object.keys(options)
 
 categoriesList.forEach((category) => {
-  let categoryEl = element({
+  let categoryEl = buildElement({
     tagName: 'div',
     id: category,
     className: 'category',
     appendTo: containerEl
   })
 
-  element({
+  buildElement({
     tagName: 'span',
     className: 'header',
     text: i18n(category),
     appendTo: categoryEl
   })
 
-  optionsContainers[category] = element({
+  optionsContainers[category] = buildElement({
     tagName: 'ul',
     appendTo: categoryEl
   })
@@ -81,12 +81,12 @@ categoriesList.forEach((category) => {
     if (backgroundColor <= '#494949') {
       data.style.color = 'white'
     }
-    element(data)
+    buildElement(data)
   }
 })
 
 // build div.remove  + click event listener
-const removeEl = element({
+const removeEl = buildElement({
   tagName: 'div',
   className: 'remove',
   text: i18n('remove'),
@@ -96,7 +96,7 @@ const removeEl = element({
 removeEl.addEventListener('click', actions.remove)
 
 // build div.settings
-const settingsEl = element({
+const settingsEl = buildElement({
   tagName: 'div',
   className: 'settings',
   text: i18n('settings'),
