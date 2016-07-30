@@ -23,5 +23,6 @@
       "num": { "content": "$1" },
       "unit": { "content": "$2" }
     }
-  }
+  },
+  "next_visit": { "message": "Next visit:" }
 }
