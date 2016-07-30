@@ -27,13 +27,15 @@ module.exports = {
 
 
 const saveCurrentUrlPeriodicity = (frequency) => {
-  return tabs.getCurrentUrlBookmarkId()
-  .then((bookmarkId) => {
+  return tabs.getCurrentUrlBookmarkData()
+  .then((bookmarkData) => {
+    let bookmarkId = bookmarkData && bookmarkData.id
     if (bookmarkId) {
-      return setPeriodicityData(bookmarkId, frequency)
+      return bookmarks.updateTitle(bookmarkId, bookmarkData.title, frequency)
+      .then(() => setPeriodicityData(bookmarkId, frequency) )
     } else {
       return tabs.getSelected()
-      .then((tabData) => bookmarks.add(tabData.url, tabData.title) )
+      .then((tabData) => bookmarks.add(tabData.url, tabData.title, frequency) )
       .then((newBookmarkData) => setPeriodicityData(newBookmarkData.id, frequency))
     }
   })

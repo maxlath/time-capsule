@@ -9,6 +9,12 @@ const init = require('./bookmarks_init')
 const _ = require('../lib/utils')
 
 const API = {
+  search: search,
+  updateTitle: (id, title, frequency) => {
+    return update(id, {
+      title: formatTitle(title, frequency)
+    })
+  },
   removeById: remove
 }
 
@@ -22,12 +28,11 @@ init()
 
   isInFolder = (bookmarkData) => bookmarkData.parentId === folderId
 
-  API.add = (url, title) => {
-    // console.log('added bookmark', url)
+  API.add = (url, title, frequency) => {
     return create({
       parentId: folderId,
       url: url,
-      title: title
+      title: formatTitle(title, frequency)
     })
     .catch(_.ErrorRethrow('bookmark add'))
   }
@@ -41,3 +46,8 @@ init()
     .then((bookmarkData) => bookmarkData && bookmarkData.id)
   }
 })
+
+
+function formatTitle (title, frequency) {
+  return `${title} ${frequency}`
+}
