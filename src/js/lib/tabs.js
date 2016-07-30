@@ -8,7 +8,8 @@ const API = {
   getUrl: () => getSelected().then((tab) => tab.url),
   getCurrentUrlBookmarkData: () => {
     return API.getUrl()
-    .then(bookmarks.getByUrl)
+    // not simply passing bookmarks.getByUrl as it might not be defined yet
+    .then((url) => bookmarks.getByUrl(url))
   },
   getCurrentUrlBookmarkId: () => {
     return API.getCurrentUrlBookmarkData()

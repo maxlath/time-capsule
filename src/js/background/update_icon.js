@@ -1,25 +1,31 @@
 const _ = require('../lib/utils')
 const icon = require('../lib/icon')
-const periodicityData = require('../lib/periodicity')
+const bookmarks = require('../lib/bookmarks')
 
-module.exports = function (url) {
-  periodicityData.getPeriodicityDataByUrl(url)
+module.exports = (url) => {
+  bookmarks.getByUrl(url)
   .then(parsePeriodicityData)
   .catch(_.ErrorRethrow('url change'))
 }
 
-const parsePeriodicityData = function (data) {
-  if (data) {
-    pageFound(data)
+function parsePeriodicityData (bookmarkData) {
+  if (bookmarks.isInFolder(bookmarkData)) {
+    pageFound(bookmarkData)
   } else {
-    pageDataNotFound(data)
+    pageDataNotFound()
   }
 }
 
-const pageFound = function (data) {
-  icon.enable(data.freq)
+function pageFound (bookmarkData) {
+  const titleData = bookmarks.title.parse(bookmarkData.title)
+  if (titleData) {
+    icon.enable(titleData.frequency)
+  } else {
+    // known case: if the bookmark title was manually modified and made unparsable
+    icon.disable()
+  }
 }
 
-const pageDataNotFound = function (url) {
+function pageDataNotFound () {
   icon.disable()
 }
