@@ -1,6 +1,6 @@
 module.exports = function (params) {
-  var { tagName, id, className, text, onClick, attributes, appendTo } = params
-  var el = document.createElement(tagName)
+  let { tagName, id, className, text, attributes, style, appendTo, onClick } = params
+  let el = document.createElement(tagName)
   if (id) {
     el.id = id
   }
@@ -14,13 +14,22 @@ module.exports = function (params) {
     el.addEventListener('click', onClick)
   }
   if (attributes) {
-    for (var k in attributes) {
-      var v = attributes[k]
+    for (let k in attributes) {
+      let v = attributes[k]
       el.setAttribute(k, v)
+    }
+  }
+  if (style) {
+    for (let k in style) {
+      let v = style[k]
+      el.style[k] = v
     }
   }
   if (appendTo) {
     appendTo.appendChild(el)
+  }
+  if (onClick) {
+    el.addEventListener('click', onClick)
   }
   return el
 }
