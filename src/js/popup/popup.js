@@ -8,6 +8,7 @@ const tabs = require('../lib/tabs')
 const _ = require('../lib/utils')
 const remove = document.querySelector('.remove')
 const actions = require('./actions')
+const getColor = require('./colors')
 
 const containerEl = document.querySelector('.container')
 
@@ -59,7 +60,8 @@ categoriesList.forEach((category) => {
   let { daysFactor, letter, options:optionsNums } = options[category]
   for (let num of optionsNums) {
     let frequency = `${num}${letter}`
-    element({
+    let backgroundColor = getColor(num, daysFactor)
+    let data = {
       tagName: 'li',
       className: `option frequency-${frequency}`,
       text: num,
@@ -67,10 +69,19 @@ categoriesList.forEach((category) => {
         'data-frequency': frequency,
         title: getTitle(num, category)
       },
+      style: {
+        backgroundColor: backgroundColor
+      },
       appendTo: optionsContainers[category],
       // TODO: use delegated events to set only 1 event listner instead of 30
       onClick: actions.select
-    })
+    }
+    // Adjusting thresold darkest color to match "1 year"
+    // and have the full years line in the same color
+    if (backgroundColor <= '#494949') {
+      data.style.color = 'white'
+    }
+    element(data)
   }
 })
 
