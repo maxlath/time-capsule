@@ -6,11 +6,11 @@ const remove = promisify(store.remove, store)
 const clear = promisify(store.clear, store)
 
 module.exports = {
-  get: function (key) {
+  get: (key) => {
     return get(key)
     .then((res) => res[key] )
   },
-  set: function (key, value) {
+  set: (key, value) => {
     const setObject = {}
     setObject[key] = value
     return set(setObject)

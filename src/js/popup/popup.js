@@ -58,7 +58,7 @@ const getTitle = (num, unit) => {
 categoriesList.forEach((category) => {
   let { daysFactor, letter, options:optionsNums } = options[category]
   for (let num of optionsNums) {
-    let frequency = `${num}-${letter}`
+    let frequency = `${num}${letter}`
     element({
       tagName: 'li',
       className: `option frequency-${frequency}`,

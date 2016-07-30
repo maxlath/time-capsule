@@ -18,9 +18,9 @@ init()
 .then((folder) => {
   let { id:folderId } = folder
 
-  console.log('folderId', folderId)
-
   API.folder = folderId
+
+  isInFolder = (bookmarkData) => bookmarkData.parentId === folderId
 
   API.add = (url, title) => {
     // console.log('added bookmark', url)
@@ -32,4 +32,12 @@ init()
     .catch(_.ErrorRethrow('bookmark add'))
   }
 
+  API.getByUrl = (url) => {
+    return search({url: url})
+    .then((res) => res.filter(isInFolder)[0] )
+  }
+  API.getBookmarkIdByUrl = (url) => {
+    return API.getByUrl(url)
+    .then((bookmarkData) => bookmarkData && bookmarkData.id)
+  }
 })

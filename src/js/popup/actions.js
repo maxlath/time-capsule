@@ -1,8 +1,8 @@
 const icon = require('../lib/icon')
-const storage = require('../lib/storage')
 const bookmarks = require('../lib/bookmarks')
 const tabs = require('../lib/tabs')
 const _ = require('../lib/utils')
+const periodicity = require('../lib/periodicity')
 
 module.exports = {
   select: function (e) {
@@ -13,49 +13,41 @@ module.exports = {
   },
   remove: function () {
     icon.disable()
-    tabs.getSelected()
-    .then((data) => {
-      let { url } = data
-      return storage.get(url)
-      .then((currentData) => {
-        if (typeof currentData !== 'object') { return }
-        let { bookmark } = currentData
-        return Promise.all([
-          bookmarks.removeById(bookmark),
-          storage.remove(url)
-        ])
-      })
+
+    tabs.getCurrentUrlBookmarkId()
+    .then((bookmarkId) => {
+      return Promise.all([
+        bookmarks.removeById(bookmarkId),
+        periodicity.remove(bookmarkId)
+      ])
     })
     .then(window.close)
   }
 }
 
 
-const saveCurrentUrlPeriodicity = function (frequency) {
-  return tabs.getSelected()
-  .then(function (data) {
-    let { url, title } = data
-    return storage.get(url)
-    .then((currentData) => {
-      if (currentData && currentData.bookmark) {
-        return setPeriodicityData(url, frequency, currentData.bookmark)
-      } else {
-        return bookmarks.add(url, title)
-        .then((bookmarkData) => setPeriodicityData(url, frequency, bookmarkData.id))
-      }
-    })
+const saveCurrentUrlPeriodicity = (frequency) => {
+  return tabs.getCurrentUrlBookmarkId()
+  .then((bookmarkId) => {
+    if (bookmarkId) {
+      return setPeriodicityData(bookmarkId, frequency)
+    } else {
+      return tabs.getSelected()
+      .then((tabData) => bookmarks.add(tabData.url, tabData.title) )
+      .then((newBookmarkData) => setPeriodicityData(newBookmarkData.id, frequency))
+    }
   })
-  .catch(_.ErrorRethrow('saveCurrentUrlPeriodicity'))
 }
 
-const setPeriodicityData = function (url, frequency, bookmarkId) {
-  let data = {
-    frequency: frequency,
-    creation: new Date().getTime(),
-    bookmark: bookmarkId
+const setPeriodicityData = function (bookmarkId, frequency) {
+  const data = {
+    // keeping keys short as the storage is limited in size
+    freq: frequency,
+    last: getTimeSeconds(),
   }
-  return storage
-  .set(url, data)
+  return periodicity.set(bookmarkId, data)
   // return data instead of undefined
   .then(() => data)
 }
+
+const getTimeSeconds = () => Math.trunc(new Date().getTime() / 1000)

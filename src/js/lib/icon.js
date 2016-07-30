@@ -10,10 +10,13 @@ const setIcon = function (substring) {
 module.exports = {
   enable: function (frequency) {
     setIcon('')
-    chrome.browserAction.setBadgeText({ text: frequency.replace('-', ' ') })
+    chrome.browserAction.setBadgeText({ text: formatFrequency(frequency) })
   },
   disable: function () {
     setIcon('disabled-')
     chrome.browserAction.setBadgeText({ text: '' })
   }
 }
+
+
+const formatFrequency = (freq) => freq.slice(0, -1) + ' ' + freq.slice(-1)

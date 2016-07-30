@@ -1,15 +1,15 @@
 const _ = require('../lib/utils')
 const icon = require('../lib/icon')
-const storage = require('../lib/storage')
+const periodicityData = require('../lib/periodicity')
 
 module.exports = function (url) {
-  storage.get(url)
-  .then(parsePageData)
+  periodicityData.getPeriodicityDataByUrl(url)
+  .then(parsePeriodicityData)
   .catch(_.ErrorRethrow('url change'))
 }
 
-const parsePageData = function (data) {
-  if (typeof data === 'object') {
+const parsePeriodicityData = function (data) {
+  if (data) {
     pageFound(data)
   } else {
     pageDataNotFound(data)
@@ -17,7 +17,7 @@ const parsePageData = function (data) {
 }
 
 const pageFound = function (data) {
-  icon.enable(data.frequency)
+  icon.enable(data.freq)
 }
 
 const pageDataNotFound = function (url) {

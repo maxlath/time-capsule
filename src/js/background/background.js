@@ -1,8 +1,9 @@
 const tabs = require('../lib/tabs')
-const urlChange = require('./url_change')
+const urlChange = require('./update_icon')
 const _ = require('../lib/utils')
 const bookmarks = require('../lib/bookmarks')
 const storage = require('../lib/storage')
+const periodicity = require('../lib/periodicity')
 const icon = require('../lib/icon')
 
 // doc: https://developer.chrome.com/extensions/tabs#event-onUpdated
@@ -15,15 +16,14 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
   .catch(_.ErrorRethrow('onActivated'))
 })
 
-// keep periodical bookmarks  in sync with native bookmarks
+// keep periodicity data in sync with native bookmarks
 chrome.bookmarks.onRemoved.addListener((bookmarkId, removeInfo) => {
   if (bookmarkId === bookmarks.folder) {
     storage.clear()
     icon.disable()
   } else if (removeInfo.parentId === bookmarks.folder) {
-    let { url } = removeInfo.node
-    storage.remove(url)
-    updateIcon(url)
+    periodicity.remove(bookmarkId)
+    updateIcon(removeInfo.node.url)
   }
 })
 
