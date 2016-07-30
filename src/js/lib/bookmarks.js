@@ -29,7 +29,7 @@ init()
       url: url,
       title: title
     })
-    .catch(_.ErrorRethrow('bookmark add err'))
+    .catch(_.ErrorRethrow('bookmark add'))
   }
 
 })

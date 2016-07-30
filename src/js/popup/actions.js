@@ -45,7 +45,7 @@ const saveCurrentUrlPeriodicity = function (frequency) {
       }
     })
   })
-  .catch(_.ErrorRethrow('saveCurrentUrlPeriodicity err'))
+  .catch(_.ErrorRethrow('saveCurrentUrlPeriodicity'))
 }
 
 const setPeriodicityData = function (url, frequency, bookmarkId) {
