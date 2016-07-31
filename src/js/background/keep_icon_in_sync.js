@@ -7,11 +7,14 @@ const _ = require('../lib/utils')
 // On update of any tab, if it is the current tab, update the icon
 // doc: https://developer.chrome.com/extensions/tabs#event-onUpdated
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  console.log('changeInfo', changeInfo)
+  const { url:changedTabUrl } = changeInfo
+  // A tab loading sends several update events but only one contains a url,
+  // thus taking only this one event in account allows to debounce icon updates
+  if (!changedTabUrl) return
   tabs.getActive()
   .then((activeTab) => {
     if (activeTab.id === tabId) {
-      updateIcon(tab.url)
+      updateIcon(changedTabUrl)
     }
   })
 })
@@ -19,7 +22,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 // When a tab becomes the active tab, update the icon
 // doc: https://developer.chrome.com/extensions/tabs#event-onActivated
 chrome.tabs.onActivated.addListener((activeInfo) => {
-  console.log('activeInfo', activeInfo)
   tabs.getUrl()
   .then(updateIcon)
   .catch(_.Error('onActivated'))
