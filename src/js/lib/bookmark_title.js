@@ -1,7 +1,7 @@
 const _ = require('../lib/utils')
 const times = require('./times')
 const separator = ' // '
-const pattern = /\s\/\/\s(\d{1,2})([HDWMY])\s(.*)$/
+const pattern = /\s\/\/\s(\d{1,2})([HDWMYT])\s(.*)$/
 
 function format (title, frequency, updating) {
   // Use ISOString as it's nicer for readability
