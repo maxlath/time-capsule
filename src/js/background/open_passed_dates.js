@@ -43,7 +43,7 @@ function open (bookmark) {
     console.log('bookmarkData', bookmarkData)
     if (bookmarkData) {
       const { title } = bookmarkData
-      return tabs.create({url: bookmarkData.url})
+      return tabs.create({url: bookmarkData.url, active: false})
       .then(bookmarks.updateTitle.bind(null, id, title, frequency))
     } else {
       console.error('bookmark data not found', bookmark)

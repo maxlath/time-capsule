@@ -11,9 +11,8 @@ chrome.bookmarks.createAsync = create
 const init = require('./bookmarks_init')
 const bookmarkTitle = require('./bookmark_title')
 
-
 const API = {
-  getById: (id)=> get(id).then((array) => array[0]),
+  getById: (id)=> get(id).then(_.first),
   search: search,
   updateTitle: (id, title, frequency) => {
     return update(id, { title: bookmarkTitle.format(title, frequency, true) })

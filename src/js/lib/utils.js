@@ -11,5 +11,6 @@ const utils = module.exports = {
       throw err
     }
   },
-  now: () => new Date().getTime()
+  now: () => new Date().getTime(),
+  first: (array) => array[0]
 }

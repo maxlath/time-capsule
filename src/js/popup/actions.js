@@ -25,7 +25,7 @@ const saveCurrentUrlPeriodicity = (frequency) => {
     if (bookmarkId) {
       return bookmarks.updateTitle(bookmarkId, bookmarkData.title, frequency)
     } else {
-      return tabs.getSelected()
+      return tabs.getActive()
       .then((tabData) => bookmarks.add(tabData.url, tabData.title, frequency) )
     }
   })
