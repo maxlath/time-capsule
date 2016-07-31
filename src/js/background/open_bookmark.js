@@ -6,7 +6,6 @@ module.exports = function open (bookmark) {
   const { id, frequency } = bookmark
   return bookmarks.getById(bookmark.id)
   .then((bookmarkData)=> {
-    console.log('bookmarkData', bookmarkData)
     if (bookmarkData) {
       const { title } = bookmarkData
       // open the tab

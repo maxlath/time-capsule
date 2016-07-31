@@ -1,5 +1,4 @@
-const _ = require('../lib/utils')
-const oneDay = require('../lib/times').D
+const _ = require('./utils')
 const promisify = require('./promisify_chrome')
 const get = promisify(chrome.bookmarks.get, chrome.bookmarks)
 const create = promisify(chrome.bookmarks.create, chrome.bookmarks)
@@ -11,6 +10,7 @@ const getSubTree = promisify(chrome.bookmarks.getSubTree, chrome.bookmarks)
 chrome.bookmarks.createAsync = create
 const init = require('./bookmarks_init')
 const bookmarkTitle = require('./bookmark_title')
+const nextVisitIsToday = require('./next_visit_is_today')
 
 const API = {
   getById: (id)=> get(id).then(_.first),
@@ -56,18 +56,18 @@ API.waitForFolder = init()
     return search({url: url})
     .then((res) => res.filter(API.isInFolder)[0] )
   }
+
+  // Could possibly be extracted to become specific to background
+  // and not overload the popup
   API._getTodaysBookmarksData = () => {
     return getSubTree(folderId)
     .then((res) => {
       return res[0].children
       .map(API.parse)
-      .filter(nextVisitIsToday.bind(null, getDayEnd()))
+      .filter(nextVisitIsToday)
     })
   }
 })
-
-const getDayEnd = () => _.now() + oneDay
-const nextVisitIsToday = (dayEnd, bookmark) => bookmark.nextVisit < dayEnd
 
 const WaitForFolder = require('./wait_for_folder')(API)
 // functions that depend on the bookmark folder id availability
