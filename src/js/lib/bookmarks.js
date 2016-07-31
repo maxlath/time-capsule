@@ -27,6 +27,10 @@ const API = {
 
 module.exports = API
 
+// The init function needs to be called only once, given that even if the bookmark
+// folder gets deleted, the folder id remains valid: newly created bookmarks
+// will trigger the folder to be re-created
+
 // store the promise
 API.waitForFolder = init()
 .then((folder) => {
