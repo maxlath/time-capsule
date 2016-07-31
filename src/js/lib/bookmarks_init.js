@@ -2,8 +2,7 @@ const promisify = require('./promisify_chrome')
 const getTree = promisify(chrome.bookmarks.getTree, chrome.bookmarks)
 const _ = require('../lib/utils')
 const create = chrome.bookmarks.createAsync
-
-const folderName = 'Browse Periodically bookmarks'
+const folderName = 'Browse Periodically'
 
 module.exports = function () {
   return getTree()
