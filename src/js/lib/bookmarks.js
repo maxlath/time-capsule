@@ -1,4 +1,5 @@
 const _ = require('../lib/utils')
+const oneDay = require('../lib/times').D
 const promisify = require('./promisify_chrome')
 const get = promisify(chrome.bookmarks.get, chrome.bookmarks)
 const create = promisify(chrome.bookmarks.create, chrome.bookmarks)
@@ -55,20 +56,21 @@ API.waitForFolder = init()
     return search({url: url})
     .then((res) => res.filter(API.isInFolder)[0] )
   }
-  API._getAllBookmarksData = () => {
+  API._getTodaysBookmarksData = () => {
     return getSubTree(folderId)
     .then((res) => {
       return res[0].children
       .map(API.parse)
-      .sort(sortChronologically)
+      .filter(nextVisitIsToday.bind(null, getDayEnd()))
     })
   }
 })
 
-const sortChronologically = (a, b) => a.nextVisit > b.nextVisit
+const getDayEnd = () => _.now() + oneDay
+const nextVisitIsToday = (dayEnd, bookmark) => bookmark.nextVisit < dayEnd
 
 const WaitForFolder = require('./wait_for_folder')(API)
 // functions that depend on the bookmark folder id availability
 // but need to be directly defined/accessible on the API object
 API.getByUrl = WaitForFolder('getByUrl')
-API.getAllBookmarksData = WaitForFolder('getAllBookmarksData')
+API.getTodaysBookmarksData = WaitForFolder('getTodaysBookmarksData')

@@ -1,52 +1,22 @@
 const _ = require('../lib/utils')
-const tabs = require('../lib/tabs')
-const bookmarks = require('../lib/bookmarks')
+const open = require('./open_bookmark')
 
-module.exports = function openPassedDates (sortedBookmarks) {
-  const hasPassedDate = HasPassedDate()
-  tryNextOne(sortedBookmarks, hasPassedDate)
-}
-
-function HasPassedDate () {
-  const now = _.now()
-  return (bookmarks) => now > bookmarks.nextVisit
-}
-
-function tryNextOne (sortedBookmarks, hasPassedDate) {
-  const nextBookmark = sortedBookmarks[0]
-  if (nextBookmark && hasPassedDate(nextBookmark)) {
-
-    const reverse = removeFromListAndPrepareReverse(sortedBookmarks, nextBookmark)
-
-    open(nextBookmark)
-    .then(tryNextOne.bind(null, sortedBookmarks, hasPassedDate))
-    .catch(reverse)
-
-  } else {
-    console.log('stopping. Next bookmark:', nextBookmark)
-  }
-}
-
-function removeFromListAndPrepareReverse (sortedBookmarks, nextBookmark) {
-  sortedBookmarks.shift()
-  return function reverse (err) {
-    sortedBookmarks.unshift(nextBookmark)
-    throw err
-  }
-}
-
-function open (bookmark) {
-  console.log('opening', bookmark)
-  const { id, frequency } = bookmark
-  return bookmarks.getById(bookmark.id)
-  .then((bookmarkData)=> {
-    console.log('bookmarkData', bookmarkData)
-    if (bookmarkData) {
-      const { title } = bookmarkData
-      return tabs.create({url: bookmarkData.url, active: false})
-      .then(bookmarks.updateTitle.bind(null, id, title, frequency))
+module.exports = function openPassedDates (todaysBookmarks) {
+  const timeBeforeOpening = TimeBeforeOpening()
+  todaysBookmarks.forEach((bookmark) => {
+    const time = timeBeforeOpening(bookmark)
+    if (time <= 0) {
+      console.log('passed date, opening now:', bookmark)
+      open(bookmark)
     } else {
-      console.error('bookmark data not found', bookmark)
+      console.log('in the coming 24 hours:', time, bookmark)
+      setTimeout(open.bind(null, bookmark), time)
     }
   })
+}
+
+function TimeBeforeOpening () {
+  // calling _.now only once by batch
+  const now = _.now()
+  return (bookmark) => bookmark.nextVisit - now
 }
