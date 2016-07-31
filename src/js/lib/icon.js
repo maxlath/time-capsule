@@ -1,12 +1,8 @@
-const setIcon = function (substring) {
-  chrome.browserAction.setIcon({
-    path: {
-      48: `/icons/browse-periodically-${substring}48.png`,
-      92: `/icons/browse-periodically-${substring}92.png`
-    }
-  })
-}
-
+// It could theorically be possible to check a lastFrequency variable to know
+// if an update is needed, but this would involve manipulating this variable
+// from both the background and the popup context, (for instance, by setting on this
+// variable on background global window object via chrome.extension.getBackgroundPage())
+// but that would be more pain than gains
 module.exports = {
   enable: function (frequency) {
     setIcon('')
@@ -18,5 +14,13 @@ module.exports = {
   }
 }
 
+function setIcon (substring) {
+  chrome.browserAction.setIcon({
+    path: {
+      48: `/icons/browse-periodically-${substring}48.png`,
+      92: `/icons/browse-periodically-${substring}92.png`
+    }
+  })
+}
 
 const formatFrequency = (freq) => freq.slice(0, -1) + ' ' + freq.slice(-1)
