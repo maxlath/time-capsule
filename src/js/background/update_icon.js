@@ -5,7 +5,7 @@ const bookmarks = require('../lib/bookmarks')
 module.exports = (url) => {
   bookmarks.getByUrl(url)
   .then(parsePeriodicityData)
-  .catch(_.ErrorRethrow('url change'))
+  .catch(_.Error('url change'))
 }
 
 function parsePeriodicityData (bookmarkData) {
@@ -17,9 +17,9 @@ function parsePeriodicityData (bookmarkData) {
 }
 
 function pageFound (bookmarkData) {
-  const titleData = bookmarks.title.parse(bookmarkData.title)
-  if (titleData) {
-    icon.enable(titleData.frequency)
+  const parsedData = bookmarks.parse(bookmarkData)
+  if (parsedData) {
+    icon.enable(parsedData.frequency)
   } else {
     // known case: if the bookmark title was manually modified and made unparsable
     icon.disable()

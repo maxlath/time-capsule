@@ -25,10 +25,10 @@ function parse (title) {
   if (match) {
     const [matching, num, unit, nextVisit] = match
     return {
-      num: parseInt(num),
-      unit: unit,
       frequency: `${num}${unit}`,
-      nextVisit: new Date(nextVisit)
+      // epoch time number should take less memory and computation power
+      // than an ISO time string in the bookmark index
+      nextVisit: new Date(nextVisit).getTime()
     }
   }
 }
