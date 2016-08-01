@@ -1,7 +1,8 @@
 const _ = require('../lib/utils')
 const times = require('./times')
 const separator = ' // '
-const pattern = /\s\/\/\s(\d{1,2})([HDWMYT])\s(.*)$/
+const pattern = /\s\/\/\s([\d\.]{1,3})([HDWMYT])\s(.*)$/
+const halfAMinute = times.T/2
 
 function format (title, frequency, updating) {
   // Use ISOString as it's nicer for readability
@@ -14,9 +15,16 @@ function format (title, frequency, updating) {
 }
 
 function getNextVisit (frequency) {
-  const num = parseInt(frequency.slice(0, -1))
+  // accepting floats
+  const num = parseFloat(frequency.slice(0, -1))
   const unit = frequency.slice(-1)
-  const time = _.now() + num*times[unit]
+  const delay = num*times[unit]
+  // Prevent scheduling a tab in less than 30 secondes
+  // as a very short delay could mean 🔥 BROWSER TABS INFINITE LOOP HELL 🔥
+  if (delay < halfAMinute) {
+    delay = halfAMinute
+  }
+  const time = _.now() + delay
   return new Date(time).toISOString()
 }
 

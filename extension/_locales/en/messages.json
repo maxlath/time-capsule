@@ -25,5 +25,6 @@
     }
   },
   "next_visit": { "message": "Next visit:" },
-  "never": { "message": "Never" }
+  "never": { "message": "Never" },
+  "custom": { "message": "Custom" }
 }

@@ -19,12 +19,12 @@ body {
   white-space: nowrap;
 }
 
-h2, .settings, .never{
+h2, .settings, .never, .custom{
   padding: 0.5em 1em 0.5em 1em;
   margin: 0.2em;
 }
 
-.option, .settings, .never{
+.option, .settings, .never, .custom{
   cursor: pointer;
   transition: background-color 0.3s;
   border-radius: 1px;
@@ -35,17 +35,29 @@ h2{
   font-size: 1.2em;
 }
 
-.never, .settings{
+.never, .settings, .custom{
   font-weight: bold;
   color: white;
 }
 
-.never{
-  @include bg-hover(#e88, #c55)
-  width: 3.4em;
+.never, .custom{
+  width: 5em;
   margin: 1em auto;
   &.selected{
     @include inner-shadow;
+  }
+}
+
+.custom{
+  @include bg-hover($light-blue, darken($light-blue, 10%))
+  &.selected{
+    background-color: darken($light-blue, 10%);
+  }
+}
+
+.never{
+  @include bg-hover(#e88, #c55)
+  &.selected{
     background-color: #c55;
   }
 }

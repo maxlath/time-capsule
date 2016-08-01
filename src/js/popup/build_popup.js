@@ -1,7 +1,8 @@
 const _ = require('../lib/utils')
 const bookmarks = require('../lib/bookmarks')
 
-require('./periodicity_options')
+const optionsEl = require('./periodicity_options')
+const addCustomFrequencyButton = require('./add_custom_frequency_button')(optionsEl)
 require('./footer')
 const updateNextVisit = require('./next_visit')
 
@@ -20,4 +21,11 @@ module.exports = function buildPopup (bookmarkData) {
   }
 }
 
-const select = (selector) => document.querySelector(selector).classList.add('selected')
+function select (selector) {
+  const el = document.querySelector(selector)
+  if (el) {
+    el.classList.add('selected')
+  } else {
+    addCustomFrequencyButton()
+  }
+}

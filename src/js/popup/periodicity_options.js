@@ -85,3 +85,5 @@ categoriesList.forEach((category) => {
     }
   }
 })
+
+module.exports = periodicityOptionsEl

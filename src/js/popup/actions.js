@@ -3,12 +3,17 @@ const bookmarks = require('../lib/bookmarks')
 const tabs = require('../lib/tabs')
 const _ = require('../lib/utils')
 
+
+function setFrequency (frequency) {
+  icon.enable(frequency)
+  saveCurrentUrlPeriodicity(frequency)
+  .then(window.close)
+}
+
 module.exports = {
+  setFrequency: setFrequency,
   select: function (e) {
-    const frequency = e.target.attributes['data-frequency'].value
-    icon.enable(frequency)
-    saveCurrentUrlPeriodicity(frequency)
-    .then(window.close)
+    setFrequency(e.target.attributes['data-frequency'].value)
   },
   remove: function () {
     icon.disable()

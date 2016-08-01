@@ -16,11 +16,14 @@ const neverEl = buildElement({
 })
 
 neverEl.addEventListener('click', actions.remove)
-neverEl.place = {
-  row: matrix.length,
-  column: 0
-}
-matrix.push([neverEl])
+// let the time to .custom element to be added before
+setTimeout(() => {
+  neverEl.place = {
+    row: matrix.length,
+    column: 0
+  }
+  matrix.push([neverEl])
+}, 100)
 
 // build div.settings
 const settingsEl = buildElement({
