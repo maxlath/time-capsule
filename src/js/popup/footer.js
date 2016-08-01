@@ -9,7 +9,10 @@ const neverEl = buildElement({
   tagName: 'div',
   className: 'never',
   text: i18n('never'),
-  appendTo: footerEl
+  appendTo: footerEl,
+  attributes: {
+    title: '[Suppr]',
+  }
 })
 
 neverEl.addEventListener('click', actions.remove)
@@ -24,5 +27,8 @@ const settingsEl = buildElement({
   tagName: 'div',
   className: 'settings',
   text: i18n('settings'),
-  appendTo: footerEl
+  appendTo: footerEl,
+  attributes: {
+    title: '[s]'
+  }
 })

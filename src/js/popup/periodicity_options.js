@@ -43,11 +43,12 @@ categoriesList.forEach((category) => {
 
 })
 
-const getTitle = (num, unit) => {
+const getTitle = (frequency, num, unit) => {
   if (num === 1) {
     unit = unit.replace(/s$/, '')
   }
-  return i18n('browse_every_time_unit', [num.toString(), i18n(unit)])
+  const hotkey = ` [${frequency}]`
+  return i18n('browse_every_time_unit', [num.toString(), i18n(unit)]) + hotkey
 }
 
 categoriesList.forEach((category) => {
@@ -63,7 +64,7 @@ categoriesList.forEach((category) => {
       text: num,
       attributes: {
         'data-frequency': frequency,
-        title: getTitle(num, category)
+        title: getTitle(frequency, num, category)
       },
       style: {
         backgroundColor: backgroundColor

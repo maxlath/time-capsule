@@ -15,7 +15,7 @@
     "default_icon": {
       "32" : "icons/browse-periodically-32.png"
     },
-    "default_title": "Browse Periodically 2",
+    "default_title": "Browse Periodically 2 [Ctrl+Shift+U]",
     "default_popup": "popup/popup.html",
     "browser_style": true
   },
