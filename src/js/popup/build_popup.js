@@ -3,7 +3,6 @@ const bookmarks = require('../lib/bookmarks')
 
 require('./periodicity_options')
 require('./footer')
-const highlightCurrentFrequency = require('./highlight_current_frequency')
 const updateNextVisit = require('./next_visit')
 
 module.exports = function buildPopup (bookmarkData) {
@@ -11,9 +10,14 @@ module.exports = function buildPopup (bookmarkData) {
     const parsedData = bookmarks.parse(bookmarkData)
     if (parsedData) {
       updateNextVisit(parsedData.nextVisit)
-      highlightCurrentFrequency(parsedData.frequency)
+      select(`.frequency-${parsedData.frequency}`)
     } else {
       console.error('bookmark in folder but impossible to parse data', bookmarkData)
+      select('.never')
     }
+  } else {
+    select('.never')
   }
 }
+
+const select = (selector) => document.querySelector(selector).classList.add('selected')

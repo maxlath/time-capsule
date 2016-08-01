@@ -1,5 +1,7 @@
 @import './style_reset';
 @import './mixins';
+$glow: rgba(158, 202, 237, 0.7);
+$light-blue: #4fbcff;
 
 html {
   font-family: sans-serif;
@@ -17,14 +19,14 @@ body {
   white-space: nowrap;
 }
 
-h2, .settings, .remove{
+h2, .settings, .never{
   padding: 0.5em 1em 0.5em 1em;
   margin: 0.2em;
 }
 
-.option, .settings, .remove{
+.option, .settings, .never{
   cursor: pointer;
-  transition: background-color 2s;
+  transition: background-color 0.2s;
   border-radius: 1px;
 }
 
@@ -33,13 +35,18 @@ h2{
   font-size: 1.2em;
 }
 
-.remove, .settings{
+.never, .settings{
   font-weight: bold;
   color: white;
 }
 
-.remove{
+.never{
   @include bg-hover(#d88, #d44)
+  width: 3.4em;
+  margin: 1em auto;
+  &.selected{
+    @include inner-shadow;
+  }
 }
 
 .settings{
@@ -67,11 +74,11 @@ h2{
     margin: 0.2em 0 0.2em 0;
     &.selected, &:hover{
       // overriding inline background colors
-      background-color: #8f8 !important;
+      background-color: rgba($light-blue, 0.8) !important;
+      // border: 0.1em solid rgba(#fff, 0.6);
+      // box-shadow: 0.2em 0.2em 0.2em $glow;
+      // transition: all 0.5s ease;
+      // @include inner-shadow(1px, 1px, 1px, 2px, rgba(#fff, 0.5));
     }
   }
-}
-
-#footer{
-  margin-top: 1.8em;
 }

@@ -4,6 +4,7 @@ const options = require('./options')
 const actions = require('./actions')
 const getColor = require('./colors')
 const periodicityOptionsEl = document.querySelector('#periodicityOptions')
+const { matrix } = require('./matrix')
 
 // build span.browse-every
 buildElement({
@@ -51,6 +52,8 @@ const getTitle = (num, unit) => {
 
 categoriesList.forEach((category) => {
   let { daysFactor, letter, options:optionsNums } = options[category]
+  const categoryMatrix = []
+  const rowNum = matrix.push(categoryMatrix) - 1
   for (let num of optionsNums) {
     let frequency = `${num}${letter}`
     let backgroundColor = getColor(num, daysFactor)
@@ -74,6 +77,10 @@ categoriesList.forEach((category) => {
     if (backgroundColor <= '#494949') {
       data.style.color = 'white'
     }
-    buildElement(data)
+    const optionEl = buildElement(data)
+    optionEl.place = {
+      row: rowNum,
+      column: categoryMatrix.push(optionEl) - 1
+    }
   }
 })

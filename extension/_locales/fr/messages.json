@@ -24,5 +24,6 @@
       "unit": { "content": "$2" }
     }
   },
-  "next_visit": { "message": "Prochaine visite :" }
+  "next_visit": { "message": "Prochaine visite :" },
+  "never": { "message": "Jamais" }
 }

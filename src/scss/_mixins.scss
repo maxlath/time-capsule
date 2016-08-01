@@ -4,3 +4,9 @@
     background-color: $bg-hover;
   }
 }
+
+@mixin inner-shadow($x:1px, $y:1px, $blur:8px, $spread:3px, $color:rgba(black, 0.3)){
+  // offset-x | offset-y | blur-radius | spread-radius | color
+  box-shadow: (-$x) $y $blur $spread $color inset,
+              $x (-$y) $blur $spread $color inset;
+}

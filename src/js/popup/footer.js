@@ -2,16 +2,22 @@ const i18n = require('../lib/i18n')
 const buildElement = require('../lib/element')
 const actions = require('./actions')
 const footerEl = document.querySelector('#footer')
+const { matrix } = require('./matrix')
 
 // build div.remove  + click event listener
-const removeEl = buildElement({
+const neverEl = buildElement({
   tagName: 'div',
-  className: 'remove',
-  text: i18n('remove'),
+  className: 'never',
+  text: i18n('never'),
   appendTo: footerEl
 })
 
-removeEl.addEventListener('click', actions.remove)
+neverEl.addEventListener('click', actions.remove)
+neverEl.place = {
+  row: matrix.length,
+  column: 0
+}
+matrix.push([neverEl])
 
 // build div.settings
 const settingsEl = buildElement({
