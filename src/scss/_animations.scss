@@ -1,0 +1,9 @@
+@keyframes start-with-inner-shadow {
+  from {
+    @include inner-shadow(1px, 1px, 1px, 1px, rgba(#aaa, 0.3));
+  }
+
+  to {
+    box-shadow: none;
+  }
+}
