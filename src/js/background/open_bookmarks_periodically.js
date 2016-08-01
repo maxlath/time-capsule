@@ -24,8 +24,13 @@ chrome.bookmarks.onRemoved.addListener(reschedule)
 chrome.bookmarks.onChanged.addListener(reschedule)
 
 function reschedule (id, bookmark) {
-  // Weirdly, the bookmark data is incomplete there: notably, it misses its id
-  bookmark.id = id
-  schedule.cancelPending(id)
-  schedule.scheduleUnparsedBookmark(bookmark)
+  // Weirdly, the bookmark data is incomplete there:
+  // notably, it misses its id and parentId, thus getting it afresh
+  bookmarks.getById(id)
+  .then((bookmarkData) => {
+    if (bookmarks.isInFolder(bookmarkData)) {
+      schedule.cancelPending(id)
+      schedule.scheduleFromUnparsedBookmark(bookmarkData)
+    }
+  })
 }

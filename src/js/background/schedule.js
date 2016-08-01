@@ -21,7 +21,7 @@ function schedule (now, bookmark) {
   }
 }
 
-function scheduleUnparsedBookmark (unparsedBookmark) {
+function scheduleFromUnparsedBookmark (unparsedBookmark) {
   const parsedBookmark = bookmarks.parse(unparsedBookmark)
   if (nextVisitIsToday(parsedBookmark)) {
     schedule(_.now(), parsedBookmark)
@@ -35,6 +35,6 @@ function cancelPending (bookmarkId) {
 
 module.exports = {
   schedule: schedule,
-  scheduleUnparsedBookmark: scheduleUnparsedBookmark,
+  scheduleFromUnparsedBookmark: scheduleFromUnparsedBookmark,
   cancelPending: cancelPending
 }
