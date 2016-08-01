@@ -20,8 +20,8 @@ openTodaysBookmarks()
 setInterval(openTodaysBookmarks, oneDay)
 
 chrome.bookmarks.onCreated.addListener(reschedule)
-chrome.bookmarks.onRemoved.addListener(reschedule)
 chrome.bookmarks.onChanged.addListener(reschedule)
+chrome.bookmarks.onRemoved.addListener(schedule.cancelPending)
 
 function reschedule (id, bookmark) {
   // Weirdly, the bookmark data is incomplete there:
