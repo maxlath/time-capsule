@@ -28,6 +28,8 @@ function shiftSelectedCoordinates (rowShift, columnShift) {
   }
 }
 
+var previousColumnNum
+
 function findByCoordinates (rowNum, columnNum) {
 
   // allow to get from first to last row and reverse
@@ -40,11 +42,21 @@ function findByCoordinates (rowNum, columnNum) {
   const row = matrix[rowNum]
   const lastColumnNum = row.length - 1
 
-  // allow to get from first to last column and reverse
+  // Allow to get from first to last column and reverse
   if (columnNum < 0 ) {
     columnNum = lastColumnNum
   } else if (columnNum > lastColumnNum) {
+    // If the row has only one column, remember the previous column num
+    // to be able to recover it when we get back to a multi-column row
+    if (lastColumnNum === 0) {
+      previousColumnNum = columnNum
+    }
     columnNum = 0
+  } else if (columnNum === 0 && previousColumnNum) {
+    // Recover the last multi-column position instead of using 0,
+    // the position possibly received from a single-column column number
+    columnNum = previousColumnNum
+    previousColumnNum = null
   }
 
   return row[columnNum]

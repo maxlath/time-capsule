@@ -41,11 +41,12 @@ h2{
 }
 
 .never{
-  @include bg-hover(#d88, #d44)
+  @include bg-hover(#e88, #c55)
   width: 3.4em;
   margin: 1em auto;
   &.selected{
     @include inner-shadow;
+    background-color: #c55;
   }
 }
 

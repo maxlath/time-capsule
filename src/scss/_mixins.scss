@@ -5,7 +5,7 @@
   }
 }
 
-@mixin inner-shadow($x:1px, $y:1px, $blur:8px, $spread:3px, $color:rgba(black, 0.3)){
+@mixin inner-shadow($x:1px, $y:1px, $blur:4px, $spread:1px, $color:rgba(#555, 0.3)){
   // offset-x | offset-y | blur-radius | spread-radius | color
   box-shadow: (-$x) $y $blur $spread $color inset,
               $x (-$y) $blur $spread $color inset;
