@@ -1,9 +1,18 @@
 const i18n = require('../lib/i18n')
-const nextVisitHeaderEl = document.querySelector('#nextVisitHeader')
+const buildElement = require('../lib/element')
+// const nextVisitHeaderEl = document.querySelector('#nextVisitHeader')
 const nextVisitEl = document.querySelector('#nextVisit')
 
 module.exports = function updateNextVisit (date) {
-  nextVisitHeaderEl.textContent = i18n('next_visit')
-  nextVisitEl.textContent = new Date(date).toLocaleString()
-}
+  buildElement({
+    tagName: 'h2',
+    text: i18n('next_visit'),
+    appendTo: nextVisitEl
+  })
 
+  buildElement({
+    tagName: 'p',
+    text: new Date(date).toLocaleString(),
+    appendTo: nextVisitEl
+  })
+}
