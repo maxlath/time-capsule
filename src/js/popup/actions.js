@@ -13,7 +13,11 @@ module.exports = {
   remove: function () {
     icon.disable()
     tabs.getCurrentUrlBookmarkId()
-    .then((bookmarkId) => bookmarks.removeById(bookmarkId))
+    .then((bookmarkId) => {
+      if (bookmarkId) {
+        bookmarks.removeById(bookmarkId)
+      }
+    })
     .then(window.close)
   }
 }
