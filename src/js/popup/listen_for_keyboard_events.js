@@ -2,7 +2,7 @@ const matrix = require('./matrix')
 const actions = require('./actions')
 const lastKeys = require('./last_keys')
 const views = require('./views')
-const solveKeyAliases = require('./solve_key_aliases')
+const parseKey = require('./parse_key')
 const _ = require('../lib/utils')
 
 // can't use the event object as it's the whole popup body that gets the event
@@ -20,8 +20,7 @@ const API = {
 var lastKeyWasFloat = false
 
 function keydownListener (e) {
-  let { key } = e
-  key = solveKeyAliases(key)
+  const key = parseKey(e)
   let isFloatCharacter = /^[\d\.]{1}$/.test(key)
 
   if (_.has(ignoreKey, key)) return
