@@ -16,7 +16,7 @@
     "default_icon": {
       "32" : "icons/time-capsule-32.png"
     },
-    "default_title": "Time Capsule [Ctrl+Shift+U]",
+    "default_title": "Time Capsule [Ctrl+Shift+L]",
     "default_popup": "popup/popup.html",
     "browser_style": true
   },
@@ -27,8 +27,7 @@
   "commands": {
     "open-periodicity-menu": {
       "suggested_key": {
-        "default": "Ctrl+Shift+U",
-        "mac": "Command+Shift+U"
+        "default": "Ctrl+Shift+L"
       },
       "description": "Open periodicity menu"
     }
