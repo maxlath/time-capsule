@@ -7,3 +7,10 @@
     box-shadow: none;
   }
 }
+
+@keyframes grow-out {
+  to {
+    font-size: 6em;
+    opacity: 0;
+  }
+}

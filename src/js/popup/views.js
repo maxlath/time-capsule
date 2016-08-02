@@ -1,6 +1,7 @@
 const optionsViewEl = document.querySelector('#optionsView')
 const typingViewEl = document.querySelector('#typingView')
 const typingEl = document.querySelector('#typing')
+const helpEl = document.querySelector('#help')
 const lastKeys = require('./last_keys')
 
 module.exports = {
@@ -13,6 +14,13 @@ module.exports = {
     hide(typingViewEl)
     show(optionsViewEl)
     typingEl.textContent = ''
+  },
+  showFrequencySelectionSuccess: (frequency) => {
+    hide(optionsViewEl)
+    hide(helpEl)
+    show(typingViewEl)
+    typingEl.textContent = frequency
+    typingEl.classList.add('success')
   }
 }
 

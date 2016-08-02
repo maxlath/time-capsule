@@ -1,19 +1,25 @@
 #typingView{
   // start hidden
   display: none;
-  padding: 1em;
   .column{
-    // min-width: 20em;
-    // min-height: 30em;
+    width: 15em;
+    height: 15em;
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
 }
 
 #typing{
   margin: auto;
   font-size: 3em;
-  padding: 1em;
+  text-align: center;
+  &.success{
+    font-weight: bold;
+    color: $success-color;
+    animation-name: grow-out;
+    animation-duration: 0.5s;
+  }
 }
 
 #help{
