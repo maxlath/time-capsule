@@ -6,6 +6,8 @@ const addCustomFrequencyButton = require('./add_custom_frequency_button')(option
 require('./footer')
 const updateNextVisit = require('./next_visit')
 
+const defaultFrequency = '1M'
+
 module.exports = function buildPopup (bookmarkData) {
   if (bookmarks.isInFolder(bookmarkData)) {
     const parsedData = bookmarks.parse(bookmarkData)
@@ -16,14 +18,14 @@ module.exports = function buildPopup (bookmarkData) {
       if (floatFrequency(parsedData.frequency)) {
         addCustomFrequencyButton()
       } else {
-        select(`.frequency-${parsedData.frequency}`)
+        select(frequencySelector(parsedData.frequency))
       }
     } else {
       console.error('bookmark in folder but impossible to parse data', bookmarkData)
       select('.never')
     }
   } else {
-    select('.never')
+    select(frequencySelector(defaultFrequency))
   }
 }
 
@@ -36,4 +38,5 @@ function select (selector) {
   }
 }
 
+const frequencySelector = (frequency) => `.frequency-${frequency}`
 const floatFrequency = (frequency) => /\./.test(frequency)
