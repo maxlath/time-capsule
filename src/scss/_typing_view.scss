@@ -1,0 +1,21 @@
+#typingView{
+  // start hidden
+  display: none;
+  padding: 1em;
+  .column{
+    // min-width: 20em;
+    // min-height: 30em;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+#typing{
+  margin: auto;
+  font-size: 3em;
+  padding: 1em;
+}
+
+#help{
+  height: 2em;
+}

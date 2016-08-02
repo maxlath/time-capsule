@@ -4,7 +4,6 @@ var lastKeys = ''
 
 module.exports = {
   matchFrequencyPattern: (key) => {
-    key = solveAliases(key)
     // Keep only the last 4 keys
     lastKeys = lastKeys.slice(-3) + key
     console.log('lastKeys', lastKeys)
@@ -13,9 +12,3 @@ module.exports = {
     return match && match[1]
   }
 }
-
-const aliases = {
-  ',': '.'
-}
-
-const solveAliases = (key) => aliases[key] || key

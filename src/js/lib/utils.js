@@ -12,5 +12,6 @@ const utils = module.exports = {
     }
   },
   now: () => new Date().getTime(),
-  first: (array) => array[0]
+  first: (array) => array[0],
+  has: (array, value) => array.indexOf(value) > -1
 }
