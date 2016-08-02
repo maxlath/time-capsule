@@ -17,31 +17,44 @@ const API = {
   Delete: actions.remove
 }
 
+var lastKeyWasFloat = false
+
 function keydownListener (e) {
   let { key } = e
   key = solveKeyAliases(key)
+  let isFloatCharacter = /^[\d\.]{1}$/.test(key)
 
   if (_.has(ignoreKey, key)) return
 
   const foundFrequency = lastKeys.matchFrequencyPattern(key)
+
+  // 'Backspace' was taken in account by lastKeys.matchFrequencyPattern
+  if (key === 'Backspace') {
+    // mimicking the last key to trigger the same view
+    if (lastKeyWasFloat) {
+      isFloatCharacter = true
+    } else {
+      isFloatCharacter = false
+    }
+  }
+
   if (foundFrequency) {
     actions.setFrequency(foundFrequency)
     return
   }
 
-  if (isNumber(key)) {
-    views.showFrequencyTypingView(key)
+  if (isFloatCharacter) {
+    views.showFrequencyTypingView()
+    lastKeyWasFloat = true
   } else {
     views.showFrequencyOptionsView()
+    lastKeyWasFloat = false
     const action = API[key]
     if (action) {
       action(e)
     }
   }
 }
-
-// include dots for floats
-const isNumber = (key) => /^[\d\.]{1}$/.test(key)
 
 const ignoreKey = ['Shift']
 

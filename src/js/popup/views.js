@@ -1,13 +1,13 @@
 const optionsViewEl = document.querySelector('#optionsView')
 const typingViewEl = document.querySelector('#typingView')
 const typingEl = document.querySelector('#typing')
+const lastKeys = require('./last_keys')
 
 module.exports = {
-  showFrequencyTypingView: (key) => {
+  showFrequencyTypingView: () => {
     hide(optionsViewEl)
     show(typingViewEl)
-    typingEl.textContent = typingEl.textContent.slice(-3) + key
-
+    typingEl.textContent = lastKeys.getMatchingPart()
   },
   showFrequencyOptionsView: () => {
     hide(typingViewEl)
