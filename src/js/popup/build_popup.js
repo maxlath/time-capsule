@@ -11,7 +11,13 @@ module.exports = function buildPopup (bookmarkData) {
     const parsedData = bookmarks.parse(bookmarkData)
     if (parsedData) {
       updateNextVisit(parsedData.nextVisit)
-      select(`.frequency-${parsedData.frequency}`)
+      // catch float frequencies (that are necessarly custom) before the select function
+      // tries to use document.querySelector on an invalid selector (due to the dot)
+      if (floatFrequency(parsedData.frequency)) {
+        addCustomFrequencyButton()
+      } else {
+        select(`.frequency-${parsedData.frequency}`)
+      }
     } else {
       console.error('bookmark in folder but impossible to parse data', bookmarkData)
       select('.never')
@@ -29,3 +35,5 @@ function select (selector) {
     addCustomFrequencyButton()
   }
 }
+
+const floatFrequency = (frequency) => /\./.test(frequency)

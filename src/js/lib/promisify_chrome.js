@@ -4,8 +4,8 @@ module.exports = function (fn, context) {
     return new Promise(function (resolve, reject) {
 
       const callback = function (result) {
-        if (chrome.extension.lastError) {
-          reject(chrome.extension.lastError)
+        if (chrome.runtime.lastError) {
+          reject(chrome.runtime.lastError)
         } else {
           resolve(result)
         }
