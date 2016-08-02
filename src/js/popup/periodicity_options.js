@@ -1,6 +1,6 @@
 const i18n = require('../lib/i18n')
 const buildElement = require('../lib/element')
-const options = require('./options')
+const options = require('./options').inMenu
 const actions = require('./actions')
 const getColor = require('./colors')
 const periodicityOptionsEl = document.querySelector('#periodicityOptions')

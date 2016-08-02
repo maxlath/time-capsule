@@ -1,7 +1,7 @@
 const optionsViewEl = document.querySelector('#optionsView')
 const typingViewEl = document.querySelector('#typingView')
 const typingEl = document.querySelector('#typing')
-const helpEl = document.querySelector('#help')
+const helpEl = require('./build_help')
 const lastKeys = require('./last_keys')
 
 module.exports = {

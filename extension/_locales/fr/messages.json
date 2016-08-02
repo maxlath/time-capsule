@@ -2,6 +2,8 @@
   "description": {
     "message": "Charge automatiquement les sites que vous voulez visiter périodiquement (une fois par heure, semaine, mois…). Peut aussi servir de rappel en chargeant une page Web une fois par mois par exemple."
   },
+  "minute": { "message": "minute" },
+  "minutes": { "message": "minutes" },
   "hour": { "message": "heure" },
   "hours": { "message": "heures" },
   "day": { "message": "jour" },
