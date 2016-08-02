@@ -18,7 +18,7 @@ function getNextVisit (frequency) {
   // accepting floats
   const num = parseFloat(frequency.slice(0, -1))
   const unit = frequency.slice(-1)
-  const delay = num*times[unit]
+  let delay = num*times[unit]
   // Prevent scheduling a tab in less than 30 secondes
   // as a very short delay could mean 🔥 BROWSER TABS INFINITE LOOP HELL 🔥
   if (delay < halfAMinute) {
