@@ -24,14 +24,3 @@ setTimeout(() => {
   }
   matrix.push([neverEl])
 }, 100)
-
-// build div.settings
-const settingsEl = buildElement({
-  tagName: 'div',
-  className: 'settings',
-  text: i18n('settings'),
-  appendTo: footerEl,
-  attributes: {
-    title: '[s]'
-  }
-})
