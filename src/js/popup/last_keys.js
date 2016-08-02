@@ -1,5 +1,5 @@
 // leading figure can't be 0
-const pattern = /^[^\d]*([1-9][\d\.]{1,2})([HDWMYT])$/i
+const pattern = /^[^\d\.]?([1-9][\d\.]{0,2})([HDWMYT])$/i
 
 var lastKeys = ''
 
@@ -11,7 +11,6 @@ module.exports = {
     }
     // Keep only the last 4 keys
     lastKeys = lastKeys.slice(-3) + key
-    console.log('lastKeys', lastKeys)
     let match = lastKeys.match(pattern)
     if (match) {
       let [matching, num, unit] = match
