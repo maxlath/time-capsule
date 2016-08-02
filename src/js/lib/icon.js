@@ -17,8 +17,8 @@ module.exports = {
 function setIcon (substring) {
   chrome.browserAction.setIcon({
     path: {
-      48: `/icons/browse-periodically-${substring}48.png`,
-      92: `/icons/browse-periodically-${substring}92.png`
+      48: `/icons/time-capsule-${substring}48.png`,
+      92: `/icons/time-capsule-${substring}92.png`
     }
   })
 }

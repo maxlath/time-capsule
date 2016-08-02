@@ -1,4 +1,4 @@
-# Browse Periodically 2
+# Time Capsule
 
 A reboot of the awesome [Browse Periodically](https://addons.mozilla.org/en-US/firefox/addon/browse-periodically/) ([repo](https://github.com/masahal/BrowsePeriodically)):
 
