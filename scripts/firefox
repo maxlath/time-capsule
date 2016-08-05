@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+cp extension/manifest.json ./manifest.backup.json
+./scripts/build-firefox-manifest &&
+
+# "pre-install" is needed for Firefox 48
+# https://developer.mozilla.org/en-US/Add-ons/WebExtensions/web-ext_command_reference#--pre-install
+cd extension && web-ext run --pre-install &&
+echo '\ndone: cleaning' && cd .. && mv ./manifest.backup.json extension/manifest.json
