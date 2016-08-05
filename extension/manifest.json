@@ -3,7 +3,7 @@
   "name": "Time Capsule",
   "version": "1.0.0",
   "description": "__MSG_description__",
-  "homepage_url": "http://maxlath.eu/projects/time-capsules",
+  "homepage_url": "http://maxlath.eu/projects/time-capsule",
   "icons": {
     "48": "icons/time-capsule-48.png",
     "92": "icons/time-capsule-92.png"
@@ -14,14 +14,16 @@
   ],
   "browser_action": {
     "default_icon": {
-      "32" : "icons/time-capsule-32.png"
+      "32": "icons/time-capsule-32.png"
     },
     "default_title": "Time Capsule [Ctrl+Shift+L]",
     "default_popup": "popup/popup.html",
     "browser_style": true
   },
   "background": {
-    "scripts": ["background/background.build.js"]
+    "scripts": [
+      "background/background.build.js"
+    ]
   },
   "default_locale": "en",
   "commands": {
