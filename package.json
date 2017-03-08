@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "scripts/build",
     "package": "scripts/package",
-    "firefox": "scripts/firefox",
+    "firefox": "cd extension && web-ext run",
     "watch": "npm run build && onchange ./src -- npm run build"
   },
   "author": "maxlath",
@@ -18,7 +18,7 @@
     "node-notifier": "^4.6.0",
     "node-sass": "^3.8.0",
     "onchange": "^2.5.0",
-    "web-ext": "^1.4.0"
+    "web-ext": "^1.8.1"
   },
   "dependencies": {}
 }

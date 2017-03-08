@@ -14,8 +14,11 @@ cd time-capsule
   * tick the `developer mode` box
   * click `load non packaged extension` and open the project's `extension` folder where the `manifest.json` file is
 
-* in Firefox
-  * there is a [script](https://github.com/maxlath/time-capsule/tree/master/scripts/firefox) for that: `npm run firefox` (tailored for Firefox 48)
+* in Firefox: [instructions](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Temporary_Installation_in_Firefox)
+  * open [about:debugging](about:debugging)
+  * Load Temporary Add-on and select the `./extension` folder
+
+  Or just run `npm run firefox` to use a temporary profile thank to `web-ext`, but [encounters this bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1338826)
 
 ## Todos
 * publish on firefox and chrome addons marketplaces`
