@@ -8,7 +8,7 @@
     "build": "scripts/build",
     "package": "scripts/package",
     "firefox": "cd extension && web-ext run",
-    "watch": "npm run build && while true ; do inotifywait -r ./src -e modify && npm run build && echo 'CHANGE'; done"
+    "watch": "npm run build && while true ; do inotifywait -r ./src -e modify && date && npm run build; done"
   },
   "author": "maxlath",
   "license": "GPL",
