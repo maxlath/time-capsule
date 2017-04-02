@@ -21,7 +21,7 @@ const API = {
   removeById: remove,
   parse: (bookmarkData) => {
     const data = bookmarkTitle.parse(bookmarkData.title)
-    data.id = bookmarkData.id
+    if (data) data.id = bookmarkData.id
     return data
   }
 }
@@ -62,6 +62,7 @@ API.waitForFolder = init()
   API._getTodaysBookmarksData = () => {
     return getSubTree(folderId)
     .then((res) => {
+      if (!(res && res[0])) return []
       return res[0].children
       .map(API.parse)
       .filter(nextVisitIsToday)
