@@ -18,13 +18,15 @@ cd time-capsule
   * open [about:debugging](about:debugging)
   * Load Temporary Add-on and select the `./extension` folder
 
-  Or just run `npm run firefox` to use a temporary profile thank to `web-ext`, but [encounters this bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1338826)
+  Or just run `npm run firefox` to use a temporary profile, with the advantage of automatically reloading the extension on change, thank to `web-ext`, but [encounters this bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1338826)
 
 ## Todos
 * publish on firefox and chrome addons marketplaces`
+* use [webextension-polyfill](https://github.com/mozilla/webextension-polyfill)
 
 ### Can wait
 * make an article to explain all the thing, and maybe even a tuto video?
+* include the possibility to add notes in markdown, opening a specific popup showing it when on the right tab
 * settings board? what would be the needs for that?
   - customizing the default periodicity used to pre-select a periodicity when opening the menu
   - customizing if a given days bookmarks are opened grouped at some point of the day, instead of simply following the exact time it was set + period
