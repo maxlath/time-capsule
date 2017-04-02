@@ -1,3 +1,16 @@
 #!/usr/bin/env sh
-cp ./logo/star-sablier-blue-yellow.svg ./extension/icons/time-capsule.svg
-cp ./logo/star-sablier-grey-2.svg ./extension/icons/time-capsule-disabled.svg
+
+mkdir -p "./extension/icons"
+
+logobase="./logo/star-sablier"
+prodbase="./extension/icons/time-capsule"
+
+# Chrome doesn't like SVG :/
+gm convert -background none "${logobase}-blue-yellow.svg" -resize 16x16 "${prodbase}-16.png"
+gm convert -background none "${logobase}-grey-2.svg" -resize 16x16 "${prodbase}-disabled-16.png"
+gm convert -background none "${logobase}-blue-yellow.svg" -resize 32x32 "${prodbase}-32.png"
+gm convert -background none "${logobase}-grey-2.svg" -resize 32x32 "${prodbase}-disabled-32.png"
+gm convert -background none "${logobase}-blue-yellow.svg" -resize 48x48 "${prodbase}-48.png"
+gm convert -background none "${logobase}-grey-2.svg" -resize 48x48 "${prodbase}-disabled-48.png"
+gm convert -background none "${logobase}-blue-yellow.svg" -resize 92x92 "${prodbase}-92.png"
+gm convert -background none "${logobase}-grey-2.svg" -resize 92x92 "${prodbase}-disabled-92.png"

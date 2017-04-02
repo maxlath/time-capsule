@@ -9,14 +9,19 @@ module.exports = {
     chrome.browserAction.setBadgeText({ text: formatFrequency(frequency) })
   },
   disable: function () {
-    setIcon('-disabled')
+    setIcon('disabled-')
     chrome.browserAction.setBadgeText({ text: '' })
   }
 }
 
 function setIcon (substring) {
-  const svg = `/icons/time-capsule${substring}.svg`
-  chrome.browserAction.setIcon({ path: { 48: svg, 92: svg }})
+  chrome.browserAction.setIcon({
+    path: {
+      32: `/icons/time-capsule-${substring}32.png`,
+      48: `/icons/time-capsule-${substring}48.png`,
+      92: `/icons/time-capsule-${substring}92.png`
+    }
+  })
 }
 
 const formatFrequency = (freq) => freq.slice(0, -1) + ' ' + freq.slice(-1)
