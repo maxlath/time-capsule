@@ -14,8 +14,8 @@
   ],
   "browser_action": {
     "default_icon": {
-      "32": "icons/time-capsule-disabled-32.png",
-      "92": "icons/time-capsule-disabled-92.png"
+      "32": "icons/time-capsule-32.png",
+      "92": "icons/time-capsule-92.png"
     },
     "default_title": "Time Capsule",
     "default_popup": "popup/popup.html",
