@@ -5,8 +5,13 @@
   "description": "__MSG_description__",
   "homepage_url": "http://maxlath.eu/projects/time-capsule",
   "icons": {
-    "48": "icons/time-capsule-48.png",
-    "92": "icons/time-capsule-92.png"
+    "16": "icons/time-capsule.svg",
+    "32": "icons/time-capsule.svg",
+    "48": "icons/time-capsule.svg",
+    "64": "icons/time-capsule.svg",
+    "92": "icons/time-capsule.svg",
+    "124": "icons/time-capsule.svg",
+    "256": "icons/time-capsule.svg"
   },
   "permissions": [
     "bookmarks",
@@ -14,7 +19,7 @@
   ],
   "browser_action": {
     "default_icon": {
-      "32": "icons/time-capsule-32.png"
+      "32": "icons/time-capsule.svg"
     },
     "default_title": "Time Capsule [Ctrl+Shift+L]",
     "default_popup": "popup/popup.html",
