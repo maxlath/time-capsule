@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+logobase="./logo/star-sablier"
+prodbase="./extension/icons/time-capsule"
+
+gm convert "${logobase}-yellow.png" -resize 32x32 "${prodbase}-32.png"
+gm convert "${logobase}-grey.png" -resize 32x32 "${prodbase}-disabled-32.png"
+gm convert "${logobase}-yellow.png" -resize 48x48 "${prodbase}-48.png"
+gm convert "${logobase}-grey.png" -resize 48x48 "${prodbase}-disabled-48.png"
+gm convert "${logobase}-yellow.png" -resize 92x92 "${prodbase}-92.png"
+gm convert "${logobase}-grey.png" -resize 92x92 "${prodbase}-disabled-92.png"
