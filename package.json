@@ -8,7 +8,8 @@
     "build": "scripts/build",
     "package": "scripts/package",
     "firefox": "cd extension && web-ext run",
-    "watch": "npm run build && while true ; do inotifywait -r ./src -e modify && date && npm run build; done"
+    "watch": "npm run build && while true ; do inotifywait -r ./src -e modify && date && npm run build; done",
+    "lint": "standard"
   },
   "author": "maxlath",
   "license": "GPL",
@@ -16,6 +17,7 @@
     "browserify": "^14.1.0",
     "jsondepth": "^1.7.0",
     "node-sass": "^4.5.0",
+    "standard": "^9.0.2",
     "web-ext": "^1.8.1"
   },
   "dependencies": {}

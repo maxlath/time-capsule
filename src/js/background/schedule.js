@@ -12,7 +12,7 @@ function schedule (now, bookmark) {
     open(bookmark)
   } else {
     console.log('in the coming 24 hours:', time, bookmark)
-    const { id:bookmarkId } = bookmark
+    const { id: bookmarkId } = bookmark
     const openAndClean = () => {
       open(bookmark)
       delete timeoutIds[bookmarkId]

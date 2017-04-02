@@ -40,7 +40,6 @@ categoriesList.forEach((category) => {
     tagName: 'ul',
     appendTo: categoryEl
   })
-
 })
 
 const getTitle = (frequency, num, unit) => {
@@ -52,7 +51,7 @@ const getTitle = (frequency, num, unit) => {
 }
 
 categoriesList.forEach((category) => {
-  let { daysFactor, letter, options:optionsNums } = options[category]
+  let { daysFactor, letter, options: optionsNums } = options[category]
   const categoryMatrix = []
   const rowNum = matrix.push(categoryMatrix) - 1
   for (let num of optionsNums) {

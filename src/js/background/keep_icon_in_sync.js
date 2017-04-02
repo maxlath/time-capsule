@@ -7,7 +7,7 @@ const _ = require('../lib/utils')
 // On update of any tab, if it is the current tab, update the icon
 // doc: https://developer.chrome.com/extensions/tabs#event-onUpdated
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  const { url:changedTabUrl } = changeInfo
+  const { url: changedTabUrl } = changeInfo
   // A tab loading sends several update events but only one contains a url,
   // thus taking only this one event in account allows to debounce icon updates
   if (!changedTabUrl) return

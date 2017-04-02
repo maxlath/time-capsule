@@ -13,7 +13,7 @@ const bookmarkTitle = require('./bookmark_title')
 const nextVisitIsToday = require('./next_visit_is_today')
 
 const API = {
-  getById: (id)=> get(id).then(_.first),
+  getById: (id) => get(id).then(_.first),
   search: search,
   updateTitle: (id, title, frequency) => {
     return update(id, { title: bookmarkTitle.format(title, frequency, true) })
@@ -35,7 +35,7 @@ module.exports = API
 // store the promise
 API.waitForFolder = init()
 .then((folder) => {
-  const { id:folderId } = folder
+  const { id: folderId } = folder
 
   API.folder = folderId
 
@@ -54,7 +54,7 @@ API.waitForFolder = init()
       throw new Error('url is missing')
     }
     return search({url: url})
-    .then((res) => res.filter(API.isInFolder)[0] )
+    .then((res) => res.filter(API.isInFolder)[0])
   }
 
   // Could possibly be extracted to become specific to background

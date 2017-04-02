@@ -3,7 +3,7 @@ const i18n = require('../lib/i18n')
 const { matrix } = require('./matrix')
 
 module.exports = (periodicityOptionsEl) => {
-   return function addCustomFrequencyButton () {
+  return function addCustomFrequencyButton () {
     const customEl = buildElement({
       tagName: 'div',
       className: 'custom selected',

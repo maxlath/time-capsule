@@ -11,7 +11,7 @@ const neverEl = buildElement({
   text: i18n('never'),
   appendTo: footerEl,
   attributes: {
-    title: '[Suppr]',
+    title: '[Suppr]'
   }
 })
 

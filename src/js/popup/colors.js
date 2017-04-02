@@ -10,10 +10,10 @@ const maxColor = 187
 const colorSpread = maxColor - minColor
 
 const getColorCoef = (num, daysFactor) => {
-  let days = num*daysFactor
+  let days = num * daysFactor
   if (days > maxDays) { days = maxDays }
-  let fractionOfMaxDays = days/maxDays
-  let adjustedColor = fractionOfMaxDays*colorSpread + minColor
+  let fractionOfMaxDays = days / maxDays
+  let adjustedColor = fractionOfMaxDays * colorSpread + minColor
   // Inverting so that the smallest amounts of time are the lightest
   // and the longest the darkest
   return Math.abs(adjustedColor - realMaxColor)
@@ -23,7 +23,7 @@ const getColor = (num, daysFactor) => {
   let coef = getColorCoef(num, daysFactor)
   let hexaString = coef.toString(16).split('.')[0]
   // left padding with 0s
-  if (hexaString.length === 1) { hexaString = `0${hexaString}`}
+  if (hexaString.length === 1) { hexaString = `0${hexaString}` }
   return `#${hexaString}${hexaString}${hexaString}`
 }
 

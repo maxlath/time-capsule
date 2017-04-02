@@ -16,7 +16,7 @@ const isSeleted = (el) => el.classList.contains('selected')
 
 function shiftSelectedCoordinates (rowShift, columnShift) {
   const currentSelectedEl = findSelected()
-  const { place:currentPlace } = currentSelectedEl
+  const { place: currentPlace } = currentSelectedEl
   const rowNum = currentPlace.row + rowShift
   const columnNum = currentPlace.column + columnShift
   const selectedEl = findByCoordinates(rowNum, columnNum)
@@ -31,7 +31,6 @@ function shiftSelectedCoordinates (rowShift, columnShift) {
 var previousColumnNum
 
 function findByCoordinates (rowNum, columnNum) {
-
   // allow to get from first to last row and reverse
   if (rowNum < 0) {
     rowNum = lastRowNum()
@@ -43,7 +42,7 @@ function findByCoordinates (rowNum, columnNum) {
   const lastColumnNum = row.length - 1
 
   // Allow to get from first to last column and reverse
-  if (columnNum < 0 ) {
+  if (columnNum < 0) {
     columnNum = lastColumnNum
   } else if (columnNum > lastColumnNum) {
     // If the row has only one column, remember the previous column num
