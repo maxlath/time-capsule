@@ -14,7 +14,7 @@ const nextVisitIsToday = require('./next_visit_is_today')
 
 const API = {
   getById: (id) => get(id).then(_.first),
-  search: search,
+  search,
   updateTitle: (id, title, frequency) => {
     return update(id, { title: bookmarkTitle.format(title, frequency, true) })
   },
@@ -44,17 +44,22 @@ API.waitForFolder = init()
   API.add = (url, title, frequency) => {
     return create({
       parentId: folderId,
-      url: url,
+      url,
       title: bookmarkTitle.format(title, frequency)
     })
   }
 
+  // Functions with a '_' prefix are called by `_${name}`
+  // in src/js/lib/wait_for_folder.js
   API._getByUrl = (url) => {
-    if (!url) {
-      throw new Error('url is missing')
-    }
-    return search({url: url})
-    .then((res) => res.filter(API.isInFolder)[0])
+    if (!url) throw new Error('url is missing')
+    return search({ url })
+    .then(res => res.filter(API.isInFolder)[0])
+    .catch(err => {
+      // Known case: about: and file: pages in Firefox
+      // https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
+      console.log('_getByUrl err', { url, err })
+    })
   }
 
   // Could possibly be extracted to become specific to background

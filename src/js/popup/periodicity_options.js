@@ -15,7 +15,7 @@ buildElement({
 })
 
 // build every div#${category} and their children
-// - span.header
+// - h3.category-header
 // - ul
 //   - li.option + click event listener
 const optionsContainers = {}
@@ -30,8 +30,8 @@ categoriesList.forEach((category) => {
   })
 
   buildElement({
-    tagName: 'span',
-    className: 'header',
+    tagName: 'h3',
+    className: 'category-header',
     text: i18n(category),
     appendTo: categoryEl
   })

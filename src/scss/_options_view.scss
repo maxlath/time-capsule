@@ -1,13 +1,13 @@
 h2, .settings, .never, .custom{
   padding: 0.5em 1em 0.5em 1em;
   margin: 0.2em;
-  text-align: center;
 }
 
 .option, .settings, .never, .custom{
   cursor: pointer;
   transition: background-color 0.3s;
   border-radius: 1px;
+  text-align: center;
 }
 
 .never, .settings, .custom{
@@ -44,9 +44,9 @@ h2, .settings, .never, .custom{
 .category{
   margin-top: 0.5em;
   margin-bottom: 0.5em;
-  .header{
-    font-weight: bold;
-    font-size: 1.2em;
+  .category-header{
+    font-size: 1.1em;
+    text-align: center;
   }
   ul{
     margin: 0 auto;

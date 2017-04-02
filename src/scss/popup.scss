@@ -5,12 +5,12 @@
 
 html {
   font-family: sans-serif;
-  background: #f0f0f0;
+  background-color: #f0f0f0;
   margin: 0;
 }
 
 body {
-  background: #f0f0f0;
+  background-color: #f0f0f0;
   color: #222;
   margin: 0 auto;
   padding: 2px;
@@ -22,6 +22,18 @@ body {
 h2{
   font-weight: bold;
   font-size: 1.2em;
+  text-align: center;
+}
+
+h3{
+  margin: 0;
+  padding: 0;
+}
+
+#nextVisit{
+  p{
+    text-align: center;
+  }
 }
 
 @import './options_view';
