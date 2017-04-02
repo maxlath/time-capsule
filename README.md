@@ -1,4 +1,6 @@
 # Time Capsule
+An addon to send links to your future self.
+Coming soon on all browsers supporting WebExtensions.
 
 ![logo](https://github.com/maxlath/time-capsule/raw/master/marketplaces/mozilla/time-capsule-256.png)
 
