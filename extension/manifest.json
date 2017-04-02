@@ -17,7 +17,7 @@
       "32": "icons/time-capsule-disabled-32.png",
       "92": "icons/time-capsule-disabled-92.png"
     },
-    "default_title": "Time Capsule [Ctrl+Shift+L]",
+    "default_title": "Time Capsule",
     "default_popup": "popup/popup.html",
     "browser_style": true
   },
@@ -30,7 +30,13 @@
   "commands": {
     "open-periodicity-menu": {
       "suggested_key": {
-        "default": "Ctrl+Shift+L"
+        "default": "Alt+C"
+      },
+      "description": "Open periodicity menu"
+    },
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+T"
       },
       "description": "Open periodicity menu"
     }
