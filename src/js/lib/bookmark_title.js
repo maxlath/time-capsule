@@ -1,7 +1,7 @@
 const _ = require('../lib/utils')
 const times = require('./times')
-const separator = ' // '
-const pattern = /\s\/\/\s([\d\.]{1,3})([HDWMYT])\s(.*)$/
+const separator = ' /ᐒ/ '
+const pattern = /\s\/ᐒ\/\s([\d\.]{1,3})([HDWMYT])\s(.*)$/
 const halfAMinute = times.T/2
 
 function format (title, frequency, updating) {
