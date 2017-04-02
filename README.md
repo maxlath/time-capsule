@@ -1,10 +1,14 @@
-# Time Capsule
+# Time Capsule
+
+![logo](https://github.com/maxlath/time-capsule/raw/master/marketplaces/mozilla/time-capsule-256.png)
+
+The best person to send you links matching your interests is a time traveling version of yourself: **create a time capsule by choosing when the current tab should be re-opened**; this will bookmark the current tab, and program to re-open it in the future, according to the choosen periodicity, be it an hour, a day, a month, a year, a decade!
 
 A reboot of the awesome [Browse Periodically](https://addons.mozilla.org/en-US/firefox/addon/browse-periodically/) ([repo](https://github.com/masahal/BrowsePeriodically)):
 
 > Browse sites you want to check periodically (every hour, day, week, month and so on). You can also use for reminding pages, for example, by browsing every month.
 
-## Development Setup
+## Development Setup
 ```sh
 git clone https://github.com/maxlath/time-capsule
 cd time-capsule
