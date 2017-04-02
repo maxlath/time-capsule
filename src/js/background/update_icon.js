@@ -8,7 +8,7 @@ module.exports = (url) => {
   .catch(_.Error('url change'))
 }
 
-function parsePeriodicityData (bookmarkData) {
+function parsePeriodicityData (bookmarkData) {
   if (bookmarks.isInFolder(bookmarkData)) {
     pageFound(bookmarkData)
   } else {

@@ -2,7 +2,7 @@ const i18n = require('../lib/i18n')
 const buildElement = require('../lib/element')
 const actions = require('./actions')
 const footerEl = document.querySelector('#footer')
-const { matrix } = require('./matrix')
+const { matrix } = require('./matrix')
 
 // build div.remove  + click event listener
 const neverEl = buildElement({

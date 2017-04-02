@@ -1,9 +1,9 @@
-const keyAliases = {
+const keyAliases = {
   ',': '.'
 }
 
 // allow to type a figure without using Shift on a French keyboard
-const whichAliases = {
+const whichAliases = {
   49: '1',
   50: '2',
   51: '3',
@@ -16,4 +16,4 @@ const whichAliases = {
   48: '0'
 }
 
-module.exports = (e) => keyAliases[e.key] || whichAliases[e.which] || e.key
+module.exports = (e) => keyAliases[e.key] || whichAliases[e.which] || e.key

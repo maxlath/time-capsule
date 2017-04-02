@@ -21,4 +21,3 @@ module.exports = (periodicityOptionsEl) => {
     matrix.push([customEl])
   }
 }
-

@@ -11,7 +11,6 @@ function openTodaysBookmarks () {
   bookmarks.getTodaysBookmarksData()
   .then((todaysBookmarks) => {
     todaysBookmarks.forEach(schedule.schedule.bind(null, _.now()))
-    return
   })
   .catch(_.Error('openTodaysBookmarks'))
 }
@@ -28,7 +27,7 @@ function reschedule (id, bookmark) {
   // notably, it misses its id and parentId, thus getting it afresh
   bookmarks.getById(id)
   .then((bookmarkData) => {
-    if (bookmarks.isInFolder(bookmarkData)) {
+    if (bookmarks.isInFolder(bookmarkData)) {
       schedule.cancelPending(id)
       schedule.scheduleFromUnparsedBookmark(bookmarkData)
     }

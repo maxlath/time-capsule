@@ -21,5 +21,13 @@
     "standard": "^9.0.2",
     "web-ext": "^1.8.1"
   },
+  "standard": {
+    "ignore": [
+      "extension"
+    ],
+    "globals": [
+      "chrome"
+    ]
+  },
   "dependencies": {}
 }

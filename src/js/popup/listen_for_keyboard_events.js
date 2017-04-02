@@ -8,7 +8,7 @@ const _ = require('../lib/utils')
 // can't use the event object as it's the whole popup body that gets the event
 const select = () => matrix.findSelected().click()
 
-const API = {
+const API = {
   ArrowUp: matrix.up,
   ArrowDown: matrix.down,
   ArrowLeft: matrix.left,
@@ -21,7 +21,7 @@ var lastKeyWasFloat = false
 
 function keydownListener (e) {
   const key = parseKey(e)
-  let isFloatCharacter = /^[\d\.]{1}$/.test(key)
+  let isFloatCharacter = /^[\d.]{1}$/.test(key)
 
   if (_.has(ignoreKey, key)) return
 

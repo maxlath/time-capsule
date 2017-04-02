@@ -1,7 +1,7 @@
 const _ = require('../lib/utils')
 const times = require('./times')
 const separator = ' /ᐒ/ '
-const pattern = /\s\/ᐒ\/\s([\d\.]{1,3})([HDWMYT])\s(.*)$/
+const pattern = /\s\/ᐒ\/\s([\d.]{1,3})([HDWMYT])\s(.*)$/
 const halfAMinute = times.T / 2
 
 function format (title, frequency, updating) {
@@ -31,7 +31,7 @@ function getNextVisit (frequency) {
 function parse (title) {
   const match = title.match(pattern)
   if (match) {
-    const [matching, num, unit, nextVisit] = match
+    const [ matching, num, unit, nextVisit ] = match // eslint-disable-line
     return {
       frequency: `${num}${unit}`,
       // epoch time number should take less memory and computation power

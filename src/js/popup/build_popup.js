@@ -1,4 +1,3 @@
-const _ = require('../lib/utils')
 const bookmarks = require('../lib/bookmarks')
 
 const optionsEl = require('./periodicity_options')

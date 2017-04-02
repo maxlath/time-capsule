@@ -5,8 +5,5 @@ var dayEnd
 
 module.exports = {
   get: () => dayEnd,
-  set: () => {
-    dayEnd = _.now() + oneDay
-    return
-  }
+  set: () => { dayEnd = _.now() + oneDay }
 }

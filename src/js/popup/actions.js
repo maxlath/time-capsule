@@ -1,7 +1,6 @@
 const icon = require('../lib/icon')
 const bookmarks = require('../lib/bookmarks')
 const tabs = require('../lib/tabs')
-const _ = require('../lib/utils')
 const CelebrateSuccess = require('./celebrate_success')
 
 function setFrequency (frequency) {

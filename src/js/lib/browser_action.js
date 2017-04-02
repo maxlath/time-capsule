@@ -1,8 +1,14 @@
 const promisify = require('../lib/promisify_chrome')
-const openPopup = promisify(chrome.browserAction.openPopup, chrome.browserAction)
+const getOpenPopup = () => {
+  if (chrome.browserAction.openPopup) {
+    return promisify(chrome.browserAction.openPopup, chrome.browserAction)
+  } else {
+    return {}
+  }
+}
 
 module.exports = {
-  openPopup: openPopup,
+  openPopup: getOpenPopup(),
   closePopup: () => {
     chrome.extension.getViews({type: 'popup'})[0].close()
   }

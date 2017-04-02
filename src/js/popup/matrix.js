@@ -16,7 +16,7 @@ const isSeleted = (el) => el.classList.contains('selected')
 
 function shiftSelectedCoordinates (rowShift, columnShift) {
   const currentSelectedEl = findSelected()
-  const { place: currentPlace } = currentSelectedEl
+  const { place: currentPlace } = currentSelectedEl
   const rowNum = currentPlace.row + rowShift
   const columnNum = currentPlace.column + columnShift
   const selectedEl = findByCoordinates(rowNum, columnNum)

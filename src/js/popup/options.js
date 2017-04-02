@@ -22,7 +22,7 @@ module.exports = {
     },
     years: {
       letter: 'Y',
-      options: [ 1, 2, 3, 4, 5, 10],
+      options: [ 1, 2, 3, 4, 5, 10 ],
       daysFactor: 356.25
     }
   },
