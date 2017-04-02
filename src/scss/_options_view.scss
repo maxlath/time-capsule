@@ -16,7 +16,9 @@ h2, .settings, .never, .custom{
 }
 
 .never, .custom{
-  width: 6em;
+  // Larger to give the room to the French 'Personnalisé' translation
+  // and anticipating for the future German translation ;)
+  width: 8em;
   margin: 1em auto;
   &.selected{
     @include inner-shadow;
