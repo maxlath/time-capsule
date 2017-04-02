@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 echo 'building popup.build.js...'
 browserify src/js/popup/popup.js > extension/popup/popup.build.js
 echo 'building background.build.js...'
