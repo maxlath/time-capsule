@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+version=$(cat package.json |jd version)
+
+cd extension
+zip -r ../packages/time-capsule.$version.zip .
