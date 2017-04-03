@@ -7,6 +7,7 @@ module.exports = {
   enable: function (frequency) {
     setIcon('')
     chrome.browserAction.setBadgeText({ text: formatFrequency(frequency) })
+    chrome.browserAction.setBadgeBackgroundColor({ color: '#333333' })
   },
   disable: function () {
     setIcon('disabled-')
