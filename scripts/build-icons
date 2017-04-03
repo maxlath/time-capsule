@@ -2,7 +2,7 @@
 
 mkdir -p "./extension/icons"
 
-logobase="./logo/star-sablier"
+logobase="./img/star-sablier"
 prodbase="./extension/icons/time-capsule"
 
 # Chrome doesn't like SVG :/
