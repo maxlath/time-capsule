@@ -3,3 +3,6 @@ node_modules
 misc
 packages
 extension/icons/*
+# force add those that we want to track
+*png
+*svg
