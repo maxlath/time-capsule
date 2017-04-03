@@ -9,6 +9,7 @@ The best person to send you links matching your interests is a time traveling ve
 ## Install
 * [Firefox](https://addons.mozilla.org/en-US/firefox/addon/time-capsule/)
 * [Chrome](https://chrome.google.com/webstore/detail/time-capsule/mmpajmbpehdbemfblpmkfmmdampljkdi)
+
 If you use a different browser that implements WebExtension, that shouldn't be hard to make it work for you too: make a request in the [issues](http://github.com/maxlath/time-capsule/issues) or on [twitter](https://twitter.com/maxlath) to let me know, and I will see if that's possible.
 
 ## Context
@@ -16,6 +17,8 @@ If you use a different browser that implements WebExtension, that shouldn't be h
 This is a reboot of the awesome, but out-dated, [Browse Periodically](https://addons.mozilla.org/en-US/firefox/addon/browse-periodically/) ([repo](https://github.com/masahal/BrowsePeriodically)):
 
 > Browse sites you want to check periodically (every hour, day, week, month and so on). You can also use for reminding pages, for example, by browsing every month.
+
+I started working on it before Firefox was up to speed with WebExtension so had to let it sleep for a moment. Meanwhile, a team started working on [SnoozeTabs](https://github.com/bwinton/SnoozeTabs), it's pretty much the same but you loose all the time-traveling jokes.
 
 ## Development Setup
 ```sh
