@@ -2,4 +2,6 @@
 version=$(cat package.json |jd version)
 
 cd extension
+# Remove previous build if any
+rm -f time-capsule.$version.zip
 zip -r ../packages/time-capsule.$version.zip .
