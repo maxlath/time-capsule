@@ -2,7 +2,7 @@
 An addon to send links to your future self.
 Coming soon on all browsers supporting WebExtensions.
 
-![logo](logo/banners/time-capsule-on-dark-sky.jpg)
+![banner](https://github.com/maxlath/time-capsule/raw/master/img/banners/time-capsule-on-dark-sky.jpg)
 
 The best person to send you links matching your interests is a time traveling version of yourself: **create a time capsule by choosing when the current tab should be re-opened**; this will bookmark the current tab, and program to re-open it in the future, according to the choosen periodicity, be it an hour, a day, a month, a year, a decade!
 
