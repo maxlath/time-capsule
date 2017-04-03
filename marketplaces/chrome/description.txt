@@ -1,0 +1,31 @@
+The best person to send you links matching your interests is a time traveling version of yourself: create a time capsule by choosing when the current tab should be re-opened; this will bookmark the current tab, and program to re-open it in the future, according to the choosen periodicity, be it an hour, a day, a month, a year, a decade!
+
+It will then re-open at this periodicity until the end of times. Or until you un-bookmark it.
+
+Why would I need this?
+
+    Do you have a bookmark folder with 10,000 things-you-should-absolutely-keep-in-mind but never actually re-open once bookmarked? Now, if you don't come back to those things, those things come back to you!
+    Works very well when learning a new subject: you open many links which for most don't make sense now, but would probably make sense in a few months. (that worked awesome for me when learning web development).
+    Works very well as a memo/alarm mechanism: "Now isn't the time to deal with [enter the task on which you plan to procrastinate], but I got to see this page in X hours/days/etc."
+    In some ways, the logo may look like a bow tie. Bow ties are cool.
+
+Top features
+
+    Built with the latest WebExtension standard: shouldn't break until next decade addon revolution
+    Super customizable periodicity: if the offered buttons aren't enough, click on the popup (to get focus on it) and start typing the precise number of a time unit you want.
+    Integrated with the browser bookmarks, which gives numerous advantages:
+        Pages you bookmark this way will show up when you're searching a page (if you activated bookmark suggestion)
+        All your time capsules are grouped in a folder in your bookmarks, which makes them easy to browse/search
+        Easy to export/import: simply import export your bookmarks and your time capsules will come along!
+    It's libre/open source
+    Comes with (poor) time-traveling jokes
+
+Sending links to your past self isn't possible yet, but could come in a future version. It might a premium feature, but you can pre-register by making a donation.
+
+Advices to keep it sane
+
+    Do not keep too many bookmarks with a short periodicity: that's gonna be very spammy.
+    Rule of thumb: if a tab re-opens 3 times, and you closed it immediatly the 3 times without considering acting upon it, deal with it now or un-bookmark it.
+    Avoid time paradoxes at all costs.
+
+If you like this addon, you might like this other project of mine: inventaire.io, a web app to share your books inventory with your friends!
