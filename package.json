@@ -8,6 +8,7 @@
     "build": "./scripts/build",
     "build-icons": "./scripts/build-icons",
     "package": "./scripts/build_package",
+    "compare-packages": "./scripts/compare_packages",
     "firefox": "cd extension && web-ext run",
     "watch": "npm run build && npm run build-icons && while true ; do inotifywait -r ./src -e modify && date && npm run build && npm run build-icons; done",
     "lint": "standard"

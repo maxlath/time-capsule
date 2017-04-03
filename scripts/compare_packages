@@ -1,14 +1,25 @@
-#!/usr/bin/env sh
+#!/usr/bin/env zsh
 echo "compare packages"
 folder=/tmp/compare_packages
 
+alias keep_filename_only="sed 's/^.*\s//'"
+
 unzip_in_new_folder(){
   # source: http://stackoverflow.com/a/8107983/3324977
-  ls *.zip|awk -F'.zip' '{print "unzip "$0" -d "$1".folder"}'|sh
+  ls -l *.zip |
+    keep_filename_only |
+    # Keep the last 2 packages
+    tail -n 2 |
+    awk -F'.zip' '{print "unzip "$0" -d "$1".folder"}'| sh > /dev/null
 }
 
 rm -rf $folder
 cp -r packages $folder
 cd $folder
 unzip_in_new_folder
-for f in *.folder ; do echo "\n$f" && du -sh $f/**/* ; done
+for f in *.folder
+do
+  echo "${f}_sizes"
+  echo "\n$f" && du -sh $f/**/* > "${f}_sizes"
+done
+diff *sizes
