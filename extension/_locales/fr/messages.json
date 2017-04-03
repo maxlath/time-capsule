@@ -1,6 +1,6 @@
 {
   "description": {
-    "message": "Charge automatiquement les sites que vous voulez visiter périodiquement (une fois par heure, semaine, mois…). Peut aussi servir de rappel en chargeant une page Web une fois par mois par exemple."
+    "message": "Re-ouvre vos marques-pages avec la periodicité souhaité : envoyez des capsules temporelles à votre future vous !"
   },
   "minute": { "message": "minute" },
   "minutes": { "message": "minutes" },
