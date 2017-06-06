@@ -6,6 +6,8 @@ An addon to send links to your future self.
 
 The best person to send you links matching your interests is a time traveling version of yourself: **create a time capsule by choosing when the current tab should be re-opened**; this will bookmark the current tab, and program to re-open it in the future, according to the choosen periodicity, be it an hour, a day, a month, a year, a decade!
 
+![popup-select](https://cloud.githubusercontent.com/assets/1596934/26828135/5223ec72-4ac0-11e7-9099-85bd92414565.gif)
+
 ## Summary
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
