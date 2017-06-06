@@ -1,0 +1,34 @@
+La personne la plus à même de vous envoyer des liens correspondants à vos intérets est une autre version de vous même voyageant dans le temps : créez une capsule temporelle en choisissant quand la page actuelle devrait être réouverte; cette page sera alors ajouté aux marque-pages et programmée pour être ré-ouverte quelque part dans le futur, selon la périodicité choisie, que ce soit une heure, un jour, un mois, une année, ou une décennie !
+
+Cette page se ré-ouvrira dès lors à cette périodicité jusqu'à la fin des temps ! Ou jusqu'à ce que vous désactiviez le marque-page.
+
+Pourquoi en auriez-vous besoin ?
+
+    Avez-vous un dossier de marque-pages garni de 10 000 choses-que-vous-devez-absolument-garder-à-l'esprit mais que vous ne ré-ouvrez en fait jamais une fois ajouté ? Maintenant, si vous ne revenez pas à ces pages, ces pages reviennent à vous !
+    Marche très bien pour explorer un nouveau domaine : découvrir un domain, un sujet, commence souvent par ouvrir beaucoup de liens, qui pour la plupart ne font pas sens pour le moment, mais feront probablement sens dans quelques mois (ça m'a beaucoup aidé dans mon apprentissage du développement web).
+    Marche très bien comme memo/alarme: "Pas le temps maintenant de m'occuper de [insérer la tâche sur laquelle vous souhaitez procrastiner], mais il me faudrait y repenser dans X heures/jours/etc."
+
+
+Top fonctionnalités
+
+    Périodicité ultra personnalisable: si les boutons proposez ne sont pas suffisant, cliquez sur la popup (pour qu'elle ait le focus) et commencez à taper le nombre précis de minutes/heures/jours/etc que vous souhaitez, suivie de la lettre correspondante à cette unité de temps (une aide devrait s'afficher pour vous y aider).
+    Intégré aux marque-pages du navigateur, ce qui offre de multiples avantages :
+        Les pages que vous marquez ainsi apparaitront quand vous rechercherez une page depuis la barre d'adresse (si vous avez activé la fonctionnalité de suggestion de marque page de votre navigateur)
+        Toutes vos capsules temporelles sont regroupé dans un dossier de marque-pages, ce qui les rends facile à parcourir depuis le gestionnaire de marque-pages de votre navigateur
+        Facile à exporter/importer : il suffit d'exporter/importer tous vos marque-pages et vos capsules temporelles viendront avec !
+    Time Capsule est un projet libre/open source
+    Codé avec le tout nouveau standard WebExtension : cette extension ne devrait pas casser avant la prochaine révolution des extensions dans une décennie ou deux.
+    Vient avec son lot de blagues (déplorables) sur les voyages temporels.
+
+
+Envoyer des liens à votre vous passé n'est malheureusement pas encore possible, mais pourrait être ajouté dans une version future. Ce serait alors probablement une fonctionnalité réservé aux généreux donateurs.
+
+Conseils pour garder ce mechanisme dans des proportions supportable
+
+    Évitez de garder trop de marque-pages avec une périodicité de ré-ouverture très courte : ça devient vite du spam intensif.
+    Technique ayant fait ses preuves : si une page se ré-ouvre 3 fois, et que vous la refermez immédiatemment les 3 fois sans la prendre en compte, faites le maintenant ou enlevez la de vos marque-pages.
+    Évitez les paradoxes temporels à tout prix
+
+
+Comment ça marche ?
+Tout repose sur un vortex temporel interne permettant d'envoyer les liens à travers l'espace-temps. Lisez le code pour en savoir plus.
