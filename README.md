@@ -1,9 +1,23 @@
 # Time Capsule
 ![banner](https://github.com/maxlath/time-capsule/raw/master/img/banners/time-capsule-on-dark-sky-with-title-and-subtitle.jpg)
 
+
 An addon to send links to your future self.
 
 The best person to send you links matching your interests is a time traveling version of yourself: **create a time capsule by choosing when the current tab should be re-opened**; this will bookmark the current tab, and program to re-open it in the future, according to the choosen periodicity, be it an hour, a day, a month, a year, a decade!
+
+## Summary
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Install](#install)
+- [Context](#context)
+- [Development Setup](#development-setup)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Install
 * [Firefox](https://addons.mozilla.org/en-US/firefox/addon/time-capsule/)
