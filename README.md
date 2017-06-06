@@ -34,3 +34,6 @@ cd time-capsule
   * Load Temporary Add-on and select the `./extension` folder
 
   Or just run `npm run firefox` to use a temporary profile, with the advantage of automatically reloading the extension on change, thank to `web-ext`, but [encounters this bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1338826)
+
+## License
+[AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.html)
