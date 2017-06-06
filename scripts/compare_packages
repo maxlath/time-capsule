@@ -1,4 +1,6 @@
 #!/usr/bin/env zsh
+set -eu
+
 echo "compare packages"
 folder=/tmp/compare_packages
 
