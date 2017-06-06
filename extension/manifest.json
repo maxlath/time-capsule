@@ -33,12 +33,6 @@
         "default": "Alt+C"
       },
       "description": "Open periodicity menu"
-    },
-    "_execute_browser_action": {
-      "suggested_key": {
-        "default": "Alt+T"
-      },
-      "description": "Open periodicity menu"
     }
   }
 }

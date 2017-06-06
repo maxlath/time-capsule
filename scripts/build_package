@@ -3,5 +3,12 @@ version=$(cat package.json |jd version)
 
 cd extension
 # Remove previous build if any
-rm -f time-capsule.$version.zip
-zip -r ../packages/time-capsule.$version.zip .
+rm -f time-capsule.$version.zip time-capsule.chrome.$version.zip time-capsule.firefox.$version.zip
+
+# Chrome
+zip -r ../packages/time-capsule.chrome.$version.zip .
+
+# Firefox
+sed -i 's/open-periodicity-menu/_execute_browser_action/' ../extension/manifest.json
+zip -r ../packages/time-capsule.firefox.$version.zip .
+sed -i 's/_execute_browser_action/open-periodicity-menu/' ../extension/manifest.json
