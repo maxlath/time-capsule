@@ -4,7 +4,7 @@ const radio = new EventEmitter()
 const timeLinearisationRatio = (1 + Math.pow(5, 0.5)) / 2
 const easeInOutQuad = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
 
-timeVortex
+timeVortex({ mode: 'tunnel' })
 .listen(7777)
 .on('init', res => {
   const { timeAndRelativeDimensionInSpace, wibblyWobblyRatio } = res
