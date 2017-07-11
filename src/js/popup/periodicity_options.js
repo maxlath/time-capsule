@@ -1,6 +1,6 @@
 const i18n = require('../lib/i18n')
 const buildElement = require('../lib/element')
-const options = require('./options').inMenu
+const { inMenu: options } = require('./options')
 const actions = require('./actions')
 const getColor = require('./colors')
 const periodicityOptionsEl = document.querySelector('#periodicityOptions')
@@ -21,7 +21,7 @@ buildElement({
 const optionsContainers = {}
 const categoriesList = Object.keys(options)
 
-categoriesList.forEach((category) => {
+categoriesList.forEach(category => {
   let categoryEl = buildElement({
     tagName: 'div',
     id: category,
@@ -43,11 +43,9 @@ categoriesList.forEach((category) => {
 })
 
 const getTitle = (frequency, num, unit) => {
-  if (num === 1) {
-    unit = unit.replace(/s$/, '')
-  }
+  if (num === 1) unit = unit.replace(/s$/, '')
   const hotkey = ` [${frequency}]`
-  return i18n('browse_every_time_unit', [num.toString(), i18n(unit)]) + hotkey
+  return i18n('browse_every_time_unit', [ num.toString(), i18n(unit) ]) + hotkey
 }
 
 categoriesList.forEach((category) => {
@@ -65,18 +63,14 @@ categoriesList.forEach((category) => {
         'data-frequency': frequency,
         title: getTitle(frequency, num, category)
       },
-      style: {
-        backgroundColor: backgroundColor
-      },
+      style: { backgroundColor },
       appendTo: optionsContainers[category],
       // TODO: use delegated events to set only 1 event listner instead of 30
       onClick: actions.select
     }
     // Adjusting thresold darkest color to match "1 year"
     // and have the full years line in the same color
-    if (backgroundColor <= '#494949') {
-      data.style.color = 'white'
-    }
+    if (backgroundColor <= '#494949') data.style.color = 'white'
     const optionEl = buildElement(data)
     optionEl.place = {
       row: rowNum,

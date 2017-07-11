@@ -10,7 +10,7 @@ const getOpenPopup = () => {
 module.exports = {
   openPopup: getOpenPopup(),
   closePopup: () => {
-    const views = chrome.extension.getViews({type: 'popup'})
-    views[0] && views[0].close()
+    const popup = chrome.extension.getViews({ type: 'popup' })[0]
+    if (popup) popup.close()
   }
 }

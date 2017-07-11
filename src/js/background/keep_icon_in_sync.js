@@ -12,16 +12,14 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   // thus taking only this one event in account allows to debounce icon updates
   if (!changedTabUrl) return
   tabs.getActive()
-  .then((activeTab) => {
-    if (activeTab.id === tabId) {
-      updateIcon(changedTabUrl)
-    }
+  .then(activeTab => {
+    if (activeTab.id === tabId) updateIcon(changedTabUrl)
   })
 })
 
 // When a tab becomes the active tab, update the icon
 // doc: https://developer.chrome.com/extensions/tabs#event-onActivated
-chrome.tabs.onActivated.addListener((activeInfo) => {
+chrome.tabs.onActivated.addListener(activeInfo => {
   tabs.getUrl()
   .then(updateIcon)
   .catch(_.Error('onActivated'))
@@ -35,10 +33,8 @@ chrome.bookmarks.onRemoved.addListener((bookmarkId, removeInfo) => {
   } else if (removeInfo.parentId === bookmarks.folder) {
     // disable icon if the removed bookmark matches the current tab
     tabs.getUrl()
-    .then((currentUrl) => {
-      if (currentUrl === removeInfo.node.url) {
-        icon.disable()
-      }
+    .then(currentUrl => {
+      if (currentUrl === removeInfo.node.url) icon.disable()
     })
   }
 })

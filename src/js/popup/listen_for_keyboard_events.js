@@ -19,7 +19,7 @@ const API = {
 
 var lastKeyWasFloat = false
 
-function keydownListener (e) {
+const keydownListener = e => {
   const key = parseKey(e)
   let isFloatCharacter = /^[\d.]{1}$/.test(key)
 
@@ -30,11 +30,8 @@ function keydownListener (e) {
   // 'Backspace' was taken in account by lastKeys.matchFrequencyPattern
   if (key === 'Backspace') {
     // mimicking the last key to trigger the same view
-    if (lastKeyWasFloat) {
-      isFloatCharacter = true
-    } else {
-      isFloatCharacter = false
-    }
+    if (lastKeyWasFloat) isFloatCharacter = true
+    else isFloatCharacter = false
   }
 
   if (foundFrequency) {
@@ -49,13 +46,11 @@ function keydownListener (e) {
     views.showFrequencyOptionsView()
     lastKeyWasFloat = false
     const action = API[key]
-    if (action) {
-      action(e)
-    }
+    if (action) action(e)
   }
 }
 
-const ignoreKey = ['Shift']
+const ignoreKey = [ 'Shift' ]
 
 module.exports = function listenForKeyboardEvents () {
   window.addEventListener('keydown', keydownListener)

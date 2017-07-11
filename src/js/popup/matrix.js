@@ -2,19 +2,17 @@
 // to make moving from one to the other with up/down/left/right commands possible
 const matrix = []
 
-function findSelected () {
+const findSelected = () => {
   for (let row of matrix) {
     for (let el of row) {
-      if (isSeleted(el)) {
-        return el
-      }
+      if (isSeleted(el)) return el
     }
   }
 }
 
-const isSeleted = (el) => el.classList.contains('selected')
+const isSeleted = el => el.classList.contains('selected')
 
-function shiftSelectedCoordinates (rowShift, columnShift) {
+const shiftSelectedCoordinates = (rowShift, columnShift) => () => {
   const currentSelectedEl = findSelected()
   const { place: currentPlace } = currentSelectedEl
   const rowNum = currentPlace.row + rowShift
@@ -32,11 +30,8 @@ var previousColumnNum
 
 function findByCoordinates (rowNum, columnNum) {
   // allow to get from first to last row and reverse
-  if (rowNum < 0) {
-    rowNum = lastRowNum()
-  } else if (rowNum > lastRowNum()) {
-    rowNum = 0
-  }
+  if (rowNum < 0) rowNum = lastRowNum()
+  else if (rowNum > lastRowNum()) rowNum = 0
 
   const row = matrix[rowNum]
   const lastColumnNum = row.length - 1
@@ -63,11 +58,11 @@ function findByCoordinates (rowNum, columnNum) {
 
 const lastRowNum = () => matrix.length - 1
 
-module.exports = window.matrixAPI = {
-  matrix: matrix,
-  up: shiftSelectedCoordinates.bind(null, -1, 0),
-  down: shiftSelectedCoordinates.bind(null, 1, 0),
-  left: shiftSelectedCoordinates.bind(null, 0, -1),
-  right: shiftSelectedCoordinates.bind(null, 0, 1),
-  findSelected: findSelected
+module.exports = {
+  matrix,
+  up: shiftSelectedCoordinates(-1, 0),
+  down: shiftSelectedCoordinates(1, 0),
+  left: shiftSelectedCoordinates(0, -1),
+  right: shiftSelectedCoordinates(0, 1),
+  findSelected
 }

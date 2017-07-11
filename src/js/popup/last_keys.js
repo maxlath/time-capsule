@@ -4,7 +4,7 @@ const pattern = /^[^\d.]?([1-9][\d.]{0,2})([HDWMYT])$/i
 var lastKeys = ''
 
 module.exports = {
-  matchFrequencyPattern: (key) => {
+  matchFrequencyPattern: key => {
     if (key === 'Backspace') {
       lastKeys = lastKeys.slice(0, -1)
       return

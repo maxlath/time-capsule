@@ -7,7 +7,7 @@ const updateNextVisit = require('./next_visit')
 
 const defaultFrequency = '1M'
 
-module.exports = function buildPopup (bookmarkData) {
+module.exports = bookmarkData => {
   if (bookmarks.isInFolder(bookmarkData)) {
     const parsedData = bookmarks.parse(bookmarkData)
     if (parsedData) {
@@ -30,12 +30,9 @@ module.exports = function buildPopup (bookmarkData) {
 
 function select (selector) {
   const el = document.querySelector(selector)
-  if (el) {
-    el.classList.add('selected')
-  } else {
-    addCustomFrequencyButton()
-  }
+  if (el) el.classList.add('selected')
+  else addCustomFrequencyButton()
 }
 
-const frequencySelector = (frequency) => `.frequency-${frequency}`
-const floatFrequency = (frequency) => /\./.test(frequency)
+const frequencySelector = frequency => `.frequency-${frequency}`
+const floatFrequency = frequency => /\./.test(frequency)

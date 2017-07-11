@@ -11,29 +11,27 @@ module.exports = function () {
   .catch(_.ErrorRethrow('initFolder'))
 }
 
-const findMatch = function (array) {
+const findMatch = array => {
   for (let node of array) {
     if (matchingNode(node)) {
       return node
     } else if (node.children) {
       let childreMatch = findMatch(node.children)
-      if (childreMatch) {
-        return childreMatch
-      }
+      if (childreMatch) return childreMatch
     }
   }
 
   return false
 }
 
-const matchingNode = (node) => node.title === folderName
+const matchingNode = node => node.title === folderName
 
-const createFolderIfMissing = function (match) {
+const createFolderIfMissing = match => {
   if (match) {
     return match
   } else {
     return create({ title: folderName })
-    .then(function (newFolder) {
+    .then(newFolder => {
       console.log('added folder: ' + newFolder.title)
       return newFolder
     })

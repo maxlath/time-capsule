@@ -1,5 +1,5 @@
 const _ = require('../lib/utils')
-const oneDay = require('../lib/times').D
+const { D: oneDay } = require('../lib/times')
 
 var dayEnd
 

@@ -1,6 +1,5 @@
 const i18n = require('../lib/i18n')
 const buildElement = require('../lib/element')
-// const nextVisitHeaderEl = document.querySelector('#nextVisitHeader')
 const nextVisitEl = document.querySelector('#nextVisit')
 
 module.exports = function updateNextVisit (date) {

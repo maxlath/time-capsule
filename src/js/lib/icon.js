@@ -4,18 +4,18 @@
 // variable on background global window object via chrome.extension.getBackgroundPage())
 // but that would be more pain than gains
 module.exports = {
-  enable: function (frequency) {
+  enable: frequency => {
     setIcon('')
     chrome.browserAction.setBadgeText({ text: formatFrequency(frequency) })
     chrome.browserAction.setBadgeBackgroundColor({ color: '#333333' })
   },
-  disable: function () {
+  disable: () => {
     setIcon('disabled-')
     chrome.browserAction.setBadgeText({ text: '' })
   }
 }
 
-function setIcon (substring) {
+const setIcon = substring => {
   chrome.browserAction.setIcon({
     path: {
       32: `/icons/time-capsule-${substring}32.png`,
@@ -25,4 +25,4 @@ function setIcon (substring) {
   })
 }
 
-const formatFrequency = (freq) => freq.slice(0, -1) + ' ' + freq.slice(-1)
+const formatFrequency = freq => freq.slice(0, -1) + ' ' + freq.slice(-1)

@@ -3,7 +3,7 @@ const buildElement = require('../lib/element')
 const helpEl = document.querySelector('#help')
 const options = require('./options')
 
-function buildHelpElements (optionsObj) {
+const buildHelpElements = optionsObj => {
   for (let optionName in optionsObj) {
     let option = optionsObj[optionName]
     let el = buildElement({

@@ -4,7 +4,7 @@ const separator = ' /ᐒ/ '
 const pattern = /\s\/ᐒ\/\s([\d.]{1,3})([HDWMYT])\s(.*)$/
 const halfAMinute = times.T / 2
 
-function format (title, frequency, updating) {
+const format = (title, frequency, updating) => {
   // Use ISOString as it's nicer for readability
   const nextVisit = getNextVisit(frequency)
   // cleaning old data
@@ -14,7 +14,7 @@ function format (title, frequency, updating) {
   return `${title}${separator}${frequency} ${nextVisit}`
 }
 
-function getNextVisit (frequency) {
+const getNextVisit = frequency => {
   // accepting floats
   const num = parseFloat(frequency.slice(0, -1))
   const unit = frequency.slice(-1)
@@ -28,7 +28,7 @@ function getNextVisit (frequency) {
   return new Date(time).toISOString()
 }
 
-function parse (title) {
+const parse = title => {
   const match = title.match(pattern)
   if (match) {
     const [ matching, num, unit, nextVisit ] = match // eslint-disable-line
@@ -41,7 +41,4 @@ function parse (title) {
   }
 }
 
-module.exports = {
-  format: format,
-  parse: parse
-}
+module.exports = { format, parse }

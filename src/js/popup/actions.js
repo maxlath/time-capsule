@@ -3,7 +3,7 @@ const bookmarks = require('../lib/bookmarks')
 const tabs = require('../lib/tabs')
 const CelebrateSuccess = require('./celebrate_success')
 
-function setFrequency (frequency) {
+const setFrequency = frequency => {
   icon.enable(frequency)
   saveCurrentUrlPeriodicity(frequency)
   .then(CelebrateSuccess(frequency))
@@ -11,31 +11,27 @@ function setFrequency (frequency) {
 }
 
 module.exports = {
-  setFrequency: setFrequency,
-  select: function (e) {
-    setFrequency(e.target.attributes['data-frequency'].value)
-  },
-  remove: function () {
+  setFrequency,
+  select: e => setFrequency(e.target.attributes['data-frequency'].value),
+  remove: () => {
     icon.disable()
     tabs.getCurrentUrlBookmarkId()
-    .then((bookmarkId) => {
-      if (bookmarkId) {
-        bookmarks.removeById(bookmarkId)
-      }
+    .then(bookmarkId => {
+      if (bookmarkId) bookmarks.removeById(bookmarkId)
     })
     .then(window.close)
   }
 }
 
-const saveCurrentUrlPeriodicity = (frequency) => {
+const saveCurrentUrlPeriodicity = frequency => {
   return tabs.getCurrentUrlBookmarkData()
-  .then((bookmarkData) => {
+  .then(bookmarkData => {
     let bookmarkId = bookmarkData && bookmarkData.id
     if (bookmarkId) {
       return bookmarks.updateTitle(bookmarkId, bookmarkData.title, frequency)
     } else {
       return tabs.getActive()
-      .then((tabData) => bookmarks.add(tabData.url, tabData.title, frequency))
+      .then(tabData => bookmarks.add(tabData.url, tabData.title, frequency))
     }
   })
 }

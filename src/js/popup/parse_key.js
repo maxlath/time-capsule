@@ -1,8 +1,10 @@
 const keyAliases = {
+  // Accepting a comma as a decimal delimiter
+  // as that's the standard delimiter in some languages (e.g. French)
   ',': '.'
 }
 
-// allow to type a figure without using Shift on a French keyboard
+// Allow to type a figure without using Shift on a French keyboard
 const whichAliases = {
   49: '1',
   50: '2',
@@ -16,4 +18,4 @@ const whichAliases = {
   48: '0'
 }
 
-module.exports = (e) => keyAliases[e.key] || whichAliases[e.which] || e.key
+module.exports = e => keyAliases[e.key] || whichAliases[e.which] || e.key

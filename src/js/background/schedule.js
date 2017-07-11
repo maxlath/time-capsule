@@ -5,7 +5,7 @@ const nextVisitIsToday = require('../lib/next_visit_is_today')
 
 const timeoutIds = {}
 
-function schedule (now, bookmark) {
+const schedule = (now, bookmark) => {
   const time = bookmark.nextVisit - now
   if (time <= 0) {
     console.log('passed date, opening now:', bookmark)
@@ -21,20 +21,14 @@ function schedule (now, bookmark) {
   }
 }
 
-function scheduleFromUnparsedBookmark (unparsedBookmark) {
+const scheduleFromUnparsedBookmark = unparsedBookmark => {
   const parsedBookmark = bookmarks.parse(unparsedBookmark)
-  if (nextVisitIsToday(parsedBookmark)) {
-    schedule(_.now(), parsedBookmark)
-  }
+  if (nextVisitIsToday(parsedBookmark)) schedule(_.now(), parsedBookmark)
 }
 
-function cancelPending (bookmarkId) {
+const cancelPending = bookmarkId => {
   console.log('cancelling', bookmarkId, timeoutIds[bookmarkId])
   clearTimeout(timeoutIds[bookmarkId])
 }
 
-module.exports = {
-  schedule: schedule,
-  scheduleFromUnparsedBookmark: scheduleFromUnparsedBookmark,
-  cancelPending: cancelPending
-}
+module.exports = { schedule, scheduleFromUnparsedBookmark, cancelPending }

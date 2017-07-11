@@ -2,7 +2,7 @@ const buildElement = require('../lib/element')
 const i18n = require('../lib/i18n')
 const { matrix } = require('./matrix')
 
-module.exports = (periodicityOptionsEl) => {
+module.exports = periodicityOptionsEl => {
   return function addCustomFrequencyButton () {
     const customEl = buildElement({
       tagName: 'div',

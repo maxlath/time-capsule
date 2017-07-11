@@ -19,7 +19,7 @@ module.exports = {
     typingEl.textContent = ''
     lastViewWasOptions = true
   },
-  showFrequencySelectionSuccess: (frequency) => {
+  showFrequencySelectionSuccess: frequency => {
     // helpEl shouldn't be hidden when the last view was the typing view
     // as it makes the text jump
     if (lastViewWasOptions) hide(helpEl)
@@ -30,5 +30,5 @@ module.exports = {
   }
 }
 
-const show = (el) => { el.style.display = 'block' }
-const hide = (el) => { el.style.display = 'none' }
+const show = el => { el.style.display = 'block' }
+const hide = el => { el.style.display = 'none' }

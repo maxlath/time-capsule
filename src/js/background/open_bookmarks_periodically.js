@@ -1,16 +1,16 @@
 const _ = require('../lib/utils')
 const bookmarks = require('../lib/bookmarks')
-const schedule = require('./schedule')
-const oneDay = require('../lib/times').D
+const { schedule, scheduleFromUnparsedBookmark, cancelPending } = require('./schedule')
+const { D: oneDay } = require('../lib/times')
 const dayEnd = require('../lib/day_end')
 
-function openTodaysBookmarks () {
+const openTodaysBookmarks = () => {
   // this function as the monopoly on setting the day end
   // and every one else simply reading from it
   dayEnd.set()
   bookmarks.getTodaysBookmarksData()
-  .then((todaysBookmarks) => {
-    todaysBookmarks.forEach(schedule.schedule.bind(null, _.now()))
+  .then(todaysBookmarks => {
+    todaysBookmarks.forEach(schedule.bind(null, _.now()))
   })
   .catch(_.Error('openTodaysBookmarks'))
 }
@@ -18,18 +18,18 @@ function openTodaysBookmarks () {
 openTodaysBookmarks()
 setInterval(openTodaysBookmarks, oneDay)
 
-chrome.bookmarks.onCreated.addListener(reschedule)
-chrome.bookmarks.onChanged.addListener(reschedule)
-chrome.bookmarks.onRemoved.addListener(schedule.cancelPending)
-
-function reschedule (id, bookmark) {
+const reschedule = (id, bookmark) => {
   // Weirdly, the bookmark data is incomplete there:
   // notably, it misses its id and parentId, thus getting it afresh
   bookmarks.getById(id)
-  .then((bookmarkData) => {
+  .then(bookmarkData => {
     if (bookmarks.isInFolder(bookmarkData)) {
-      schedule.cancelPending(id)
-      schedule.scheduleFromUnparsedBookmark(bookmarkData)
+      cancelPending(id)
+      scheduleFromUnparsedBookmark(bookmarkData)
     }
   })
 }
+
+chrome.bookmarks.onCreated.addListener(reschedule)
+chrome.bookmarks.onChanged.addListener(reschedule)
+chrome.bookmarks.onRemoved.addListener(cancelPending)

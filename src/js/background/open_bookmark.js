@@ -5,11 +5,11 @@ module.exports = function open (bookmark) {
   console.log('opening', bookmark)
   const { id, frequency } = bookmark
   return bookmarks.getById(bookmark.id)
-  .then((bookmarkData) => {
+  .then(bookmarkData => {
     if (bookmarkData) {
       const { title } = bookmarkData
       // open the tab
-      return tabs.create({url: bookmarkData.url, active: false})
+      return tabs.create({ url: bookmarkData.url, active: false })
       // re-set the periodicity data
       .then(bookmarks.updateTitle.bind(null, id, title, frequency))
       // update the view
