@@ -1,6 +1,6 @@
 {
   "name": "time-capsule",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A reboot of the awesome Browse Periodically",
   "main": "index.js",
   "scripts": {
