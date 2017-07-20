@@ -1,3 +1,6 @@
+const tabs = require('./tabs')
+const darkGrey = '#333333'
+
 // It could theorically be possible to check a lastFrequency variable to know
 // if an update is needed, but this would involve manipulating this variable
 // from both the background and the popup context, (for instance, by setting on this
@@ -5,18 +8,26 @@
 // but that would be more pain than gains
 module.exports = {
   enable: frequency => {
-    setIcon('')
-    chrome.browserAction.setBadgeText({ text: formatFrequency(frequency) })
-    chrome.browserAction.setBadgeBackgroundColor({ color: '#333333' })
+    tabs.getCurrentTabId()
+    .then(tabId => {
+      const text = formatFrequency(frequency)
+      setActiveIcon(tabId)
+      chrome.browserAction.setBadgeText({ tabId, text })
+      chrome.browserAction.setBadgeBackgroundColor({ tabId, color: darkGrey })
+    })
   },
   disable: () => {
-    setIcon('disabled-')
-    chrome.browserAction.setBadgeText({ text: '' })
+    tabs.getCurrentTabId()
+    .then(tabId => {
+      setDisableIcon(tabId)
+      chrome.browserAction.setBadgeText({ tabId, text: '' })
+    })
   }
 }
 
-const setIcon = substring => {
+const setStatusIcon = substring => tabId => {
   chrome.browserAction.setIcon({
+    tabId,
     path: {
       32: `/icons/time-capsule-${substring}32.png`,
       48: `/icons/time-capsule-${substring}48.png`,
@@ -24,5 +35,8 @@ const setIcon = substring => {
     }
   })
 }
+
+const setActiveIcon = setStatusIcon('')
+const setDisableIcon = setStatusIcon('disabled-')
 
 const formatFrequency = freq => freq.slice(0, -1) + ' ' + freq.slice(-1)
