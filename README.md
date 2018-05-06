@@ -1,12 +1,16 @@
-# Time Capsule
-![banner](https://github.com/maxlath/time-capsule/raw/master/img/banners/time-capsule-on-dark-sky-with-title-and-subtitle.jpg)
-
-
-An addon to send links to your future self.
+<div align="center">
+  <h1>Time Capsule</h1>
+  <img src="https://github.com/maxlath/time-capsule/raw/master/img/banners/time-capsule-on-dark-sky-with-title-and-subtitle.jpg" alt="banner">
+</div>
+<br>
 
 The best person to send you links matching your interests is a time traveling version of yourself: **create a time capsule by choosing when the current tab should be re-opened**; this will bookmark the current tab, and program to re-open it in the future, according to the choosen periodicity, be it an hour, a day, a month, a year, a decade!
 
-![popup-select](https://cloud.githubusercontent.com/assets/1596934/26828135/5223ec72-4ac0-11e7-9099-85bd92414565.gif)
+<br>
+
+<div align="center">
+  <img src="https://cloud.githubusercontent.com/assets/1596934/26828135/5223ec72-4ac0-11e7-9099-85bd92414565.gif" alt="popup-select">
+</div>
 
 ## Summary
 
