@@ -36,46 +36,46 @@ module.exports = API
 
 // store the promise
 API.waitForFolder = init()
-.then((folder) => {
-  const { id: folderId } = folder
+  .then(folder => {
+    const { id: folderId } = folder
 
-  API.folder = folderId
+    API.folder = folderId
 
-  API.isInFolder = bookmarkData => bookmarkData && bookmarkData.parentId === folderId
+    API.isInFolder = bookmarkData => bookmarkData && bookmarkData.parentId === folderId
 
-  API.add = (url, title, frequency) => {
-    return create({
-      parentId: folderId,
-      url,
-      title: bookmarkTitle.format(title, frequency)
-    })
-  }
+    API.add = (url, title, frequency) => {
+      return create({
+        parentId: folderId,
+        url,
+        title: bookmarkTitle.format(title, frequency)
+      })
+    }
 
-  // Functions with a '_' prefix are called by `_${name}`
-  // in src/js/lib/wait_for_folder.js
-  API._getByUrl = url => {
-    if (!url) throw new Error('url is missing')
-    return search({ url })
-    .then(res => res.filter(API.isInFolder)[0])
-    .catch(err => {
-      // Known case: about: and file: pages in Firefox
-      // https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
-      console.log('_getByUrl err', { url, err })
-    })
-  }
+    // Functions with a '_' prefix are called by `_${name}`
+    // in src/js/lib/wait_for_folder.js
+    API._getByUrl = url => {
+      if (!url) throw new Error('url is missing')
+      return search({ url })
+      .then(res => res.filter(API.isInFolder)[0])
+      .catch(err => {
+        // Known case: about: and file: pages in Firefox
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
+        console.log('_getByUrl err', { url, err })
+      })
+    }
 
-  // Could possibly be extracted to become specific to background
-  // and not overload the popup
-  API._getTodaysBookmarksData = () => {
-    return getSubTree(folderId)
-    .then((res) => {
-      if (!(res && res[0])) return []
-      return res[0].children
-      .map(API.parse)
-      .filter(nextVisitIsToday)
-    })
-  }
-})
+    // Could possibly be extracted to become specific to background
+    // and not overload the popup
+    API._getTodaysBookmarksData = () => {
+      return getSubTree(folderId)
+      .then(res => {
+        if (!(res && res[0])) return []
+        return res[0].children
+        .map(API.parse)
+        .filter(nextVisitIsToday)
+      })
+    }
+  })
 
 const WaitForFolder = require('./wait_for_folder')(API)
 // functions that depend on the bookmark folder id availability
