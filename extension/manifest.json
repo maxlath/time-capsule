@@ -3,7 +3,7 @@
   "name": "Time Capsule",
   "version": "1.0.3",
   "description": "__MSG_description__",
-  "homepage_url": "http://maxlath.eu/projects/time-capsule",
+  "homepage_url": "https://maxlath.eu/projects/time-capsule",
   "icons": {
     "32": "icons/time-capsule-32.png",
     "92": "icons/time-capsule-92.png"

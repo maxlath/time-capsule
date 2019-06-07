@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eu
+
+version=$(cat package.json | jq '.version' | sed 's/"//g')
+tag="v${version}"
+
+cd extension
+cat manifest.json | jq ".version = \"$version\"" > manifest.json.update
+mv manifest.json.update manifest.json
+
+git add manifest.json
+git commit --amend --no-edit
+git tag --delete $tag > /dev/null
+git tag $tag
