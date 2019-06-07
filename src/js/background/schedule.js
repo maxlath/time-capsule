@@ -17,6 +17,7 @@ const schedule = (now, bookmark) => {
       open(bookmark)
       delete timeoutIds[bookmarkId]
     }
+    console.log('scheduling', { bookmark, time, now })
     timeoutIds[bookmarkId] = setTimeout(openAndClean, time)
   }
 }
