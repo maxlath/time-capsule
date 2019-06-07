@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-set -eu
+set -u
 
 echo "compare packages"
 folder=/tmp/compare_packages
@@ -19,9 +19,17 @@ rm -rf $folder
 cp -r packages $folder
 cd $folder
 unzip_in_new_folder
-for f in *.folder
-do
-  echo "${f}_sizes"
-  echo "\n$f" && du -sh $f/**/* > "${f}_sizes"
+
+for f in *.folder; do
+  du -s $f/**/* > "${f}_sizes"
 done
-diff *sizes
+
+sed -i 's/time-capsule.*\///' *sizes
+
+hasdiff=$(diff *sizes | grep '>')
+
+if [[ "$hasdiff" == "" ]] ; then
+  echo "no diff"
+else
+  diff *sizes
+fi
