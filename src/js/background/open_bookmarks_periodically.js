@@ -23,10 +23,13 @@ const reschedule = (id, bookmark) => {
   // notably, it misses its id and parentId, thus getting it afresh
   bookmarks.getById(id)
   .then(bookmarkData => {
-    if (bookmarks.isInFolder(bookmarkData)) {
-      cancelPending(id)
-      scheduleFromUnparsedBookmark(bookmarkData)
-    }
+    bookmarks.waitForFolder
+    .then(() => {
+      if (bookmarks.isInFolder(bookmarkData)) {
+        cancelPending(id)
+        scheduleFromUnparsedBookmark(bookmarkData)
+      }
+    })
   })
 }
 
