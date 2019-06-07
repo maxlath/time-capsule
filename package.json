@@ -12,7 +12,8 @@
     "watch": "npm run build && npm run build-icons && while true ; do inotifywait -r ./src -e modify && date && npm run build && npm run build-icons; done",
     "lint": "standard",
     "update-toc": "doctoc README.md",
-    "postversion": "./scripts/postversion"
+    "postversion": "./scripts/postversion",
+    "get-repository-zip": "./scripts/get_repository_zip"
   },
   "author": "maxlath",
   "license": "AGPL-3.0",

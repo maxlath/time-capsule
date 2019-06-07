@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# A zip of the source code is requested by Mozilla ahead of validating a new version,
+# this is the lazy way to generate it
+
+git push origin master
+sleep 5
+cd packages
+rm master.zip
+wget https://github.com/maxlath/time-capsule/archive/master.zip
