@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 version=$(cat package.json |jd version)
 
 cd extension
