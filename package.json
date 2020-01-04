@@ -21,7 +21,7 @@
     "browserify": "^16.2.3",
     "git-hooks": "^1.1.8",
     "jsondepth": "^1.9.2",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.0",
     "standard": "^9.0.2"
   },
   "standard": {
