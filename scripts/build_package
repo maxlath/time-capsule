@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-version=$(cat package.json |jd version)
+version=$(cat package.json |jq .version -r)
 
 cd extension
 # Remove previous build if any

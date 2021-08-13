@@ -8,7 +8,6 @@
     "build": "./scripts/build",
     "build-icons": "./scripts/build-icons",
     "package": "npm run build && ./scripts/build_package",
-    "compare-packages": "./scripts/compare_packages",
     "watch": "npm run build && npm run build-icons && while true ; do inotifywait -r ./src -e modify && date && npm run build && npm run build-icons; done",
     "lint": "standard",
     "update-toc": "doctoc README.md",
@@ -20,7 +19,6 @@
   "devDependencies": {
     "browserify": "^16.2.3",
     "git-hooks": "^1.1.8",
-    "jsondepth": "^1.9.2",
     "node-sass": "^4.13.0",
     "standard": "^9.0.2"
   },
