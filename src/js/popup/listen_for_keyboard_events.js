@@ -17,7 +17,7 @@ const API = {
   Delete: actions.remove
 }
 
-var lastKeyWasFloat = false
+let lastKeyWasFloat = false
 
 const keydownListener = e => {
   const key = parseKey(e)

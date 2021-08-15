@@ -18,6 +18,6 @@ module.exports = periodicityOptionsEl => {
       row: matrix.length,
       column: 0
     }
-    matrix.push([customEl])
+    matrix.push([ customEl ])
   }
 }

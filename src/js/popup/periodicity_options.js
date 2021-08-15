@@ -22,7 +22,7 @@ const optionsContainers = {}
 const categoriesList = Object.keys(options)
 
 categoriesList.forEach(category => {
-  let categoryEl = buildElement({
+  const categoryEl = buildElement({
     tagName: 'div',
     id: category,
     className: 'category',
@@ -48,14 +48,14 @@ const getTitle = (frequency, num, unit) => {
   return i18n('browse_every_time_unit', [ num.toString(), i18n(unit) ]) + hotkey
 }
 
-categoriesList.forEach((category) => {
-  let { daysFactor, letter, options: optionsNums } = options[category]
+categoriesList.forEach(category => {
+  const { daysFactor, letter, options: optionsNums } = options[category]
   const categoryMatrix = []
   const rowNum = matrix.push(categoryMatrix) - 1
-  for (let num of optionsNums) {
-    let frequency = `${num}${letter}`
-    let backgroundColor = getColor(num, daysFactor)
-    let data = {
+  for (const num of optionsNums) {
+    const frequency = `${num}${letter}`
+    const backgroundColor = getColor(num, daysFactor)
+    const data = {
       tagName: 'li',
       className: `option frequency-${frequency}`,
       text: num,

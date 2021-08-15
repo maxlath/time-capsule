@@ -1,15 +1,14 @@
-const bookmarks = require('../lib/bookmarks')
+import { parse, isInFolder } from '../lib/bookmarks'
+import optionsEl from './periodicity_options'
+import './footer'
+import updateNextVisit from './next_visit'
 
-const optionsEl = require('./periodicity_options')
 const addCustomFrequencyButton = require('./add_custom_frequency_button')(optionsEl)
-require('./footer')
-const updateNextVisit = require('./next_visit')
-
 const defaultFrequency = '1M'
 
-module.exports = bookmarkData => {
-  if (bookmarks.isInFolder(bookmarkData)) {
-    const parsedData = bookmarks.parse(bookmarkData)
+export default async function (bookmarkData) {
+  if (await isInFolder(bookmarkData)) {
+    const parsedData = parse(bookmarkData)
     if (parsedData) {
       updateNextVisit(parsedData.nextVisit)
       // catch float frequencies (that are necessarly custom) before the select function

@@ -20,5 +20,5 @@ setTimeout(() => {
     row: matrix.length,
     column: 0
   }
-  matrix.push([neverEl])
+  matrix.push([ neverEl ])
 }, 100)

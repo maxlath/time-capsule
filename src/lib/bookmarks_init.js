@@ -1,22 +1,20 @@
-const promisify = require('./promisify_chrome')
-const getTree = promisify(chrome.bookmarks.getTree, chrome.bookmarks)
-const _ = require('../lib/utils')
-const create = chrome.bookmarks.createAsync
+import { ErrorRethrow } from '../lib/utils'
+
 const folderName = 'Time Capsules [managed folder]'
 
-module.exports = function () {
-  return getTree()
+export default function () {
+  return browser.bookmarks.getTree()
   .then(findMatch)
   .then(createFolderIfMissing)
-  .catch(_.ErrorRethrow('initFolder'))
+  .catch(ErrorRethrow('initFolder'))
 }
 
 const findMatch = array => {
-  for (let node of array) {
+  for (const node of array) {
     if (matchingNode(node)) {
       return node
     } else if (node.children) {
-      let childreMatch = findMatch(node.children)
+      const childreMatch = findMatch(node.children)
       if (childreMatch) return childreMatch
     }
   }
@@ -30,7 +28,7 @@ const createFolderIfMissing = match => {
   if (match) {
     return match
   } else {
-    return create({ title: folderName })
+    return browser.bookmarks.create({ title: folderName })
     .then(newFolder => {
       console.log('added folder: ' + newFolder.title)
       return newFolder
