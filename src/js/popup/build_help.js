@@ -4,9 +4,9 @@ const helpEl = document.querySelector('#help')
 const options = require('./options')
 
 const buildHelpElements = optionsObj => {
-  for (let optionName in optionsObj) {
-    let option = optionsObj[optionName]
-    let el = buildElement({
+  for (const optionName in optionsObj) {
+    const option = optionsObj[optionName]
+    const el = buildElement({
       tagName: 'li',
       className: 'option-help',
       appendTo: helpEl

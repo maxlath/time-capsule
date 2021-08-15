@@ -3,8 +3,8 @@
 const matrix = []
 
 const findSelected = () => {
-  for (let row of matrix) {
-    for (let el of row) {
+  for (const row of matrix) {
+    for (const el of row) {
       if (isSeleted(el)) return el
     }
   }
@@ -26,7 +26,7 @@ const shiftSelectedCoordinates = (rowShift, columnShift) => () => {
   }
 }
 
-var previousColumnNum
+let previousColumnNum
 
 function findByCoordinates (rowNum, columnNum) {
   // allow to get from first to last row and reverse

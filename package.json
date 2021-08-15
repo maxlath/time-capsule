@@ -1,29 +1,47 @@
 {
   "name": "time-capsule",
+  "type": "module",
   "version": "1.0.4",
   "description": "A reboot of the awesome Browse Periodically",
   "main": "index.js",
   "scripts": {
+    "auto-reload-extension": "web-ext run --firefox-profile=web-ext-tests --keep-profile-changes",
     "test": "mocha ./tests",
-    "build": "./scripts/build",
+    "build": "rollup -c",
     "build-icons": "./scripts/build-icons",
     "package": "npm run build && ./scripts/build_package",
-    "watch": "npm run build && npm run build-icons && while true ; do inotifywait -r ./src -e modify && date && npm run build && npm run build-icons; done",
-    "lint": "standard",
-    "update-toc": "doctoc README.md",
+    "watch": "rollup -c -w",
+    "lint": "npm run lint:src && npm run lint:extension",
+    "lint:src": "eslint src",
+    "lint:src:fix": "eslint src --fix",
+    "lint:extension": "web-ext lint",
+    "update-toc": "npx doctoc README.md",
     "postversion": "./scripts/postversion",
     "get-repository-zip": "./scripts/get_repository_zip"
   },
   "author": "maxlath",
   "license": "AGPL-3.0",
   "devDependencies": {
-    "browserify": "^16.2.3",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
     "doctoc": "^1.3.0",
+    "eslint-config-standard": "^7.1.0",
+    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^3.4.2",
+    "eslint-plugin-svelte3": "^3.2.0",
     "git-hooks": "^1.1.8",
     "mocha": "^10.1.0",
+    "rollup": "^2.56.2",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-notify": "github:aredridel/rollup-plugin-notify#510ae8751b98e41698885cae1c2af02541daacc0",
+    "rollup-plugin-svelte": "^7.1.0",
+    "rollup-plugin-terser": "^7.0.2",
     "sass": "^1.55.0",
     "should": "^13.2.3",
-    "standard": "^9.0.2"
+    "standard": "^9.0.2",
+    "svelte": "^3.42.1",
+    "web-ext": "^6.2.0"
   },
   "standard": {
     "ignore": [
@@ -32,5 +50,8 @@
     "globals": [
       "chrome"
     ]
+  },
+  "webExt": {
+    "sourceDir": "extension"
   }
 }

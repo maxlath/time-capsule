@@ -1,20 +1,21 @@
-const tabs = require('../lib/tabs')
-const bookmarks = require('../lib/bookmarks')
+import { create } from '../lib/tabs'
+import { getById, updateTitle } from '../lib/bookmarks'
 
-module.exports = function open (bookmark) {
+export default function open (bookmark) {
   console.log('opening', bookmark)
   const { id, frequency } = bookmark
-  return bookmarks.getById(bookmark.id)
+  return getById(bookmark.id)
   .then(bookmarkData => {
     if (bookmarkData) {
       const { title } = bookmarkData
       // open the tab
-      return tabs.create({ url: bookmarkData.url, active: false })
+      return create({ url: bookmarkData.url, active: false })
       // re-set the periodicity data
-      .then(bookmarks.updateTitle.bind(null, id, title, frequency))
+      .then(updateTitle.bind(null, id, title, frequency))
       // update the view
     } else {
       console.error('bookmark data not found', bookmark)
     }
   })
 }
+//

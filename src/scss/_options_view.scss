@@ -39,37 +39,36 @@ h2, .settings, .never, .custom{
   }
 }
 
-.settings{
-  @include bg-hover(#777, #333);
-}
-
-.category{
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  .category-header{
-    font-size: 1.1em;
-    text-align: center;
-  }
-  ul{
-    margin: 0 auto;
-    width: 17em;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-  li.option{
-    font-size: 1em;
-    padding: 0.2em 0 0.2em 0;
-    width: 2.5em;
-    margin: 0.2em 0 0.2em 0;
-    &.selected, &:hover{
-      // overriding inline background colors
-      background-color: rgba($light-blue, 0.8) !important;
-      // Start with an inner shadow so that we briefly see which option is selected
-      // when keeping an arrow key pressed: only useful for playing purpose.
-      // So, very useful.
-      animation-name: start-with-inner-shadow;
-      animation-duration: 0.2s;
-    }
-  }
-}
+// .settings{
+//   @include bg-hover(#777, #333)
+// }
+// .category{
+//   margin-top: 0.5em;
+//   margin-bottom: 0.5em;
+//   .category-header{
+//     font-size: 1.1em;
+//     text-align: center;
+//   }
+//   ul{
+//     margin: 0 auto;
+//     width: 17em;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-around;
+//   }
+//   li.option{
+//     font-size: 1em;
+//     padding: 0.2em 0 0.2em 0;
+//     width: 2.5em;
+//     margin: 0.2em 0 0.2em 0;
+//     &.selected, &:hover{
+//       // overriding inline background colors
+//       background-color: rgba($light-blue, 0.8) !important;
+//       // Start with an inner shadow so that we briefly see which option is selected
+//       // when keeping an arrow key pressed: only useful for playing purpose.
+//       // So, very useful.
+//       animation-name: start-with-inner-shadow;
+//       animation-duration: 0.2s;
+//     }
+//   }
+// }

@@ -4,7 +4,7 @@ const typingEl = document.querySelector('#typing')
 const helpEl = require('./build_help')
 const lastKeys = require('./last_keys')
 
-var lastViewWasOptions = true
+let lastViewWasOptions = true
 
 module.exports = {
   showFrequencyTypingView: () => {
