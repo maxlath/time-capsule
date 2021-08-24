@@ -5,6 +5,7 @@
   export let selectedFrequency
 
   let highlightedFrequency = selectedFrequency || '1M'
+
   const categoriesList = Object.values(categories)
   const categoriesLetters = categoriesList.map(category => category.letter)
   const categoriesByLetter = categoriesList.reduce((index, category) => {
@@ -12,12 +13,21 @@
     return index
   }, {})
 
+  let selectedFrequencyIsCustom
+  if (selectedFrequency) {
+    const selectedFrequencyNumber = parseInt(selectedFrequency.slice(0, -1))
+    const selectedFrequencyLetter = selectedFrequency.slice(-1)[0]
+    const selectedCategory = categoriesByLetter[selectedFrequencyLetter]
+    selectedFrequencyIsCustom = selectedCategory == null || !selectedCategory.options.includes(selectedFrequencyNumber)
+  }
+
   function onKeydown ({ key }) {
     const currentFrequencyNumber = parseInt(highlightedFrequency.slice(0, -1))
     const currentFrequencyLetter = highlightedFrequency.slice(-1)[0]
     const currentCategory = categoriesByLetter[currentFrequencyLetter]
     const lineNumber = categoriesLetters.indexOf(currentFrequencyLetter)
-    const columnNumber = currentCategory.options.indexOf(currentFrequencyNumber)
+    let columnNumber = currentCategory.options.indexOf(currentFrequencyNumber)
+    if (columnNumber < 0) columnNumber = 0
     if (key === 'ArrowLeft') {
       const { options } = currentCategory
       const number = options.at((columnNumber - 1) % options.length)
@@ -81,6 +91,15 @@
     </ul>
   {/each}
 
+  {#if selectedFrequencyIsCustom}
+    <button
+      class="custom highlight"
+      on:click={window.close.bind(window)}
+      >
+      {i18n('custom')}
+    </button>
+  {/if}
+
   <button
     class="never"
     title="[Delete]"
@@ -142,25 +161,21 @@
     color: white !important;
     background-color: var(--light-blue) !important;
   }
-
   .never, .custom{
     font-weight: bold;
     color: white;
-  }
-
-  .never, .custom{
     /* Larger to give the room to the French 'Personnalisé' translation */
     /* and anticipating for the future German translation ;) */
     width: 8em;
     margin: 1em auto;
   }
+  .custom:hover{
+    background-color: var(--darker-light-blue) !important;
+  }
   .never{
     background-color: #e88;
   }
-  .never:hover{
-    background-color: #c55;
-  }
-  .never.highlight{
+  .never:hover, .never.highlight{
     background-color: #c55;
   }
 </style>

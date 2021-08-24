@@ -77,6 +77,7 @@
   :global(:root){
     --glow: rgba(158, 202, 237, 0.7);
     --light-blue: #0099d4;
+    --darker-light-blue: #0077b4;
     --success-color: #22ee22;
   }
 
