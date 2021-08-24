@@ -4,7 +4,8 @@ import { getCurrentUrlBookmarkId, getCurrentUrlBookmarkData, getActive } from '.
 
 export async function setFrequency (frequency) {
   if (!frequency) throw new Error('missing frequency')
-  enable(frequency)
+  if (frequency === 'never') disable()
+  else enable(frequency)
   await saveCurrentUrlPeriodicity(frequency)
 }
 
@@ -24,12 +25,12 @@ export default {
 export const saveCurrentUrlPeriodicity = async frequency => {
   const bookmarkData = await getCurrentUrlBookmarkData()
   const bookmarkId = bookmarkData && bookmarkData.id
-  console.log({ bookmarkData, bookmarkId })
-  if (bookmarkId) {
+  if (frequency === 'never') {
+    return removeById(bookmarkId)
+  } else if (bookmarkId) {
     return updateTitle(bookmarkId, bookmarkData.title, frequency)
   } else {
     const tabData = await getActive()
-    console.log('tabData', tabData)
     return add(tabData.url, tabData.title, frequency)
   }
 }
