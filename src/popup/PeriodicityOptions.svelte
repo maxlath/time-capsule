@@ -37,11 +37,18 @@
     } else if (key === 'Enter') {
       selectedFrequency = highlightedFrequency
       done()
+    } else if (key === 'Delete') {
+      remove()
     }
   }
 
   function onSelect (e) {
     highlightedFrequency = selectedFrequency = e.target.dataset.frequency
+    done()
+  }
+
+  function remove () {
+    selectedFrequency = 'never'
     done()
   }
 
@@ -76,8 +83,8 @@
 
   <button
     class="never"
-    title="[Suppr]"
-    on:click={() => selectedFrequency = 'never'}
+    title="[Delete]"
+    on:click={remove}
     >
     {i18n('never')}
   </button>
