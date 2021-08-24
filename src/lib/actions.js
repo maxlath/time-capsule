@@ -1,14 +1,11 @@
 import { enable, disable } from './icon'
 import { removeById, updateTitle, add } from './bookmarks'
 import { getCurrentUrlBookmarkId, getCurrentUrlBookmarkData, getActive } from './tabs'
-// import CelebrateSuccess from './celebrate_success'
 
 export async function setFrequency (frequency) {
   if (!frequency) throw new Error('missing frequency')
   enable(frequency)
   await saveCurrentUrlPeriodicity(frequency)
-  // .then(CelebrateSuccess(frequency))
-  // .then(window.close)
 }
 
 export default {

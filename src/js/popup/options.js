@@ -43,8 +43,10 @@ Object.values(inMenu).forEach(categoryData => {
   })
 })
 
-export const typingOnly = {
+const typingOnly = {
   minutes: {
     letter: 'T'
   }
 }
+
+export const allOptions = Object.assign({}, typingOnly, inMenu)

@@ -9,7 +9,6 @@
 
   let waitingForBookmarkData = getCurrentUrlBookmarkData()
     .then(bookmarkData => {
-      console.log('bookmarkData', bookmarkData)
       if (bookmarkData) {
         nextVisit = new Date(bookmarkData.nextVisit).toLocaleString()
         selectedFrequency = bookmarkData.frequency
