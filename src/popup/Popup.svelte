@@ -2,12 +2,14 @@
   import OptionsSelector from './OptionsSelector.svelte'
   import Spinner from './Spinner.svelte'
   import { setFrequency } from '../lib/actions'
-  import { getCurrentUrlBookmarkData } from '../lib/tabs'
+  import { getUrl, getCurrentUrlBookmarkData } from '../lib/tabs'
   import { i18n } from '../lib/i18n'
 
-  let selectedFrequency, nextVisit
+  let selectedFrequency, nextVisit, waitingForBookmarkData, currentUrl
 
-  let waitingForBookmarkData = getCurrentUrlBookmarkData()
+  getUrl().then(url => currentUrl = url)
+
+  waitingForBookmarkData = getCurrentUrlBookmarkData()
     .then(bookmarkData => {
       if (bookmarkData) {
         nextVisit = new Date(bookmarkData.nextVisit).toLocaleString()
@@ -16,6 +18,11 @@
     })
 
   $: selectedFrequency && setFrequency(selectedFrequency)
+
+  // Filter-out URLs such as 'about:*' and 'file:*'
+  // See https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
+  $: isTimeCapsulableUrl = currentUrl && currentUrl.startsWith('http')
+
 </script>
 
 {#if nextVisit}
@@ -25,11 +32,15 @@
   </div>
 {/if}
 
-{#await waitingForBookmarkData}
-  <Spinner />
-{:then}
-  <OptionsSelector bind:selectedFrequency />
-{/await}
+{#if isTimeCapsulableUrl}
+  {#await waitingForBookmarkData}
+    <Spinner />
+  {:then}
+    <OptionsSelector bind:selectedFrequency />
+  {/await}
+{:else}
+  <p class="invalid">{i18n('url_cant_be_time_capsuled')}</p>
+{/if}
 
 <style>
   :global(p), :global(ul), :global(ul li){
@@ -55,7 +66,6 @@
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
-    min-height: 20em;
     min-width: 19em;
     display: flex;
     flex-direction: column;
@@ -85,5 +95,11 @@
 
   #nextVisit p{
     text-align: center;
+  }
+
+  .invalid{
+    padding: 1em;
+    font-style: italic;
+    color: #666;
   }
 </style>
