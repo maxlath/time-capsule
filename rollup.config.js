@@ -65,4 +65,5 @@ const build = name => {
 export default [
   build('background'),
   build('popup'),
+  build('settings'),
 ]

@@ -7,6 +7,5 @@ extension/icons/*
 *png
 *svg
 *.map
-extension/popup/popup.css
-extension/popup/popup.js
-extension/background/
+extension/*/*.css
+extension/*/*.js

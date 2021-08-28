@@ -17,6 +17,12 @@
       }
     })
 
+
+  function showSettings () {
+    browser.tabs.create({ url: '/settings/settings.html' })
+    window.close()
+  }
+
   $: selectedFrequency && setFrequency(selectedFrequency)
 
   // Filter-out URLs such as 'about:*' and 'file:*'
@@ -24,6 +30,8 @@
   $: isTimeCapsulableUrl = currentUrl && currentUrl.startsWith('http')
 
 </script>
+
+<button id="settings" on:click={showSettings} />
 
 {#if nextVisit}
   <div id="nextVisit">
@@ -95,6 +103,16 @@
 
   #nextVisit p{
     text-align: center;
+  }
+
+  #settings{
+    margin: 1em 1em 1em auto;
+    border: 0;
+    width: 1.6em;
+    height: 1.6em;
+    background-image: url('/icons/cog.svg');
+    background-size: cover;
+    background-position: center center;
   }
 
   .invalid{
