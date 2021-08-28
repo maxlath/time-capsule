@@ -47,10 +47,6 @@
     margin: 0;
   }
 
-  :global(*:focus){
-    background-color: red;
-  }
-
   :global(body){
     background-color: #f0f0f0;
     color: #222;
@@ -59,7 +55,7 @@
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
-    min-height: 30em;
+    min-height: 20em;
     min-width: 19em;
     display: flex;
     flex-direction: column;

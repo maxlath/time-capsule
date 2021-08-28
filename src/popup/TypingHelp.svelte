@@ -1,5 +1,5 @@
 <script>
-  import { allOptions } from '../js/popup/options'
+  import { allOptions } from './options'
   import { i18n } from '../lib/i18n'
 </script>
 
