@@ -1,5 +1,5 @@
 <script>
-  import { inMenu as categories } from '../js/popup/options'
+  import { inMenu as categories } from './options'
   import { i18n } from '../lib/i18n'
 
   export let selectedFrequency
