@@ -7,15 +7,17 @@ export const getById = id => browser.bookmarks.get(id).then(first)
 
 export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
-export const updateTitle = (id, title, frequency) => {
+export async function updateTitle (id, title, frequency) {
   title = bookmarkTitle.format(title, frequency, true)
-  return browser.bookmarks.update(id, { title })
+  const bookmark = await browser.bookmarks.update(id, { title })
+  await ensureBookmarkFolderIsManagedFolder(bookmark)
+  return bookmark
 }
 
 export const removeById = browser.bookmarks.remove.bind(browser.bookmarks)
 
 export const parse = bookmarkData => {
-  const data = bookmarkTitle.parse(bookmarkData.title)
+  const data = bookmarkTitle.parse(bookmarkData.title) || {}
   return Object.assign(data, bookmarkData)
 }
 
@@ -24,9 +26,11 @@ export const parse = bookmarkData => {
 // will trigger the folder to be re-created
 
 export let folderId
+export let folder
 
 // store the promise
-export const waitForFolder = init().then(folder => {
+export const waitForFolder = init().then(f => {
+  folder = f
   folderId = folder.id
 })
 
@@ -67,4 +71,12 @@ export async function getTodaysBookmarksData () {
     .map(parse)
     .filter(nextVisitIsToday)
   })
+}
+
+async function ensureBookmarkFolderIsManagedFolder (bookmark) {
+  await waitForFolder
+  if (bookmark.parent !== folderId) {
+    console.log('moving bookmark to managed folder', bookmark)
+    browser.bookmarks.move(bookmark.id, { parentId: folderId })
+  }
 }
