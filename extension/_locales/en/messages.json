@@ -31,6 +31,5 @@
   "custom": { "message": "Custom" },
   "url_cant_be_time_capsuled": { "message": "This URL can't be saved as a Time Capsule" },
   "Parameters": { "message": "Parameters" },
-  "Incoming": { "message": "Incoming" },
-  "Latest created": { "message": "Latest created" }
+  "Capsules": { "message": "Capsules" }
 }

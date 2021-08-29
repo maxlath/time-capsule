@@ -80,3 +80,9 @@ async function ensureBookmarkFolderIsManagedFolder (bookmark) {
     browser.bookmarks.move(bookmark.id, { parentId: folderId })
   }
 }
+
+export async function getBookmarks () {
+  await waitForFolder
+  const [ { children: bookmarks } ] = await browser.bookmarks.getSubTree(folderId)
+  return bookmarks.map(parse)
+}

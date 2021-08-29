@@ -13,3 +13,10 @@ export const Y = year
 export const T = minute
 
 export const timeUnits = { H, D, W, M, Y, T }
+
+export function epochToSimpleTime (epoch) {
+  return new Date(epoch)
+    .toISOString()
+    .split('.')[0]
+    .replace('T', ' ')
+}
