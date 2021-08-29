@@ -1,29 +1,54 @@
 <script>
   import { i18n } from '../lib/i18n'
   import Parameters from './Parameters.svelte'
-  import Incoming from './Incoming.svelte'
-  import LatestCreated from './LatestCreated.svelte'
+  import Capsules from './Capsules.svelte'
 
-  let currentTab = 'parameters'
+  const tabs = [
+    { key: 'parameters', label: i18n('Parameters') },
+    { key: 'capsules', label: i18n('Capsules') },
+  ]
+
+  let currentTab = tabs[0]
+
+  function onKeydown (e) {
+    const { key, shiftKey } = e
+    if (key === 'Tab') {
+      const currentTabIndex = tabs.indexOf(currentTab)
+      const incrementor = shiftKey ? -1 : 1
+      let nextTabIndex = (currentTabIndex + incrementor) % tabs.length
+      if (nextTabIndex === -1) nextTabIndex = tabs.length - 1
+      if (tabs[nextTabIndex]) currentTab = tabs[nextTabIndex]
+      e.stopPropagation()
+      e.preventDefault()
+    }
+  }
+
 </script>
+
+<svelte:window on:keydown={onKeydown}/>
 
 <nav>
   <img id="logo" src="/icons/time-capsule-32.png" alt="logo" />
-  <button on:click={e => currentTab = 'parameters'} class:active={currentTab === 'parameters'}>{i18n('Parameters')}</button>
-  <button on:click={e => currentTab = 'incoming'} class:active={currentTab === 'incoming'}>{i18n('Incoming')}</button>
-  <button on:click={e => currentTab = 'latest'} class:active={currentTab === 'latest'}>{i18n('Latest created')}</button>
+  {#each tabs as tab}
+    <button on:click={() => currentTab = tab} class:active={currentTab === tab}>{tab.label}</button>
+  {/each}
 </nav>
 
 <div id="panel">
-  {#if currentTab === 'parameters'}<Parameters />
-  {:else if currentTab === 'incoming'}<Incoming />
-  {:else if currentTab === 'latest'}<LatestCreated />
+  {#if currentTab.key === 'parameters'}<Parameters />
+  {:else if currentTab.key === 'capsules'}<Capsules />
   {/if}
 </div>
 
 <style>
   :global(body){
     margin: 0;
+    font-family: sans-serif;
+  }
+  :global(button){
+    cursor: pointer;
+    border: 0;
+    background-color: white;
   }
   nav{
     display: flex;
@@ -40,9 +65,6 @@
     margin: 0.8em 1em;
   }
   button{
-    cursor: pointer;
-    border: 0;
-    background-color: white;
     padding: 0.5rem;
     padding: 1rem;
     align-self: stretch;
@@ -53,8 +75,5 @@
   .active, button:hover{
     border-bottom: 3px solid #592acb;
     color: #592acb;
-  }
-  #panel{
-    padding: 1em;
   }
 </style>

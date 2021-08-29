@@ -1,5 +1,6 @@
 import { now } from '../lib/utils'
 import { timeUnits, T } from './times'
+
 const separator = ' /ᐒ/ '
 const pattern = /\s\/ᐒ\/\s([\d.]{1,3})([HDWMYT])\s(.*)$/
 const halfAMinute = T / 2
@@ -31,9 +32,11 @@ const getNextVisit = frequency => {
 const parse = title => {
   const match = title.match(pattern)
   if (match) {
-    const [ matching, num, unit, nextVisit ] = match // eslint-disable-line
+    const [ , num, unit, nextVisit ] = match
     return {
+      cleanedTitle: title.split(separator)[0],
       frequency: `${num}${unit}`,
+      frequencyTime: num * timeUnits[unit],
       // epoch time number should take less memory and computation power
       // than an ISO time string in the bookmark index
       nextVisit: new Date(nextVisit).getTime()
