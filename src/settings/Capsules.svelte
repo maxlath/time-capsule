@@ -64,8 +64,8 @@
     <tbody>
       {#each bookmarksPage as bookmark (bookmark.id)}
         <tr>
-          <td class="title"><a href="{bookmark.url}" title="{bookmark.url}">{bookmark.cleanedTitle}</a></td>
-          <td class="frequency">{bookmark.frequency}</td>
+          <td class="title"><a href={bookmark.url} title={bookmark.url}>{bookmark.cleanedTitle}</a></td>
+          <td class="frequency" title={bookmark.frequencyLabel}>{bookmark.frequency}</td>
           <td class="nextVisit">{epochToSimpleTime(bookmark.nextVisit)}</td>
           <td class="dateAdded">{epochToSimpleTime(bookmark.dateAdded)}</td>
           <td><button>trash-icon</button></td>

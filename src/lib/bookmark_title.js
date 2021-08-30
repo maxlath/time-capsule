@@ -1,5 +1,5 @@
 import { now } from '../lib/utils'
-import { timeUnits, T } from './times'
+import { timeUnits, T, unitsLabels } from './times'
 
 const separator = ' /ᐒ/ '
 const pattern = /\s\/ᐒ\/\s([\d.]{1,3})([HDWMYT])\s(.*)$/
@@ -37,6 +37,7 @@ const parse = title => {
       cleanedTitle: title.split(separator)[0],
       frequency: `${num}${unit}`,
       frequencyTime: num * timeUnits[unit],
+      frequencyLabel: `${num} ${unitsLabels[unit]}`,
       // epoch time number should take less memory and computation power
       // than an ISO time string in the bookmark index
       nextVisit: new Date(nextVisit).getTime()
