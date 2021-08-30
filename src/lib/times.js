@@ -14,6 +14,15 @@ export const T = minute
 
 export const timeUnits = { H, D, W, M, Y, T }
 
+export const unitsLabels = {
+  T: 'minute(s)',
+  H: 'hour(s)',
+  D: 'day(s)',
+  W: 'week(s)',
+  M: 'month(s)',
+  Y: 'year(s)',
+}
+
 export function epochToSimpleTime (epoch) {
   return new Date(epoch)
     .toISOString()
