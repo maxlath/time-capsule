@@ -4,8 +4,8 @@
   import Capsules from './Capsules.svelte'
 
   const tabs = [
-    { key: 'parameters', label: i18n('Parameters') },
     { key: 'capsules', label: i18n('Capsules') },
+    { key: 'parameters', label: i18n('Parameters') },
   ]
 
   let currentTab = tabs[0]

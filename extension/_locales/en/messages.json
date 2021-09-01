@@ -31,5 +31,12 @@
   "custom": { "message": "Custom" },
   "url_cant_be_time_capsuled": { "message": "This URL can't be saved as a Time Capsule" },
   "Parameters": { "message": "Parameters" },
-  "Capsules": { "message": "Capsules" }
+  "Delete": { "message": "Delete" },
+  "Capsules": { "message": "Capsules" },
+  "Title": { "message": "Title" },
+  "Frequency": { "message": "Frequency" },
+  "Next Visit": { "message": "Next" },
+  "Added": { "message": "Added" },
+  "Undo": { "message": "Undo" },
+  "Actions": { "message": "Actions" }
 }
