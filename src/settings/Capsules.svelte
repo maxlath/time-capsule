@@ -1,8 +1,9 @@
 <script>
   import { getBookmarks } from '../lib/bookmarks'
-  import { epochToSimpleTime } from '../lib/times'
   import { sortFunctions } from '../lib/sort_capsules'
   import Spinner from '../popup/Spinner.svelte'
+  import CapsuleRow from './CapsuleRow.svelte'
+  import { i18n } from '../lib/i18n'
 
   let bookmarks, sortedBookmark, bookmarksPage
   let sortField = 'nextVisit'
@@ -28,7 +29,7 @@
     { label: 'Frequency', field: 'frequency' },
     { label: 'Next Visit', field: 'nextVisit' },
     { label: 'Added', field: 'dateAdded' },
-    { label: 'Remove' },
+    { label: 'Actions' },
   ]
 
   function resort (e) {
@@ -56,20 +57,14 @@
               class:reversed={sortField === column.field && reverseSort}
               disabled={column.field == null}
               on:click={resort}
-            >{column.label}</button>
+            >{i18n(column.label)}</button>
           </th>
         {/each}
       </tr>
     </thead>
     <tbody>
       {#each bookmarksPage as bookmark (bookmark.id)}
-        <tr>
-          <td class="title"><a href={bookmark.url} title={bookmark.url}>{bookmark.cleanedTitle}</a></td>
-          <td class="frequency" title={bookmark.frequencyLabel}>{bookmark.frequency}</td>
-          <td class="nextVisit">{epochToSimpleTime(bookmark.nextVisit)}</td>
-          <td class="dateAdded">{epochToSimpleTime(bookmark.dateAdded)}</td>
-          <td><button>trash-icon</button></td>
-        </tr>
+        <CapsuleRow {bookmark} />
       {/each}
     </tbody>
   </table>
@@ -115,18 +110,5 @@
   }
   tr:nth-child(even) {
     background: #eee;
-  }
-  td{
-    font-weight: normal;
-    padding: 0.2em;
-  }
-  .title{
-    text-align: left;
-  }
-  .frequency{
-    text-align: right;
-  }
-  .nextVisit, .dateAdded{
-    padding: 0 0.5em;
   }
 </style>

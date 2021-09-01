@@ -43,6 +43,15 @@ export async function add (url, title, frequency) {
   })
 }
 
+export async function recover (deletedBookmark) {
+  await waitForFolder
+  return browser.bookmarks.create({
+    parentId: folderId,
+    url: deletedBookmark.url,
+    title: deletedBookmark.title
+  })
+}
+
 export async function isInFolder (bookmarkData) {
   await waitForFolder
   return bookmarkData && bookmarkData.parentId === folderId
