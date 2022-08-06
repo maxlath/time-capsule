@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Time Capsule</h1>
-  <img src="https://github.com/maxlath/time-capsule/raw/master/img/banners/time-capsule-on-dark-sky-with-title-and-subtitle.jpg" alt="banner">
+  <img src="https://github.com/maxlath/time-capsule/raw/main/img/banners/time-capsule-on-dark-sky-with-title-and-subtitle.jpg" alt="banner">
 </div>
 <br>
 
