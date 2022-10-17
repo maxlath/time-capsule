@@ -26,21 +26,21 @@ h2, .settings, .never, .custom{
 }
 
 .custom{
-  @include bg-hover($light-blue, darken($light-blue, 10%))
+  @include bg-hover($light-blue, darken($light-blue, 10%));
   &.selected{
     background-color: darken($light-blue, 10%);
   }
 }
 
 .never{
-  @include bg-hover(#e88, #c55)
+  @include bg-hover(#e88, #c55);
   &.selected{
     background-color: #c55;
   }
 }
 
 .settings{
-  @include bg-hover(#777, #333)
+  @include bg-hover(#777, #333);
 }
 
 .category{

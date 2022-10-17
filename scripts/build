@@ -6,7 +6,7 @@ build(){
   echo 'building background.build.js...' &&
   browserify src/js/background/background.js > extension/background/background.build.js &&
   echo 'building popup.build.css...' &&
-  node-sass src/scss/popup.scss > extension/popup/popup.build.css &&
+  sass src/scss/popup.scss > extension/popup/popup.build.css &&
   echo 'done building!'
 }
 
