@@ -6,21 +6,18 @@ const darkGrey = '#333333'
 // from both the background and the popup context, (for instance, by setting on this
 // variable on background global window object via browser.extension.getBackgroundPage())
 // but that would be more pain than gains
-export function enable (frequency) {
-  getCurrentTabId()
-  .then(tabId => {
-    const text = formatFrequency(frequency)
-    setActiveIcon(tabId)
-    browser.browserAction.setBadgeText({ tabId, text })
-    browser.browserAction.setBadgeBackgroundColor({ tabId, color: darkGrey })
-  })
+export async function enable (frequency) {
+  const tabId = await getCurrentTabId()
+  const text = formatFrequency(frequency)
+  setActiveIcon(tabId)
+  browser.browserAction.setBadgeText({ tabId, text })
+  browser.browserAction.setBadgeBackgroundColor({ tabId, color: darkGrey })
 }
-export function disable () {
-  getCurrentTabId()
-  .then(tabId => {
-    setDisableIcon(tabId)
-    browser.browserAction.setBadgeText({ tabId, text: '' })
-  })
+
+export async function disable () {
+  const tabId = await getCurrentTabId()
+  setDisableIcon(tabId)
+  browser.browserAction.setBadgeText({ tabId, text: '' })
 }
 
 const setStatusIcon = substring => tabId => {
