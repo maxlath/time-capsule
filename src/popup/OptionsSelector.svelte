@@ -56,10 +56,10 @@
 
 <svelte:window on:keydown={onKeydown}/>
 
-<div id="optionsView">
+<div>
   {#if showKeyboardSelector}
-    <div id="typingView">
-      <p id="typing" class:success={foundFrequency}>{matchingPart}</p>
+    <div class="typing-view">
+      <p class="typing" class:success={foundFrequency}>{matchingPart}</p>
       <TypingHelp />
     </div>
   {:else}
@@ -68,7 +68,7 @@
 </div>
 
 <style>
-  #typingView{
+  .typing-view{
     width: 18em;
     height: 16em;
     display: flex;
@@ -76,13 +76,13 @@
     align-items: center;
   }
 
-  #typing{
+  .typing{
     margin: auto;
     font-size: 3em;
     text-align: center;
   }
 
-  #typing.success{
+  .typing.success{
     font-weight: bold;
     color: var(--success-color);
     animation-name: grow-out;

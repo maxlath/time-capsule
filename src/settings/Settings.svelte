@@ -27,13 +27,13 @@
 <svelte:window on:keydown={onKeydown}/>
 
 <nav>
-  <img id="logo" src="/icons/time-capsule-32.png" alt="logo" />
+  <img class="logo" src="/icons/time-capsule-32.png" alt="logo" />
   {#each tabs as tab}
     <button on:click={() => currentTab = tab} class:active={currentTab === tab}>{tab.label}</button>
   {/each}
 </nav>
 
-<div id="panel">
+<div>
   {#if currentTab.key === 'parameters'}<Parameters />
   {:else if currentTab.key === 'capsules'}<Capsules />
   {/if}
@@ -60,7 +60,7 @@
                 0px 2px 1px -1px #0730721f,
                 0px 1px 6px 0px #0e0d1a1f;
   }
-  #logo{
+  .logo{
     margin: 0.8em 1em;
   }
   button{

@@ -3,17 +3,17 @@
   import { i18n } from '../lib/i18n'
 </script>
 
-<ul id="help">
-{#each Object.entries(allOptions) as [ name, { letter } ] }
-  <li>
-    <p class="letter">{letter}</p>
-    <p class="name">{i18n(name)}</p>
-  </li>
-{/each}
+<ul>
+  {#each Object.entries(allOptions) as [ name, { letter } ] }
+    <li>
+      <p class="letter">{letter}</p>
+      <p class="name">{i18n(name)}</p>
+    </li>
+  {/each}
 </ul>
 
 <style>
-  #help{
+  ul{
     height: 7em;
     display: flex;
     flex-direction: row;

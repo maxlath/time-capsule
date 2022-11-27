@@ -72,7 +72,7 @@
 
 <svelte:window on:keydown={onKeydown}/>
 
-<div id="periodicOptions">
+<div class="periodic-options">
   {#each Object.entries(categories) as [ category, { optionsData } ] }
     <h3 class="category-header">{i18n(category)}</h3>
     <ul>
@@ -111,16 +111,11 @@
 </div>
 
 <style>
-  #periodicOptions{
+  .periodic-options{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-  .category{
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    text-align: center;
   }
   .category-header{
     font-size: 1.1em;
@@ -176,7 +171,7 @@
   .never{
     background-color: #e88;
   }
-  .never:hover, .never.highlight{
+  .never:hover{
     background-color: #c55;
   }
 </style>

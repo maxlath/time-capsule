@@ -18,7 +18,7 @@
   }
 </script>
 
-<button id="settings" on:click={showSettings} />
+<button class="settings" on:click={showSettings} />
 
 {#await waitingForBookmarkData}
   <Spinner />
@@ -62,7 +62,7 @@
     flex: 1;
   }
 
-  #settings{
+  .settings{
     margin: 1em 1em 1em auto;
     border: 0;
     width: 1.6em;
