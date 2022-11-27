@@ -1,6 +1,5 @@
 import { parse } from '../lib/bookmarks'
 import open from './open_bookmark'
-import { now as _now } from '../lib/utils'
 import nextVisitIsToday from '../lib/next_visit_is_today'
 
 const timeoutIds = {}
@@ -24,7 +23,7 @@ export const schedule = (now, bookmark) => {
 
 export const scheduleFromUnparsedBookmark = unparsedBookmark => {
   const parsedBookmark = parse(unparsedBookmark)
-  if (nextVisitIsToday(parsedBookmark)) schedule(_now(), parsedBookmark)
+  if (nextVisitIsToday(parsedBookmark)) schedule(Date.now(), parsedBookmark)
 }
 
 export const cancelPending = bookmarkId => {
