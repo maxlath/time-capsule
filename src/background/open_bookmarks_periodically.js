@@ -1,4 +1,4 @@
-import { now, Error } from '../lib/utils'
+import { Error } from '../lib/utils'
 import { getTodaysBookmarksData, getById, isInFolder } from '../lib/bookmarks'
 import { schedule, scheduleFromUnparsedBookmark, cancelPending } from './schedule'
 import { D as oneDay } from '../lib/times'
@@ -10,7 +10,7 @@ const openTodaysBookmarks = () => {
   set()
   getTodaysBookmarksData()
   .then(todaysBookmarks => {
-    todaysBookmarks.forEach(schedule.bind(null, now()))
+    todaysBookmarks.forEach(schedule.bind(null, Date.now()))
   })
   .catch(Error('openTodaysBookmarks'))
 }

@@ -1,4 +1,3 @@
-import { now } from '../lib/utils'
 import { timeUnits, T, unitsLabels } from './times'
 
 const separator = ' /ᐒ/ '
@@ -25,7 +24,7 @@ const getNextVisit = frequency => {
   if (delay < halfAMinute) {
     delay = halfAMinute
   }
-  const time = now() + delay
+  const time = Date.now() + delay
   return new Date(time).toISOString()
 }
 
