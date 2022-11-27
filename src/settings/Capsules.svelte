@@ -3,11 +3,14 @@
   import { sortFunctions } from '../lib/sort_capsules'
   import Spinner from '../popup/Spinner.svelte'
   import CapsuleRow from './CapsuleRow.svelte'
+  import CapsuleEditor from '../popup/CapsuleEditor.svelte'
   import { i18n } from '../lib/i18n'
+  import { onChange } from '../lib/svelte'
 
   let bookmarks, sortedBookmark, bookmarksPage
   let sortField = 'nextVisit'
   let reverseSort = false
+  let editedBookmark
 
   const waitForBookmarks = getBookmarks()
     .then(b => bookmarks = b)
@@ -28,7 +31,7 @@
     { label: 'Title', field: 'title' },
     { label: 'Frequency', field: 'frequency' },
     { label: 'Next Visit', field: 'nextVisit' },
-    { label: 'Added', field: 'dateAdded' },
+    { label: 'Date Created', field: 'dateAdded' },
     { label: 'Actions' },
   ]
 
@@ -41,34 +44,60 @@
     }
   }
 
+  function updateBookmark () {
+    bookmarks = bookmarks
+  }
+
+  $: onChange(editedBookmark, updateBookmark)
 </script>
 
-{#await waitForBookmarks}
-  <Spinner />
-{:then}
-  <table>
-    <thead>
-      <tr>
-        {#each columns as column}
-          <th>
-            <button
-              name={column.field}
-              class:active={sortField === column.field}
-              class:reversed={sortField === column.field && reverseSort}
-              disabled={column.field == null}
-              on:click={resort}
-            >{i18n(column.label)}</button>
-          </th>
+{#if editedBookmark}
+  {#if editedBookmark.cleanedTitle}
+    <div class="edited-bookmark-info">
+      <a href={editedBookmark.url} title={editedBookmark.url}>{editedBookmark.cleanedTitle}</a>
+    </div>
+  {/if}
+  <div class="editor-wrapper">
+    <div class="editor">
+      <pre>{JSON.stringify({
+        editedBookmark: editedBookmark ? editedBookmark.frequency : null,
+      }, null, 2)} (Capsules.svelte:64)</pre>
+      <CapsuleEditor
+        bind:bookmark={editedBookmark}
+        url={editedBookmark.url}
+        context="settings"
+        on:done={() => editedBookmark = null}
+      />
+    </div>
+  </div>
+{:else}
+  {#await waitForBookmarks}
+    <Spinner />
+  {:then}
+    <table>
+      <thead>
+        <tr>
+          {#each columns as column}
+            <th>
+              <button
+                name={column.field}
+                class:active={sortField === column.field}
+                class:reversed={sortField === column.field && reverseSort}
+                disabled={column.field == null}
+                on:click={resort}
+              >{i18n(column.label)}</button>
+            </th>
+          {/each}
+        </tr>
+      </thead>
+      <tbody>
+        {#each bookmarksPage as bookmark (bookmark.id)}
+          <CapsuleRow {bookmark} on:edit={() => editedBookmark = bookmark} />
         {/each}
-      </tr>
-    </thead>
-    <tbody>
-      {#each bookmarksPage as bookmark (bookmark.id)}
-        <CapsuleRow {bookmark} />
-      {/each}
-    </tbody>
-  </table>
-{/await}
+      </tbody>
+    </table>
+  {/await}
+{/if}
 
 <style>
   table{
@@ -110,5 +139,35 @@
   }
   tr:nth-child(even) {
     background: #eee;
+  }
+  .editor-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+  }
+  .editor{
+    max-width: 30em;
+    background-color: white;
+    margin: 1em 1em 5em 1em;
+    border-radius: 3px;
+    padding: 1em;
+    position: relative;
+  }
+  .edited-bookmark-info{
+    background-color: #eee;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .edited-bookmark-info a{
+    background-color: white;
+    margin: auto;
+    max-width: 30em;
+    margin: 1em 1em 0 1em;
+    padding: 1em;
+    border-radius: 3px;
   }
 </style>

@@ -1,16 +1,13 @@
-import { Error } from '../lib/utils'
 import { enable, disable } from '../lib/icon'
 import { getByUrl, isInFolder, parse } from '../lib/bookmarks'
 
-export default url => {
-  getByUrl(url)
-  .then(parsePeriodicityData)
-  .catch(Error('url change'))
-}
-
-const parsePeriodicityData = async bookmarkData => {
-  if (await isInFolder(bookmarkData)) pageFound(bookmarkData)
-  else pageDataNotFound()
+export async function updateIcon (url) {
+  const bookmarkData = await getByUrl(url)
+  if (await isInFolder(bookmarkData)) {
+    pageFound(bookmarkData)
+  } else {
+    pageDataNotFound()
+  }
 }
 
 const pageFound = bookmarkData => {

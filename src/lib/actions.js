@@ -1,32 +1,25 @@
 import { enable, disable } from './icon'
 import { removeById, updateTitle, add } from './bookmarks'
-import { getCurrentUrlBookmarkId, getCurrentUrlBookmarkData, getActive } from './tabs'
+import { getActive, getUrlBookmarkData } from './tabs'
 
-export async function setFrequency (frequency) {
+export async function setFrequency ({ url, frequency, context }) {
   if (!frequency) throw new Error('missing frequency')
-  if (frequency === 'never') disable()
-  else enable(frequency)
-  await saveCurrentUrlPeriodicity(frequency)
-}
-
-export default {
-  setFrequency,
-  select: e => setFrequency(e.target.attributes['data-frequency'].value),
-  remove: () => {
-    disable()
-    getCurrentUrlBookmarkId()
-    .then(bookmarkId => {
-      if (bookmarkId) removeById(bookmarkId)
-    })
-    .then(window.close)
+  if (!url) throw new Error('missing url')
+  if (context === 'popup') {
+    if (frequency === 'never') {
+      disable()
+    } else {
+      enable(frequency)
+    }
   }
+  return saveUrlPeriodicity({ url, frequency })
 }
 
-export const saveCurrentUrlPeriodicity = async frequency => {
-  const bookmarkData = await getCurrentUrlBookmarkData()
-  const bookmarkId = bookmarkData && bookmarkData.id
+async function saveUrlPeriodicity ({ url, frequency }) {
+  const bookmarkData = await getUrlBookmarkData(url)
+  const bookmarkId = bookmarkData?.id
   if (frequency === 'never') {
-    return removeById(bookmarkId)
+    if (bookmarkId) await removeById(bookmarkId)
   } else if (bookmarkId) {
     return updateTitle(bookmarkId, bookmarkData.title, frequency)
   } else {

@@ -1,8 +1,13 @@
 <script>
   import PeriodicityOptions from './PeriodicityOptions.svelte'
   import TypingHelp from './TypingHelp.svelte'
+  import { createEventDispatcher } from 'svelte'
+  import { BubbleUpComponentEvent } from '../lib/svelte'
 
   export let selectedFrequency
+
+  const dispatch = createEventDispatcher()
+  const bubbleUpComponentEvent = BubbleUpComponentEvent(dispatch)
 
   const isKeyboardSelectorKey = key => /^[\d.HDWMYT]{1}$/.test(key)
 
@@ -15,7 +20,6 @@
       foundFrequency = matchFrequencyPattern(key)
       if (foundFrequency) {
         selectedFrequency = foundFrequency
-        done()
       }
     } else if (key === 'Backspace') {
       lastKeys = lastKeys.slice(0, -1)
@@ -47,11 +51,6 @@
     return match ? match[0] : ''
   }
 
-  function done () {
-    // Wait a bit to let the frequency to be saved and show the success animation
-    setTimeout(window.close.bind(window), 500)
-  }
-
   $: matchingPart = getMatchingPart(lastKeys)
 </script>
 
@@ -64,7 +63,7 @@
       <TypingHelp />
     </div>
   {:else}
-    <PeriodicityOptions bind:selectedFrequency />
+    <PeriodicityOptions bind:selectedFrequency on:done={bubbleUpComponentEvent} />
   {/if}
 </div>
 

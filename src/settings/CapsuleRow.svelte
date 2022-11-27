@@ -2,8 +2,15 @@
   import { recover, removeById } from '../lib/bookmarks'
   import { epochToSimpleTime } from '../lib/times'
   import { i18n } from '../lib/i18n'
+  import { createEventDispatcher } from 'svelte'
 
   export let bookmark
+
+  const dispatch = createEventDispatcher()
+
+  function edit () {
+    dispatch('edit', bookmark)
+  }
 
   async function deleteBookmark () {
     bookmark.deleted = true
@@ -30,12 +37,13 @@
 <tr class:deleted={bookmark.deleted}>
   <td class="title"><a href={bookmark.url} title={bookmark.url}>{bookmark.cleanedTitle}</a></td>
   <td class="frequency" title={bookmark.frequencyLabel}>{bookmark.frequency}</td>
-  <td class="nextVisit">{epochToSimpleTime(bookmark.nextVisit)}</td>
-  <td class="dateAdded">{epochToSimpleTime(bookmark.dateAdded)}</td>
+  <td class="nextVisit">{new Date(bookmark.nextVisit).toLocaleString()}</td>
+  <td class="dateAdded">{new Date(bookmark.dateAdded).toLocaleString()}</td>
   <td>
     {#if bookmark.deleted}
       <button class="undelete" on:click={undeleteBookmark}>{i18n('Undo')}</button>
     {:else}
+      <button class="edit" on:click={edit}>{i18n('Edit')}</button>
       <button class="delete" on:click={deleteBookmark}>{i18n('Delete')}</button>
     {/if}
   </td>
@@ -55,17 +63,23 @@
   .nextVisit, .dateAdded{
     padding: 0 0.5em;
   }
-  .delete, .undelete{
+  button{
     background-color: transparent;
     font-size: 1rem;
     text-decoration: underline;
     color: #222;
   }
-  .delete:hover, .undelete:hover{
+  button:hover{
     color: #444;
+  }
+  tr{
+    border-bottom: 1px solid #ccc;
   }
   tr.deleted{
     opacity: 0.8;
     background-color: #eee;
+  }
+  td{
+    padding: 0.5em;
   }
 </style>

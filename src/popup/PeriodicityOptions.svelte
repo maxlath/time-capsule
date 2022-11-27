@@ -1,8 +1,11 @@
 <script>
   import { inMenu as categories } from './options'
   import { i18n } from '../lib/i18n'
+  import { createEventDispatcher } from 'svelte'
 
   export let selectedFrequency
+
+  const dispatch = createEventDispatcher()
 
   let highlightedFrequency = selectedFrequency || '1M'
 
@@ -21,12 +24,13 @@
     selectedFrequencyIsCustom = selectedCategory == null || !selectedCategory.options.includes(selectedFrequencyNumber)
   }
 
-  function onKeydown ({ key }) {
+  function onKeydown (e) {
+    const { key } = e
     const currentFrequencyNumber = parseInt(highlightedFrequency.slice(0, -1))
     const currentFrequencyLetter = highlightedFrequency.slice(-1)[0]
     const currentCategory = categoriesByLetter[currentFrequencyLetter]
     const lineNumber = categoriesLetters.indexOf(currentFrequencyLetter)
-    let columnNumber = currentCategory.options.indexOf(currentFrequencyNumber)
+    let columnNumber = currentCategory?.options.indexOf(currentFrequencyNumber)
     if (columnNumber < 0) columnNumber = 0
     if (key === 'ArrowLeft') {
       const { options } = currentCategory
@@ -46,27 +50,24 @@
       highlightedFrequency = `${number}${category.letter}`
     } else if (key === 'Enter') {
       selectedFrequency = highlightedFrequency
-      done()
+      dispatch('done')
     } else if (key === 'Delete') {
       remove()
     }
+
+    e.stopPropagation()
+    e.preventDefault()
   }
 
-  function onSelect (e) {
-    highlightedFrequency = selectedFrequency = e.target.dataset.frequency
-    done()
+  function select (frequency) {
+    highlightedFrequency = selectedFrequency = frequency
+    dispatch('done')
   }
 
   function remove () {
     selectedFrequency = 'never'
-    done()
+    dispatch('done')
   }
-
-  function done () {
-    // Wait a bit to let the frequency to be saved
-    setTimeout(window.close.bind(window), 200)
-  }
-
 </script>
 
 <svelte:window on:keydown={onKeydown}/>
@@ -78,11 +79,11 @@
       {#each optionsData as { num, frequency, color, bgColor }}
         <li>
           <button
-            class="option frequency-{frequency}"
+            class="option"
             class:highlight={frequency === highlightedFrequency}
-            style="color: {color}; background-color: {bgColor};"
-            data-frequency={frequency}
-            on:click={onSelect}
+            style:color={color}
+            style:background-color={bgColor}
+            on:click={() => select(frequency)}
           >
             {num}
           </button>
@@ -96,7 +97,7 @@
       class="custom highlight"
       on:click={window.close.bind(window)}
       >
-      {i18n('custom')}
+      {i18n('custom')}: {selectedFrequency}
     </button>
   {/if}
 

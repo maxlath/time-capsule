@@ -1,65 +1,39 @@
 <script>
-  import OptionsSelector from './OptionsSelector.svelte'
+  import CapsuleEditor from './CapsuleEditor.svelte'
   import Spinner from './Spinner.svelte'
-  import { setFrequency } from '../lib/actions'
   import { getUrl, getCurrentUrlBookmarkData } from '../lib/tabs'
-  import { i18n } from '../lib/i18n'
+  import Flash from './Flash.svelte'
 
-  let selectedFrequency, nextVisit, waitingForBookmarkData, currentUrl
+  let waitingForBookmarkData, currentUrl, bookmark, flash
 
   getUrl().then(url => currentUrl = url)
 
   waitingForBookmarkData = getCurrentUrlBookmarkData()
-    .then(bookmarkData => {
-      if (bookmarkData) {
-        nextVisit = new Date(bookmarkData.nextVisit).toLocaleString()
-        selectedFrequency = bookmarkData.frequency
-      }
-    })
-
+    .then(bookmarkData => bookmark = bookmarkData)
+    .catch(err => flash = err)
 
   function showSettings () {
     browser.tabs.create({ url: '/settings/settings.html' })
     window.close()
   }
-
-  $: selectedFrequency && setFrequency(selectedFrequency)
-
-  // Filter-out URLs such as 'about:*' and 'file:*'
-  // See https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
-  $: isTimeCapsulableUrl = currentUrl && currentUrl.startsWith('http')
-
 </script>
 
 <button id="settings" on:click={showSettings} />
 
-{#if nextVisit}
-  <div id="nextVisit">
-    <h2>{i18n('next_visit')}</h2>
-    <p>{nextVisit}</p>
-  </div>
-{/if}
+{#await waitingForBookmarkData}
+  <Spinner />
+{:then}
+  <CapsuleEditor
+    bind:bookmark
+    url={currentUrl}
+    context="popup"
+    on:done={() => window.close()}
+    />
+{/await}
 
-{#if isTimeCapsulableUrl}
-  {#await waitingForBookmarkData}
-    <Spinner />
-  {:then}
-    <OptionsSelector bind:selectedFrequency />
-  {/await}
-{:else}
-  <p class="invalid">{i18n('url_cant_be_time_capsuled')}</p>
-{/if}
+<Flash state={flash} />
 
 <style>
-  :global(p), :global(ul), :global(ul li){
-    margin: 0;
-    padding: 0;
-  }
-
-  :global(ul), :global(ul li){
-    list-style-type: none;
-  }
-
   :global(html){
     font-family: sans-serif;
     background-color: #f0f0f0;
@@ -88,23 +62,6 @@
     flex: 1;
   }
 
-  :global(:root){
-    --glow: rgba(158, 202, 237, 0.7);
-    --light-blue: #0099d4;
-    --darker-light-blue: #0077b4;
-    --success-color: #22ee22;
-  }
-
-  h2{
-    text-align: center;
-    font-size: 1rem;
-    margin-bottom: 0;
-  }
-
-  #nextVisit p{
-    text-align: center;
-  }
-
   #settings{
     margin: 1em 1em 1em auto;
     border: 0;
@@ -113,11 +70,5 @@
     background-image: url('/icons/cog.svg');
     background-size: cover;
     background-position: center center;
-  }
-
-  .invalid{
-    padding: 1em;
-    font-style: italic;
-    color: #666;
   }
 </style>
