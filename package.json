@@ -37,19 +37,9 @@
     "rollup-plugin-notify": "github:aredridel/rollup-plugin-notify#510ae8751b98e41698885cae1c2af02541daacc0",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-terser": "^7.0.2",
-    "sass": "^1.55.0",
     "should": "^13.2.3",
-    "standard": "^9.0.2",
     "svelte": "^3.42.1",
     "web-ext": "^6.2.0"
-  },
-  "standard": {
-    "ignore": [
-      "extension"
-    ],
-    "globals": [
-      "chrome"
-    ]
   },
   "webExt": {
     "sourceDir": "extension"
