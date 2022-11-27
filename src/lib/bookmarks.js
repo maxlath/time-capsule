@@ -11,7 +11,7 @@ export async function updateTitle (id, title, frequency) {
   title = bookmarkTitle.format(title, frequency, true)
   const bookmark = await browser.bookmarks.update(id, { title })
   await ensureBookmarkFolderIsManagedFolder(bookmark)
-  return bookmark
+  return parse(bookmark)
 }
 
 export const removeById = browser.bookmarks.remove.bind(browser.bookmarks)
@@ -52,8 +52,8 @@ export async function recover (deletedBookmark) {
   })
 }
 
-export async function isInFolder (bookmarkData) {
-  await waitForFolder
+export function isInFolder (bookmarkData) {
+  if (folderId == null) throw new Error('folder id is not defined yet')
   return bookmarkData && bookmarkData.parentId === folderId
 }
 
@@ -73,13 +73,11 @@ export async function getByUrl (url) {
 // and not overload the popup
 export async function getTodaysBookmarksData () {
   await waitForFolder
-  return browser.bookmarks.getSubTree(folderId)
-  .then(res => {
-    if (!(res && res[0])) return []
-    return res[0].children
-    .map(parse)
-    .filter(nextVisitIsToday)
-  })
+  const res = await browser.bookmarks.getSubTree(folderId)
+  if (res?.[0] == null) return []
+  return res[0].children
+  .map(parse)
+  .filter(nextVisitIsToday)
 }
 
 async function ensureBookmarkFolderIsManagedFolder (bookmark) {

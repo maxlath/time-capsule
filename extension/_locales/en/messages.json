@@ -35,8 +35,10 @@
   "Capsules": { "message": "Capsules" },
   "Title": { "message": "Title" },
   "Frequency": { "message": "Frequency" },
-  "Next Visit": { "message": "Next" },
+  "Next Visit": { "message": "Next Visit" },
+  "Date Created": { "message": "Date Created" },
   "Added": { "message": "Added" },
   "Undo": { "message": "Undo" },
+  "Edit": { "message": "Edit" },
   "Actions": { "message": "Actions" }
 }

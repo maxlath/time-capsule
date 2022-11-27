@@ -22,7 +22,6 @@
       e.preventDefault()
     }
   }
-
 </script>
 
 <svelte:window on:keydown={onKeydown}/>

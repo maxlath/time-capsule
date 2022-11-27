@@ -24,6 +24,10 @@ export async function getCurrentUrlBookmarkData () {
   if (bookmarkData) return parse(bookmarkData)
 }
 
+export async function getUrlBookmarkData (url) {
+  const bookmarkData = await getBookmarkByUrl(url)
+  if (bookmarkData) return parse(bookmarkData)
+}
 
 export function getCurrentUrlBookmarkId () {
   return getCurrentUrlBookmarkData()
