@@ -9,22 +9,7 @@
   ]
 
   let currentTab = tabs[0]
-
-  function onKeydown (e) {
-    const { key, shiftKey } = e
-    if (key === 'Tab') {
-      const currentTabIndex = tabs.indexOf(currentTab)
-      const incrementor = shiftKey ? -1 : 1
-      let nextTabIndex = (currentTabIndex + incrementor) % tabs.length
-      if (nextTabIndex === -1) nextTabIndex = tabs.length - 1
-      if (tabs[nextTabIndex]) currentTab = tabs[nextTabIndex]
-      e.stopPropagation()
-      e.preventDefault()
-    }
-  }
 </script>
-
-<svelte:window on:keydown={onKeydown}/>
 
 <nav>
   <img class="logo" src="/icons/time-capsule-32.png" alt="logo" />
