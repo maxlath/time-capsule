@@ -9,3 +9,4 @@ extension/icons/*
 *.map
 extension/*/*.css
 extension/*/*.js
+extension/browser-polyfill.min.js
