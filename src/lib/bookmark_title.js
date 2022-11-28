@@ -1,8 +1,7 @@
-import { timeUnits, T, unitsLabels } from './times.js'
+import { unitsLabels, incrementByTimeUnit } from './times.js'
 
 const separator = ' /ᐒ/ '
 const pattern = /\s\/ᐒ\/\s([\d.]{1,3})([HDWMYT])\s(.*)$/
-const halfAMinute = T / 2
 
 export const formatBookmarkTitle = (title, frequency, updating) => {
   // Use ISOString as it's nicer for readability
@@ -15,17 +14,9 @@ export const formatBookmarkTitle = (title, frequency, updating) => {
 }
 
 export const getNextVisit = frequency => {
-  // accepting floats
-  const num = parseFloat(frequency.slice(0, -1))
+  const num = parseInt(frequency.slice(0, -1))
   const unit = frequency.slice(-1)
-  let delay = num * timeUnits[unit]
-  // Prevent scheduling a tab in less than 30 secondes
-  // as a very short delay could mean 🔥 BROWSER TABS INFINITE LOOP HELL 🔥
-  if (delay < halfAMinute) {
-    delay = halfAMinute
-  }
-  const time = Date.now() + delay
-  return new Date(time).toISOString()
+  return incrementByTimeUnit[unit](Date.now(), num).toISOString()
 }
 
 export const parseBookmarkTitle = title => {
@@ -35,7 +26,6 @@ export const parseBookmarkTitle = title => {
     return {
       cleanedTitle: title.split(separator)[0],
       frequency: `${num}${unit}`,
-      frequencyTime: num * timeUnits[unit],
       frequencyLabel: `${num} ${unitsLabels[unit]}`,
       // epoch time number should take less memory and computation power
       // than an ISO time string in the bookmark index
