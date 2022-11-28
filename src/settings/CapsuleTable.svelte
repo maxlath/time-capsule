@@ -105,6 +105,9 @@
     font-weight: normal;
     padding: 0;
   }
+  th:not(:last-child){
+    border-right: 1px solid #ccc;
+  }
   th button, th span{
     text-align: center;
     display: block;
