@@ -30,8 +30,8 @@
   const columns = [
     { label: 'Title', field: 'title' },
     { label: 'Frequency', field: 'frequency' },
-    { label: 'Next Visit', field: 'nextVisit' },
-    { label: 'Date Created', field: 'dateAdded' },
+    { label: 'Next_Visit', field: 'nextVisit' },
+    { label: 'Date_Created', field: 'dateAdded' },
     { label: 'Actions' },
   ]
 
