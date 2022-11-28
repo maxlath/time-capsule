@@ -43,12 +43,6 @@
       reverseSort = false
     }
   }
-
-  function updateBookmark () {
-    bookmarks = bookmarks
-  }
-
-  $: onChange(editedBookmark, updateBookmark)
 </script>
 
 {#await waitForBookmarks}
