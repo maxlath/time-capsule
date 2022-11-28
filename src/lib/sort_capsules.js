@@ -1,4 +1,4 @@
-import { timeUnits } from './times'
+import { timeUnits } from './times.js'
 
 export const getFrequencyTime = frequency => {
   const number = parseInt(frequency.slice(0, -1))

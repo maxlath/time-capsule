@@ -1,8 +1,8 @@
-import { Error } from '../lib/utils'
-import { getTodaysBookmarksData, getById, isInFolder } from '../lib/bookmarks'
-import { schedule, scheduleFromUnparsedBookmark, cancelPending } from './schedule'
-import { D as oneDay } from '../lib/times'
-import { set } from '../lib/day_end'
+import { Error } from '../lib/utils.js'
+import { getTodaysBookmarksData, getById, isInFolder } from '../lib/bookmarks.js'
+import { schedule, scheduleFromUnparsedBookmark, cancelPending } from './schedule.js'
+import { D as oneDay } from '../lib/times.js'
+import { set } from '../lib/day_end.js'
 
 const openTodaysBookmarks = () => {
   // this function as the monopoly on setting the day end

@@ -1,4 +1,4 @@
-import { D as oneDay } from '../lib/times'
+import { D as oneDay } from '../lib/times.js'
 
 let dayEnd
 

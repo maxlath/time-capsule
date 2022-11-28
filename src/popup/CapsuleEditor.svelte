@@ -1,10 +1,10 @@
 <script>
   import OptionsSelector from './OptionsSelector.svelte'
-  import { setFrequency } from '../lib/actions'
-  import { i18n } from '../lib/i18n'
-  import { onChange } from '../lib/svelte'
+  import { setFrequency } from '../lib/actions.js'
+  import { i18n } from '../lib/i18n.js'
+  import { onChange } from '../lib/svelte.js'
   import { createEventDispatcher } from 'svelte'
-  import { sleep } from '../lib/utils'
+  import { sleep } from '../lib/utils.js'
   import TrashBinIcon from './TrashBinIcon.svelte'
 
   export let bookmark, url, context = null

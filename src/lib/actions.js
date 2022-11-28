@@ -1,6 +1,6 @@
-import { enable, disable } from './icon'
-import { removeById, updateTitle, add } from './bookmarks'
-import { getActive, getUrlBookmarkData } from './tabs'
+import { enable, disable } from './icon.js'
+import { removeById, updateTitle, add } from './bookmarks.js'
+import { getActive, getUrlBookmarkData } from './tabs.js'
 
 export async function setFrequency ({ url, frequency, context }) {
   if (!frequency) throw new Error('missing frequency')

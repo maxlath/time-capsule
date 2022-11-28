@@ -1,4 +1,4 @@
-import { ErrorRethrow } from '../lib/utils'
+import { ErrorRethrow } from '../lib/utils.js'
 
 const folderName = 'Time Capsules [managed folder]'
 

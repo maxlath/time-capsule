@@ -1,5 +1,5 @@
 <script>
-  import { i18n } from '../lib/i18n'
+  import { i18n } from '../lib/i18n.js'
   import Parameters from './Parameters.svelte'
   import Capsules from './Capsules.svelte'
 

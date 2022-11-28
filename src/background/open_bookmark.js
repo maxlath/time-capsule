@@ -1,5 +1,5 @@
-import { create } from '../lib/tabs'
-import { getById, updateTitle } from '../lib/bookmarks'
+import { create } from '../lib/tabs.js'
+import { getById, updateTitle } from '../lib/bookmarks.js'
 
 export default function open (bookmark) {
   console.log('opening', bookmark)

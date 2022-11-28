@@ -1,4 +1,4 @@
-import { getCurrentTabId } from './tabs'
+import { getCurrentTabId } from './tabs.js'
 const darkGrey = '#333333'
 
 // It could theorically be possible to check a lastFrequency variable to know

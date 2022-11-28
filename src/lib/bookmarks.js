@@ -1,14 +1,14 @@
-import { first } from './utils'
-import init from './bookmarks_init'
-import bookmarkTitle from './bookmark_title'
-import nextVisitIsToday from './next_visit_is_today'
+import { first } from './utils.js'
+import init from './bookmarks_init.js'
+import { formatBookmarkTitle, parseBookmarkTitle } from './bookmark_title.js'
+import { nextVisitIsToday } from './next_visit_is_today.js'
 
 export const getById = id => browser.bookmarks.get(id).then(first)
 
 export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
 export async function updateTitle (id, title, frequency) {
-  title = bookmarkTitle.format(title, frequency, true)
+  title = formatBookmarkTitle(title, frequency, true)
   const bookmark = await browser.bookmarks.update(id, { title })
   await ensureBookmarkFolderIsManagedFolder(bookmark)
   return parse(bookmark)
@@ -17,7 +17,7 @@ export async function updateTitle (id, title, frequency) {
 export const removeById = browser.bookmarks.remove.bind(browser.bookmarks)
 
 export const parse = bookmarkData => {
-  const data = bookmarkTitle.parse(bookmarkData.title) || {}
+  const data = parseBookmarkTitle(bookmarkData.title) || {}
   return Object.assign(data, bookmarkData)
 }
 
@@ -39,7 +39,7 @@ export async function add (url, title, frequency) {
   return browser.bookmarks.create({
     parentId: folderId,
     url,
-    title: bookmarkTitle.format(title, frequency)
+    title: formatBookmarkTitle(title, frequency)
   })
 }
 

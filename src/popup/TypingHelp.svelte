@@ -1,6 +1,6 @@
 <script>
-  import { allOptions } from './options'
-  import { i18n } from '../lib/i18n'
+  import { allOptions } from './options.js'
+  import { i18n } from '../lib/i18n.js'
 </script>
 
 <ul>

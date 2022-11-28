@@ -1,3 +1,4 @@
-import { get } from './day_end'
+import { get } from './day_end.js'
 
-export default bookmark => bookmark && bookmark.nextVisit < get()
+export const nextVisitIsToday = bookmark => bookmark && bookmark.nextVisit < get()
+

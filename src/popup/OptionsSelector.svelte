@@ -2,7 +2,7 @@
   import PeriodicityOptions from './PeriodicityOptions.svelte'
   import TypingHelp from './TypingHelp.svelte'
   import { createEventDispatcher } from 'svelte'
-  import { BubbleUpComponentEvent } from '../lib/svelte'
+  import { BubbleUpComponentEvent } from '../lib/svelte.js'
 
   export let selectedFrequency
 

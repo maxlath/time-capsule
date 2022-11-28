@@ -1,6 +1,6 @@
 <script>
-  import { inMenu as categories } from './options'
-  import { i18n } from '../lib/i18n'
+  import { inMenu as categories } from './options.js'
+  import { i18n } from '../lib/i18n.js'
   import { createEventDispatcher } from 'svelte'
 
   export let selectedFrequency

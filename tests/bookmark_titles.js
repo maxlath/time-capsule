@@ -1,6 +1,5 @@
-const { getNextVisit } = require('../src/js/lib/bookmark_title')
-
-require('should')
+import should from 'should'
+import { getNextVisit } from '../src/lib/bookmark_title.js'
 
 describe('getNextVisit', () => {
   it('should get the next visit date', () => {

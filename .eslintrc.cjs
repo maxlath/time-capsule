@@ -71,5 +71,10 @@ module.exports = {
   globals: {
     browser: 'readable',
     chrome: 'readable',
+    it: 'readonly',
+    xit: 'readonly',
+    describe: 'readonly',
+    xdescribe: 'readonly',
+    beforeEach: 'readonly',
   }
 }

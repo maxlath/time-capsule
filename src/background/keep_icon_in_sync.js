@@ -1,7 +1,7 @@
-import { disable } from '../lib/icon'
-import { getActive, getUrl } from '../lib/tabs'
-import { folderId } from '../lib/bookmarks'
-import { updateIcon } from './update_icon'
+import { disable } from '../lib/icon.js'
+import { getActive, getUrl } from '../lib/tabs.js'
+import { folderId } from '../lib/bookmarks.js'
+import { updateIcon } from './update_icon.js'
 
 // On update of any tab, if it is the current tab, update the icon
 // doc: https://developer.chrome.com/extensions/tabs#event-onUpdated

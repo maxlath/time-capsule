@@ -1,10 +1,10 @@
-import { timeUnits, T, unitsLabels } from './times'
+import { timeUnits, T, unitsLabels } from './times.js'
 
 const separator = ' /ᐒ/ '
 const pattern = /\s\/ᐒ\/\s([\d.]{1,3})([HDWMYT])\s(.*)$/
 const halfAMinute = T / 2
 
-const format = (title, frequency, updating) => {
+export const formatBookmarkTitle = (title, frequency, updating) => {
   // Use ISOString as it's nicer for readability
   const nextVisit = getNextVisit(frequency)
   // cleaning old data
@@ -14,7 +14,7 @@ const format = (title, frequency, updating) => {
   return `${title}${separator}${frequency} ${nextVisit}`
 }
 
-const getNextVisit = frequency => {
+export const getNextVisit = frequency => {
   // accepting floats
   const num = parseFloat(frequency.slice(0, -1))
   const unit = frequency.slice(-1)
@@ -28,7 +28,7 @@ const getNextVisit = frequency => {
   return new Date(time).toISOString()
 }
 
-const parse = title => {
+export const parseBookmarkTitle = title => {
   const match = title.match(pattern)
   if (match) {
     const [ , num, unit, nextVisit ] = match
@@ -43,5 +43,3 @@ const parse = title => {
     }
   }
 }
-
-export default { format, parse }

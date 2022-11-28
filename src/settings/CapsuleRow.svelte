@@ -1,6 +1,6 @@
 <script>
-  import { recover, removeById } from '../lib/bookmarks'
-  import { i18n } from '../lib/i18n'
+  import { recover, removeById } from '../lib/bookmarks.js'
+  import { i18n } from '../lib/i18n.js'
   import { createEventDispatcher } from 'svelte'
 
   export let bookmark

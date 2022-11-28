@@ -1,6 +1,6 @@
-import { parse } from '../lib/bookmarks'
-import open from './open_bookmark'
-import nextVisitIsToday from '../lib/next_visit_is_today'
+import { parse } from '../lib/bookmarks.js'
+import open from './open_bookmark.js'
+import { nextVisitIsToday } from '../lib/next_visit_is_today.js'
 
 const timeoutIds = {}
 

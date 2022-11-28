@@ -1,5 +1,5 @@
-import { getLastFocusedId } from './windows'
-import { parse, getByUrl as getBookmarkByUrl } from './bookmarks'
+import { getLastFocusedId } from './windows.js'
+import { parse, getByUrl as getBookmarkByUrl } from './bookmarks.js'
 
 export const create = browser.tabs.create.bind(browser.tabs)
 

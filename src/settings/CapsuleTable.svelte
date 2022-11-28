@@ -1,10 +1,10 @@
 <script>
-  import { getBookmarks } from '../lib/bookmarks'
-  import { sortFunctions } from '../lib/sort_capsules'
+  import { getBookmarks } from '../lib/bookmarks.js'
+  import { sortFunctions } from '../lib/sort_capsules.js'
   import Spinner from '../popup/Spinner.svelte'
   import CapsuleRow from './CapsuleRow.svelte'
-  import { i18n } from '../lib/i18n'
-  import { columns, filterByText } from './capsule_table_helpers'
+  import { i18n } from '../lib/i18n.js'
+  import { columns, filterByText } from './capsule_table_helpers.js'
   import Flash from '../popup/Flash.svelte'
 
   export let editedBookmark

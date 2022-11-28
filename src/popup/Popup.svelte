@@ -1,7 +1,7 @@
 <script>
   import CapsuleEditor from './CapsuleEditor.svelte'
   import Spinner from './Spinner.svelte'
-  import { getUrl, getCurrentUrlBookmarkData } from '../lib/tabs'
+  import { getUrl, getCurrentUrlBookmarkData } from '../lib/tabs.js'
   import Flash from './Flash.svelte'
 
   let waitingForBookmarkData, currentUrl, bookmark, flash

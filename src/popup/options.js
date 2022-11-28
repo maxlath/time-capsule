@@ -1,4 +1,4 @@
-import { getColor } from './colors'
+import { getColor } from './colors.js'
 
 export const inMenu = {
   hours: {

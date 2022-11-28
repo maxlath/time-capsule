@@ -1,5 +1,5 @@
-import { enable, disable } from '../lib/icon'
-import { getByUrl, isInFolder, parse } from '../lib/bookmarks'
+import { enable, disable } from '../lib/icon.js'
+import { getByUrl, isInFolder, parse } from '../lib/bookmarks.js'
 
 export async function updateIcon (url) {
   const bookmarkData = await getByUrl(url)
