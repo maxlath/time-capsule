@@ -60,8 +60,20 @@
   }
   .title{
     text-align: left;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    max-width: 38em;
+  }
+  .title a{
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .hostname{
+    margin-left: 0.5em;
     color: #444;
     font-size: 0.8rem;
   }
