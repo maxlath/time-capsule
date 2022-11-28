@@ -59,9 +59,6 @@
   {/if}
   <div class="editor-wrapper">
     <div class="editor">
-      <pre>{JSON.stringify({
-        editedBookmark: editedBookmark ? editedBookmark.frequency : null,
-      }, null, 2)} (Capsules.svelte:64)</pre>
       <CapsuleEditor
         bind:bookmark={editedBookmark}
         url={editedBookmark.url}
