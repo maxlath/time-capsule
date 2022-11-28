@@ -1,6 +1,5 @@
 <script>
   import { recover, removeById } from '../lib/bookmarks'
-  import { epochToSimpleTime } from '../lib/times'
   import { i18n } from '../lib/i18n'
   import { createEventDispatcher } from 'svelte'
 
@@ -35,7 +34,12 @@
 </script>
 
 <tr class:deleted={bookmark.deleted}>
-  <td class="title"><a href={bookmark.url} title={bookmark.url}>{bookmark.cleanedTitle}</a></td>
+  <td class="title">
+    <a href={bookmark.url} title={bookmark.url}>
+      {bookmark.cleanedTitle}
+    </a>
+    <span class="hostname">{new URL(bookmark.url).hostname}</span>
+  </td>
   <td class="frequency" title={bookmark.frequencyLabel}>{bookmark.frequency}</td>
   <td class="nextVisit">{new Date(bookmark.nextVisit).toLocaleString()}</td>
   <td class="dateAdded">{new Date(bookmark.dateAdded).toLocaleString()}</td>
@@ -56,6 +60,10 @@
   }
   .title{
     text-align: left;
+  }
+  .hostname{
+    color: #444;
+    font-size: 0.8rem;
   }
   .frequency{
     text-align: right;

@@ -40,5 +40,6 @@
   "Added": { "message": "Added" },
   "Undo": { "message": "Undo" },
   "Edit": { "message": "Edit" },
-  "Actions": { "message": "Actions" }
+  "Actions": { "message": "Actions" },
+  "Filter": { "message": "Filter" }
 }
