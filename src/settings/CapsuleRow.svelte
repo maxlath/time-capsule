@@ -42,7 +42,7 @@
   </td>
   <td class="frequency" title={bookmark.frequencyLabel}>{bookmark.frequency}</td>
   <td class="nextVisit">{new Date(bookmark.nextVisit).toLocaleString()}</td>
-  <td class="dateAdded">{new Date(bookmark.dateAdded).toLocaleString()}</td>
+  <td class="referenceDate">{new Date(bookmark.referenceDate).toLocaleString()}</td>
   <td>
     {#if bookmark.deleted}
       <button class="undelete" on:click={undeleteBookmark}>{i18n('Undo')}</button>
@@ -80,7 +80,7 @@
   .frequency{
     text-align: right;
   }
-  .nextVisit, .dateAdded{
+  .nextVisit, .referenceDate{
     padding: 0 0.5em;
   }
   button{

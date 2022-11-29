@@ -1,5 +1,5 @@
 import { enable, disable } from './icon.js'
-import { removeById, updateTitle, add } from './bookmarks.js'
+import { removeById, updateCapsuleData, add } from './bookmarks.js'
 import { getActive, getUrlBookmarkData } from './tabs.js'
 
 export async function setFrequency ({ url, frequency, context }) {
@@ -21,7 +21,7 @@ async function saveUrlPeriodicity ({ url, frequency }) {
   if (frequency === 'never') {
     if (bookmarkId) await removeById(bookmarkId)
   } else if (bookmarkId) {
-    return updateTitle(bookmarkId, bookmarkData.title, frequency)
+    return updateCapsuleData({ bookmarkData, newFrequency: frequency })
   } else {
     const tabData = await getActive()
     return add(tabData.url, tabData.title, frequency)

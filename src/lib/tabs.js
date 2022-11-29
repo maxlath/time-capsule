@@ -1,7 +1,7 @@
 import { getLastFocusedId } from './windows.js'
 import { parse, getByUrl as getBookmarkByUrl } from './bookmarks.js'
 
-export const create = browser.tabs.create.bind(browser.tabs)
+export const createTab = browser.tabs.create.bind(browser.tabs)
 
 // Replacing the deprecated getSelected
 // see https://developer.chrome.com/extensions/tabs#method-getSelected

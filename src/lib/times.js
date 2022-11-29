@@ -1,9 +1,9 @@
-const minute = 60 * 1000
-const hour = 60 * minute
-const day = 24 * hour
-const week = 7 * day
-const year = 365.25 * day
-const month = year / 12
+export const minute = 60 * 1000
+export const hour = 60 * minute
+export const day = 24 * hour
+export const week = 7 * day
+export const year = 365.25 * day
+export const month = year / 12
 
 export const H = hour
 export const D = day
@@ -72,4 +72,8 @@ export const incrementByTimeUnit = {
   },
   M: incrementTimeUnitValue('M'),
   Y: incrementTimeUnitValue('Y'),
+}
+
+export function timeIsInThePast (time) {
+  return new Date(time).getTime() < Date.now()
 }

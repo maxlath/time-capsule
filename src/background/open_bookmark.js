@@ -1,20 +1,15 @@
-import { create } from '../lib/tabs.js'
-import { getById, updateTitle } from '../lib/bookmarks.js'
+import { createTab } from '../lib/tabs.js'
+import { getById, updateCapsuleData } from '../lib/bookmarks.js'
 
-export function openBookmark (bookmark) {
+export async function openBookmark (bookmark) {
   console.log('opening', bookmark)
-  const { id, frequency } = bookmark
-  return getById(bookmark.id)
-  .then(bookmarkData => {
-    if (bookmarkData) {
-      const { title } = bookmarkData
-      // open the tab
-      return create({ url: bookmarkData.url, active: false })
-      // re-set the periodicity data
-      .then(updateTitle.bind(null, id, title, frequency))
-      // update the view
-    } else {
-      console.error('bookmark data not found', bookmark)
-    }
-  })
+  const bookmarkData = await getById(bookmark.id)
+  Object.assign(bookmarkData, bookmark)
+  if (bookmarkData) {
+    await createTab({ url: bookmarkData.url, active: false })
+    // re-set the periodicity data
+    await updateCapsuleData({ bookmarkData })
+  } else {
+    console.error('bookmark data not found', bookmark)
+  }
 }

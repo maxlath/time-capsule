@@ -7,9 +7,15 @@ export const getById = id => browser.bookmarks.get(id).then(first)
 
 export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
-export async function updateTitle (id, title, frequency) {
-  title = formatBookmarkTitle(title, frequency, true)
-  const bookmark = await browser.bookmarks.update(id, { title })
+export async function updateCapsuleData ({ bookmarkData, newFrequency }) {
+  const { id, title, frequency, referenceDate } = bookmarkData
+  const updatedTitle = formatBookmarkTitle({
+    title,
+    frequency: newFrequency != null ? newFrequency : frequency,
+    referenceDate: newFrequency != null ? Date.now() : referenceDate,
+    updating: true,
+  })
+  const bookmark = await browser.bookmarks.update(id, { title: updatedTitle })
   await ensureBookmarkFolderIsManagedFolder(bookmark)
   return parse(bookmark)
 }
@@ -39,7 +45,7 @@ export async function add (url, title, frequency) {
   return browser.bookmarks.create({
     parentId: folderId,
     url,
-    title: formatBookmarkTitle(title, frequency)
+    title: formatBookmarkTitle({ title, frequency, referenceDate: Date.now() })
   })
 }
 
