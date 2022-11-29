@@ -22,7 +22,6 @@ cat ../manifest.json.bak | jq '.background.scripts = [ "browser-polyfill.min.js"
 sed -i '/popup.js/i <script src="../browser-polyfill.min.js"></script>' ./popup/popup.html
 sed -i '/settings.js/i <script src="../browser-polyfill.min.js"></script>' ./settings/settings.html
 zip -r "../packages/time-capsule.chrome.$version.zip" .
-rm ../node_modules/webextension-polyfill/dist/browser-polyfill.min.js
 
 # Cleanup
 mv ../manifest.json.bak ./manifest.json
