@@ -25,31 +25,17 @@
 </div>
 
 <style>
-  :global(body){
-    margin: 0;
-    font-family: sans-serif;
-  }
-  :global(button){
-    cursor: pointer;
-    border: 0;
-    background-color: white;
-  }
   nav{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    box-shadow: 0px 0px 0px 1px #20123a0a,
-                0px 1px 2px 0px #2200330a,
-                0px 2px 1px -1px #0730721f,
-                0px 1px 6px 0px #0e0d1a1f;
   }
   .logo{
     margin: 0.8em 1em;
   }
   button{
-    padding: 0.5rem;
     padding: 1rem;
     align-self: stretch;
     font-size: 1rem;
@@ -57,7 +43,7 @@
     transition: all 0.25s ease;
   }
   .active, button:hover{
-    border-bottom: 3px solid #592acb;
-    color: #592acb;
+    border-bottom: 3px solid var(--active-settings-tab);
+    color: var(--active-settings-tab);
   }
 </style>

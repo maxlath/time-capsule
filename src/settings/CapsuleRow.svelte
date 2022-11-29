@@ -74,7 +74,7 @@
   }
   .hostname{
     margin-left: 0.5em;
-    color: #444;
+    color: var(--grey-444);
     font-size: 0.8rem;
   }
   .frequency{
@@ -87,17 +87,17 @@
     background-color: transparent;
     font-size: 1rem;
     text-decoration: underline;
-    color: #222;
+    color: var(--grey-222);
   }
   button:hover{
-    color: #444;
+    color: var(--grey-444);
   }
   tr{
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--grey-ccc);
   }
   tr.deleted{
     opacity: 0.8;
-    background-color: #eee;
+    background-color: var(--grey-eee);
   }
   td{
     padding: 0.5em;

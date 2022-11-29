@@ -1,3 +1,77 @@
+:root{
+  --black: #000;
+  --grey-111: #111;
+  --grey-222: #222;
+  --grey-333: #333;
+  --grey-444: #444;
+  --grey-555: #555;
+  --grey-666: #666;
+  --grey-777: #777;
+  --grey-888: #888;
+  --grey-999: #999;
+  --grey-aaa: #aaa;
+  --grey-bbb: #bbb;
+  --grey-ccc: #ccc;
+  --grey-ddd: #ddd;
+  --grey-eee: #eee;
+  --white: #fff;
+
+  --glow: rgba(158, 202, 237, 0.7);
+  --light-blue: #0099d4;
+  --darker-light-blue: #0077b4;
+  --success-color: #22ee22;
+  --danger-color: #ff4e4e;
+  --body-bg-color: #f0f0f0;
+  --active-settings-tab: #592acb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root{
+    --black: #fff;
+    --grey-111: #eee;
+    --grey-222: #ddd;
+    --grey-333: #ccc;
+    --grey-444: #bbb;
+    --grey-555: #aaa;
+    --grey-666: #999;
+    --grey-777: #888;
+    --grey-888: #777;
+    --grey-999: #666;
+    --grey-aaa: #555;
+    --grey-bbb: #444;
+    --grey-ccc: #333;
+    --grey-ddd: #222;
+    --grey-eee: #111;
+    --white: #000;
+
+    --body-bg-color: #090e12;
+    --active-settings-tab: #924bff;
+  }
+  a{
+    color: #61a7ec;
+  }
+}
+
+
+body, button, input{
+  background-color: var(--body-bg-color);
+  color: var(--grey-111);
+}
+
+body{
+  margin: 0;
+  font-family: sans-serif;
+}
+
+button{
+  cursor: pointer;
+  border: 0;
+}
+
+input[type="text"], input[type="search"]{
+  border: 1px solid var(--grey-aaa);
+}
+
 p, ul, ul li{
   margin: 0;
   padding: 0;
@@ -5,16 +79,4 @@ p, ul, ul li{
 
 ul, ul li{
   list-style-type: none;
-}
-
-button{
-  cursor: pointer;
-}
-
-:root{
-  --glow: rgba(158, 202, 237, 0.7);
-  --light-blue: #0099d4;
-  --darker-light-blue: #0077b4;
-  --success-color: #22ee22;
-  --danger-color: #ff4e4e;
 }

@@ -21,3 +21,7 @@ export const has = (array, value) => array.indexOf(value) > -1
 export const sleep = (ms = 0) => {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
+
+export function usesDarkMode () {
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches
+}

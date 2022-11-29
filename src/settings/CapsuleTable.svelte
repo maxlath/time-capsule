@@ -85,11 +85,11 @@
     flex-direction: row;
     justify-content: flex-end;
     padding: 0.5em;
-    background-color: #eee;
+    background-color: var(--grey-eee);
   }
   .controls label, th, th button{
     font-weight: bold;
-    color: #444;
+    color: var(--grey-444);
   }
   .controls input{
     padding: 0.3em;
@@ -99,14 +99,14 @@
   table{
     border-collapse: collapse;
     width: 100%;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--grey-ccc);
   }
   th{
     font-weight: normal;
     padding: 0;
   }
   th:not(:last-child){
-    border-right: 1px solid #ccc;
+    border-right: 1px solid var(--grey-ccc);
   }
   th button, th span{
     text-align: center;
@@ -115,18 +115,18 @@
     width: 100%;
     font-size: 1rem;
     position: relative;
-    background-color: #eee;
+    background-color: var(--grey-eee);
     transition: background-color 0.3s ease;
   }
   button:disabled{
     color: inherit;
   }
   th button.active, th button:not(:disabled):hover{
-    background-color: #ddd;
+    background-color: var(--grey-ddd);
   }
   th button.active:after{
     content: '▲';
-    color: #777;
+    color: var(--grey-777);
     position: absolute;
     top: 10%;
     right: 0.5em;
@@ -137,6 +137,6 @@
     bottom: 10%;
   }
   tr:nth-child(even) {
-    background: #eee;
+    background: var(--grey-eee);
   }
 </style>

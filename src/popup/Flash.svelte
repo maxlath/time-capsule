@@ -26,7 +26,7 @@
     padding: 0.5em;
     margin: 0.3em 0;
     padding-left: 0.5em;
-    color: #222;
+    color: var(--grey-222);
     border-radius: 3px;
   }
   .error{

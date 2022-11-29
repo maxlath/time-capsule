@@ -34,25 +34,25 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: #eee;
+    background-color: var(--grey-eee);
   }
   .editor{
     max-width: 30em;
-    background-color: white;
+    background-color: var(--white);
     margin: 1em 1em 5em 1em;
     border-radius: 3px;
     padding: 1em;
     position: relative;
   }
   .edited-bookmark-info{
-    background-color: #eee;
+    background-color: var(--grey-eee);
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
   }
   .edited-bookmark-info a{
-    background-color: white;
+    background-color: var(--white);
     margin: auto;
     max-width: 30em;
     margin: 1em 1em 0 1em;

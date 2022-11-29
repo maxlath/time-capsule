@@ -33,7 +33,7 @@
     justify-content: center;
   }
   .letter{
-    background-color: #ddd;
+    background-color: var(--grey-ddd);
     width: 3em;
     border-radius: 1px;
     text-align: center;

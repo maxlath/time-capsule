@@ -83,7 +83,7 @@
   .invalid{
     padding: 2em 1em;
     font-style: italic;
-    color: #666;
+    color: var(--grey-666);
   }
 
   .close{
@@ -93,11 +93,11 @@
     position: absolute;
     top: 0;
     right: 0;
-    color: #666;
+    color: var(--grey-666);
     transition: color 0.2s ease;
   }
   .close:hover{
-    color: #222;
+    color: var(--grey-222);
   }
 
   .celebration-wrapper{

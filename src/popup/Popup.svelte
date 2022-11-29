@@ -3,6 +3,7 @@
   import Spinner from './Spinner.svelte'
   import { getUrl, getCurrentUrlBookmarkData } from '../lib/tabs.js'
   import Flash from './Flash.svelte'
+  import { usesDarkMode } from '../lib/utils.js'
 
   let waitingForBookmarkData, currentUrl, bookmark, flash
 
@@ -19,7 +20,11 @@
 </script>
 
 <button class="settings" on:click={showSettings}>
-  <img src="/icons/cog.svg" alt="settings icon" />
+  {#if usesDarkMode()}
+    <img src="/icons/cog-light.svg" alt="settings icon" />
+  {:else}
+    <img src="/icons/cog.svg" alt="settings icon" />
+  {/if}
 </button>
 
 {#await waitingForBookmarkData}
@@ -36,15 +41,7 @@
 <Flash state={flash} />
 
 <style>
-  :global(html){
-    font-family: sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-  }
-
   :global(body){
-    background-color: #f0f0f0;
-    color: #222;
     margin: 0 auto;
     padding: 2px;
     text-align: center;
