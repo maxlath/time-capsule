@@ -30,7 +30,7 @@
   "never": { "message": "Never" },
   "custom": { "message": "Custom" },
   "url_cant_be_time_capsuled": { "message": "This URL can't be saved as a Time Capsule" },
-  "Parameters": { "message": "Parameters" },
+  "Preferences": { "message": "Preferences" },
   "Delete": { "message": "Delete" },
   "Capsules": { "message": "Capsules" },
   "Title": { "message": "Title" },

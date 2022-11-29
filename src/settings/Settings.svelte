@@ -1,11 +1,11 @@
 <script>
   import { i18n } from '../lib/i18n.js'
-  import Parameters from './Parameters.svelte'
+  import Preferences from './Preferences.svelte'
   import Capsules from './Capsules.svelte'
 
   const tabs = [
     { key: 'capsules', label: i18n('Capsules') },
-    { key: 'parameters', label: i18n('Parameters') },
+    { key: 'preferences', label: i18n('Preferences') },
   ]
 
   let currentTab = tabs[0]
@@ -19,7 +19,7 @@
 </nav>
 
 <div>
-  {#if currentTab.key === 'parameters'}<Parameters />
+  {#if currentTab.key === 'preferences'}<Preferences />
   {:else if currentTab.key === 'capsules'}<Capsules />
   {/if}
 </div>

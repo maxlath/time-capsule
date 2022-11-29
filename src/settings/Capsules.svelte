@@ -1,6 +1,9 @@
 <script>
+  import { i18n } from '../lib/i18n.js'
   import CapsuleEditor from '../popup/CapsuleEditor.svelte'
   import CapsuleTable from './CapsuleTable.svelte'
+
+  document.title = `Time Capsule - ${i18n('Capsules')}`
 
   let editedBookmark
 </script>
