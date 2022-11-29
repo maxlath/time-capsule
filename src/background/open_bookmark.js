@@ -1,7 +1,7 @@
 import { create } from '../lib/tabs.js'
 import { getById, updateTitle } from '../lib/bookmarks.js'
 
-export default function open (bookmark) {
+export function openBookmark (bookmark) {
   console.log('opening', bookmark)
   const { id, frequency } = bookmark
   return getById(bookmark.id)
@@ -18,4 +18,3 @@ export default function open (bookmark) {
     }
   })
 }
-//

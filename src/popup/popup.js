@@ -1,8 +1,6 @@
 import Popup from './Popup.svelte'
 
-const popup = new Popup({
+new Popup({
   target: document.querySelector('main'),
   props: {}
 })
-
-export default popup

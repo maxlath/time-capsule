@@ -1,5 +1,5 @@
 import { first } from './utils.js'
-import init from './bookmarks_init.js'
+import { initBookmarks } from './bookmarks_init.js'
 import { formatBookmarkTitle, parseBookmarkTitle } from './bookmark_title.js'
 import { nextVisitIsToday } from './next_visit_is_today.js'
 
@@ -21,7 +21,7 @@ export const parse = bookmarkData => {
   return Object.assign(data, bookmarkData)
 }
 
-// The init function needs to be called only once, given that even if the bookmark
+// The initBookmarks function needs to be called only once, given that even if the bookmark
 // folder gets deleted, the folder id remains valid: newly created bookmarks
 // will trigger the folder to be re-created
 
@@ -29,7 +29,7 @@ export let folderId
 export let folder
 
 // store the promise
-export const waitForFolder = init().then(f => {
+export const waitForFolder = initBookmarks().then(f => {
   folder = f
   folderId = folder.id
 })

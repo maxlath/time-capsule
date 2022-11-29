@@ -2,7 +2,7 @@ import { ErrorRethrow } from '../lib/utils.js'
 
 const folderName = 'Time Capsules [managed folder]'
 
-export default function () {
+export function initBookmarks () {
   return browser.bookmarks.getTree()
   .then(findMatch)
   .then(createFolderIfMissing)

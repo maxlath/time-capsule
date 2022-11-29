@@ -33,7 +33,6 @@ const getTimeUnitValue = {
   T: getMinutes,
   H: getHours,
   D: getDay,
-  // W:
   M: getMonth,
   Y: getYear,
 }
