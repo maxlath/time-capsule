@@ -80,7 +80,7 @@
   }
 
   .invalid{
-    padding: 1em;
+    padding: 2em 1em;
     font-style: italic;
     color: #666;
   }

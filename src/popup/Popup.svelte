@@ -18,7 +18,9 @@
   }
 </script>
 
-<button class="settings" on:click={showSettings} />
+<button class="settings" on:click={showSettings}>
+  <img src="/icons/cog.svg" alt="settings icon" />
+</button>
 
 {#await waitingForBookmarkData}
   <Spinner />
@@ -60,15 +62,22 @@
     align-items: center;
     justify-content: center;
     flex: 1;
+    position: relative;
+    padding: 0.5em;
   }
 
   .settings{
-    margin: 1em 1em 1em auto;
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
     border: 0;
+  }
+  .settings img{
     width: 1.6em;
     height: 1.6em;
-    background-image: url('/icons/cog.svg');
-    background-size: cover;
-    background-position: center center;
+  }
+  .settings:hover{
+    background: none;
+    opacity: 0.9;
   }
 </style>
