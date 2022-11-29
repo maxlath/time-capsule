@@ -5,7 +5,6 @@
   import { onChange } from '../lib/svelte.js'
   import { createEventDispatcher } from 'svelte'
   import { sleep } from '../lib/utils.js'
-  import TrashBinIcon from './TrashBinIcon.svelte'
 
   export let bookmark, url, context = null
 
@@ -41,7 +40,9 @@
 {#if celebratedNewFrequency}
   <div class="celebration-wrapper">
     {#if celebratedNewFrequency === 'never'}
-      <p class="never"><TrashBinIcon /></p>
+      <p class="never">
+        <img src="/icons/red-trash-bin.svg" alt="delete icon" />
+      </p>
     {:else}
       <p>{celebratedNewFrequency}</p>
     {/if}
