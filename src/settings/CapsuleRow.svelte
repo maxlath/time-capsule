@@ -35,7 +35,7 @@
 
 <tr class:deleted={bookmark.deleted}>
   <td class="title">
-    <a href={bookmark.url} title={bookmark.url}>
+    <a href={bookmark.url} title={bookmark.cleanedTitle}>
       {bookmark.cleanedTitle}
     </a>
     <span class="hostname">{new URL(bookmark.url).hostname}</span>
