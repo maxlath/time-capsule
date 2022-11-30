@@ -1,14 +1,31 @@
 #!/usr/bin/env bash
+
+set -eu
+
 version=$(cat package.json |jq .version -r)
 
 cd extension
 # Remove previous build if any
-rm -f time-capsule.$version.zip time-capsule.chrome.$version.zip time-capsule.firefox.$version.zip
+rm -f "time-capsule.$version.zip" "time-capsule.chrome.$version.zip" "time-capsule.firefox.$version.zip"
 
-# Chrome
-zip -r ../packages/time-capsule.chrome.$version.zip .
+cp ./manifest.json ../manifest.json.bak
+cp ./popup/popup.html ../popup.html.bak
+cp ./settings/settings.html ../settings.html.bak
 
 # Firefox
-sed -i 's/open-periodicity-menu/_execute_browser_action/' ../extension/manifest.json
-zip -r ../packages/time-capsule.firefox.$version.zip .
-sed -i 's/_execute_browser_action/open-periodicity-menu/' ../extension/manifest.json
+sed -i 's/open-periodicity-menu/_execute_browser_action/' ./manifest.json
+zip -r "../packages/time-capsule.firefox.$version.zip" .
+
+# Chrome
+cp ../node_modules/webextension-polyfill/dist/browser-polyfill.min.js .
+cat ../manifest.json.bak | jq '.background.scripts = [ "browser-polyfill.min.js" ] + .background.scripts' > ./manifest.json
+sed -i '/popup.js/i <script src="../browser-polyfill.min.js"></script>' ./popup/popup.html
+sed -i '/settings.js/i <script src="../browser-polyfill.min.js"></script>' ./settings/settings.html
+zip -r "../packages/time-capsule.chrome.$version.zip" .
+rm ../node_modules/webextension-polyfill/dist/browser-polyfill.min.js
+
+# Cleanup
+mv ../manifest.json.bak ./manifest.json
+mv ../popup.html.bak ./popup/popup.html
+mv ../settings.html.bak ./settings/settings.html
+rm ./browser-polyfill.min.js

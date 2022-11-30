@@ -23,7 +23,7 @@
   },
   "background": {
     "scripts": [
-      "background/background.build.js"
+      "background/background.js"
     ]
   },
   "default_locale": "en",

@@ -6,3 +6,7 @@ extension/icons/*
 # force add those that we want to track
 *png
 *svg
+*.map
+extension/*/*.css
+extension/*/*.js
+extension/browser-polyfill.min.js
