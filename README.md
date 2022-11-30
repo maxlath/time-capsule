@@ -37,7 +37,10 @@ This is a reboot of the awesome, but out-dated, [Browse Periodically](https://ad
 
 > Browse sites you want to check periodically (every hour, day, week, month and so on). You can also use for reminding pages, for example, by browsing every month.
 
-I started working on it before Firefox was up to speed with WebExtension so had to let it sleep for a moment. Meanwhile, a team started working on [SnoozeTabs](https://github.com/bwinton/SnoozeTabs), it's pretty much the same but you loose all the time-traveling jokes.
+I started working on it before Firefox was up to speed with WebExtension so had to let it sleep for a moment. Meanwhile, a team started working on [SnoozeTabs](https://github.com/bwinton/SnoozeTabs), it's quite similar, but TimeCapsule offers a few more things:
+- re-open tabs periodically (rather than just one time)
+- more flexibility to set the periodicity
+- more time-traveling jokes
 
 ## Development Setup
 ```sh
