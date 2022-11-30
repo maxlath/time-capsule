@@ -80,3 +80,10 @@ p, ul, ul li{
 ul, ul li{
   list-style-type: none;
 }
+
+fieldset, legend{
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}

@@ -7,12 +7,14 @@ export const getById = id => browser.bookmarks.get(id).then(first)
 
 export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
-export async function updateCapsuleData ({ bookmarkData, newFrequency }) {
+export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit }) {
   const { id, title, frequency, referenceDate } = bookmarkData
   const updatedTitle = formatBookmarkTitle({
     title,
     frequency: newFrequency != null ? newFrequency : frequency,
-    referenceDate: newFrequency != null ? Date.now() : referenceDate,
+    referenceDate: nextVisit || referenceDate || Date.now(),
+    nextVisit,
+    repeat,
     updating: true,
   })
   const bookmark = await browser.bookmarks.update(id, { title: updatedTitle })

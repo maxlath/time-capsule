@@ -35,6 +35,7 @@
   "Capsules": { "message": "Capsules" },
   "Title": { "message": "Title" },
   "Frequency": { "message": "Frequency" },
+  "Repeat": { "message": "Repeat" },
   "Next_Visit": { "message": "Next Visit" },
   "Reference_Date": { "message": "Reference Date" },
   "Date_Created": { "message": "Date Created" },

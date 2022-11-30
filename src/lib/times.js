@@ -77,3 +77,16 @@ export const incrementByTimeUnit = {
 export function timeIsInThePast (time) {
   return new Date(time).getTime() < Date.now()
 }
+
+export function getDateTimeLocalInputValue (date) {
+  if (date) {
+    date = new Date(date)
+  } else {
+    date = new Date()
+  }
+  const localYear = date.getFullYear().toString().padStart(4, '0')
+  const localMonth = (date.getMonth() + 1).toString().padStart(2, '0')
+  const localDay = date.getDate().toString().padStart(2, '0')
+  const localTime = date.toTimeString().split(':').slice(0, 2).join(':')
+  return `${localYear}-${localMonth}-${localDay}T${localTime}`
+}

@@ -1,14 +1,16 @@
 <script>
   import OptionsSelector from './OptionsSelector.svelte'
+  import OptionsSelectorAdvanced from './OptionsSelectorAdvanced.svelte'
   import { setFrequency } from '../lib/actions.js'
   import { i18n } from '../lib/i18n.js'
-  import { onChange } from '../lib/svelte.js'
+  import { BubbleUpComponentEvent, onChange } from '../lib/svelte.js'
   import { createEventDispatcher } from 'svelte'
   import { sleep } from '../lib/utils.js'
 
   export let bookmark, url, context = null
 
   const dispatch = createEventDispatcher()
+  const bubbleUpComponentEvent = BubbleUpComponentEvent(dispatch)
 
   let nextVisit, selectedFrequency, newBookmark
 
@@ -17,7 +19,7 @@
     selectedFrequency = bookmark.frequency
   }
 
-  // Filter-out URLs such as 'about:*' and 'file:*'
+  // Filter-out URLs such as (about|file|data):*
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
   const isTimeCapsulableUrl = url && url.startsWith('http')
 
@@ -55,30 +57,73 @@
     >⨯</button>
   {/if}
 
-  {#if nextVisit}
-    <div class="next-visit">
-      <h2>{i18n('next_visit')}</h2>
-      <p>{nextVisit}</p>
-    </div>
-  {/if}
-
   {#if isTimeCapsulableUrl}
-    <OptionsSelector bind:selectedFrequency />
+    <div
+      class="tabs"
+      class:in-settings={context === 'settings'}
+      >
+      <button
+        on:click={() => selectedTab = 'simple'}
+        class:active={selectedTab === 'simple'}
+      >Simple</button>
+      <button
+        on:click={() => selectedTab = 'advanced'}
+        class:active={selectedTab === 'advanced'}
+      >Advanced</button>
+    </div>
+    {#if selectedTab === 'simple'}
+      <OptionsSelector bind:selectedFrequency />
+    {:else if selectedTab === 'advanced'}
+      <OptionsSelectorAdvanced
+        bind:bookmark
+        {url}
+        {context}
+        on:done={bubbleUpComponentEvent}
+      />
+    {/if}
   {:else}
     <p class="invalid">{i18n('url_cant_be_time_capsuled')}</p>
   {/if}
 {/if}
 
 <style>
-  h2{
+  /* h2{
     text-align: center;
     font-size: 1rem;
     margin-bottom: 0;
-  }
+  } */
 
+  .tabs{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .tabs.in-settings{
+    margin-top: 1.5rem;
+  }
+  .tabs button{
+    flex: 1 0 0;
+    padding: 0.5em;
+  }
+  .tabs button:first-child{
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+  .tabs button:last-child{
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+  .tabs button:hover, .tabs button.active{
+    background-color: var(--grey-ddd);
+  }
+  .tabs button.active{
+    cursor: default;
+  }
+/*
   .next-visit p{
     text-align: center;
-  }
+  } */
 
   .invalid{
     padding: 2em 1em;

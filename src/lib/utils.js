@@ -25,3 +25,13 @@ export const sleep = (ms = 0) => {
 export function usesDarkMode () {
   return window.matchMedia?.('(prefers-color-scheme: dark)').matches
 }
+
+export function range (from, to) {
+  return Array.from(Array(to + 1).keys()).slice(from)
+}
+
+export function parseFrequency (frequency) {
+  const num = parseInt(frequency.slice(0, -1))
+  const unit = frequency.slice(-1)
+  return { num, unit }
+}

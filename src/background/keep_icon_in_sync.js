@@ -1,5 +1,5 @@
 import { disable } from '../lib/icon.js'
-import { getActive, getUrl } from '../lib/tabs.js'
+import { getActiveTab, getUrl } from '../lib/tabs.js'
 import { folderId } from '../lib/bookmarks.js'
 import { updateIcon } from './update_icon.js'
 
@@ -11,7 +11,7 @@ async function onTabUpdated (tabId, changeInfo, tab) {
     // A tab loading sends several update events but only one contains a url,
     // thus taking only this one event in account allows to debounce icon updates
     if (!changedTabUrl) return
-    const activeTab = await getActive()
+    const activeTab = await getActiveTab()
     // activeTab might be undefined?!?
     if (activeTab.id === tabId) await updateIcon(changedTabUrl)
   } catch (err) {

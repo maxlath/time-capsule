@@ -5,7 +5,7 @@ export const createTab = browser.tabs.create.bind(browser.tabs)
 
 // Replacing the deprecated getSelected
 // see https://developer.chrome.com/extensions/tabs#method-getSelected
-export function getActive () {
+export function getActiveTab () {
   return Promise.all([
     browser.tabs.query({ active: true }),
     getLastFocusedId()
@@ -15,9 +15,9 @@ export function getActive () {
   })
 }
 
-export const getCurrentTabId = () => getActive().then(tab => tab.id)
+export const getCurrentTabId = () => getActiveTab().then(tab => tab.id)
 
-export const getUrl = () => getActive().then(tab => tab.url)
+export const getUrl = () => getActiveTab().then(tab => tab.url)
 
 export async function getCurrentUrlBookmarkData () {
   const bookmarkData = await getUrl().then(getBookmarkByUrl)
