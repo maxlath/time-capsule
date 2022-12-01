@@ -10,6 +10,7 @@
   },
   "permissions": [
     "bookmarks",
+    "storage",
     "tabs"
   ],
   "browser_action": {
@@ -33,6 +34,15 @@
         "default": "Alt+C"
       },
       "description": "Open periodicity menu"
+    }
+  },
+  "options_ui": {
+    "page": "settings/settings.html",
+    "open_in_tab": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "time-capsule@maxlath.eu"
     }
   }
 }

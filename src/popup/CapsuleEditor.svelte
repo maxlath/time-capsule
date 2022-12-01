@@ -7,6 +7,7 @@
   import { createEventDispatcher } from 'svelte'
   import { sleep } from '../lib/utils.js'
   import CapsuleEditorTabs from './CapsuleEditorTabs.svelte'
+  import { getSettingStore } from '../lib/settings_store.js'
 
   export let bookmark, url, context = null
 
@@ -38,6 +39,8 @@
   }
 
   $: onChange(selectedFrequency, onSelectedFrequencyChange)
+
+  const selectedTabSetting = getSettingStore('popup:selectedTab', 'simple')
 </script>
 
 {#if celebratedNewFrequency}
@@ -59,10 +62,10 @@
   {/if}
 
   {#if isTimeCapsulableUrl}
-    <CapsuleEditorTabs bind:selectedTab />
-    {#if selectedTab === 'simple'}
+    <CapsuleEditorTabs />
+    {#if $selectedTabSetting === 'simple'}
       <OptionsSelector bind:selectedFrequency />
-    {:else if selectedTab === 'advanced'}
+    {:else if $selectedTabSetting === 'advanced'}
       <OptionsSelectorAdvanced
         bind:bookmark
         {url}

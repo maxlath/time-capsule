@@ -2,7 +2,7 @@
 
 set -eu
 
-version=$(cat package.json |jq .version -r)
+version=$(cat package.json | jq .version -r)
 
 cd extension
 # Remove previous build if any
@@ -18,7 +18,9 @@ zip -r "../packages/time-capsule.firefox.$version.zip" .
 
 # Chrome
 cp ../node_modules/webextension-polyfill/dist/browser-polyfill.min.js .
-cat ../manifest.json.bak | jq '.background.scripts = [ "browser-polyfill.min.js" ] + .background.scripts' > ./manifest.json
+cat ../manifest.json.bak |
+  jq '.background.scripts = [ "browser-polyfill.min.js" ] + .background.scripts' |
+  jq 'del(.browser_specific_settings)' > ./manifest.json
 sed -i '/popup.js/i <script src="../browser-polyfill.min.js"></script>' ./popup/popup.html
 sed -i '/settings.js/i <script src="../browser-polyfill.min.js"></script>' ./settings/settings.html
 zip -r "../packages/time-capsule.chrome.$version.zip" .
