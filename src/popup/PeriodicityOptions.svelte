@@ -5,6 +5,7 @@
   import { parseFrequency } from '../lib/utils.js'
   import { unitsLabels } from '../lib/times.js'
   import { getNextVisit } from '../lib/bookmark_title.js'
+  import { slide } from 'svelte/transition'
 
   export let selectedFrequency
 
@@ -27,8 +28,14 @@
     selectedFrequencyIsCustom = selectedCategory == null || !selectedCategory.options.includes(selectedFrequencyNumber)
   }
 
+  const optionsElements = {}
+
   function onKeydown (e) {
     const { key } = e
+
+    // Let the Tab key bubble up
+    if (key === 'Tab') return
+
     const currentFrequencyNumber = parseInt(highlightedFrequency.slice(0, -1))
     const currentFrequencyLetter = highlightedFrequency.slice(-1)[0]
     const currentCategory = categoriesByLetter[currentFrequencyLetter]
@@ -39,21 +46,30 @@
       const { options } = currentCategory
       const number = options.at((columnNumber - 1) % options.length)
       highlightedFrequency = `${number}${currentFrequencyLetter}`
+      optionsElements[highlightedFrequency].focus()
     } else if (key === 'ArrowRight') {
       const { options } = currentCategory
       const number = options.at((columnNumber + 1) % options.length)
       highlightedFrequency = `${number}${currentFrequencyLetter}`
+      optionsElements[highlightedFrequency].focus()
     } else if (key === 'ArrowUp') {
       const category = categoriesList.at((lineNumber - 1) % categoriesList.length)
       const number = category.options[columnNumber]
       highlightedFrequency = `${number}${category.letter}`
+      optionsElements[highlightedFrequency].focus()
     } else if (key === 'ArrowDown') {
       const category = categoriesList.at((lineNumber + 1) % categoriesList.length)
       const number = category.options[columnNumber]
       highlightedFrequency = `${number}${category.letter}`
+      optionsElements[highlightedFrequency].focus()
     } else if (key === 'Enter') {
-      selectedFrequency = highlightedFrequency
-      dispatch('done')
+      if (Array.from(e.target.classList).includes('option')) {
+        selectedFrequency = highlightedFrequency
+        dispatch('done')
+      } else {
+        // Let the event bubble to trigger buttons
+        return
+      }
     } else if (key === 'Delete') {
       remove()
     }
@@ -77,11 +93,19 @@
     ;({ num: frequencyNum, unit: frequencyUnit } = parseFrequency(highlightedFrequency))
     if (frequencyNum === 1) {
       frequencyUnitLabel = unitsLabels[frequencyUnit].replace('(s)', '')
-    } else {
+    } else if (frequencyNum != null) {
       frequencyUnitLabel = unitsLabels[frequencyUnit].replace(/[()]/g, '')
     }
   }
-  $: nextVisit = getNextVisit({ frequency: highlightedFrequency, referenceDate: Date.now() })
+
+  let nextVisit
+  $: {
+    if (highlightedFrequency === 'never') {
+      nextVisit = null
+    } else {
+      nextVisit = getNextVisit({ frequency: highlightedFrequency, referenceDate: Date.now() })
+    }
+  }
 </script>
 
 <svelte:window on:keydown={onKeydown}/>
@@ -98,9 +122,10 @@
         <li>
           <button
             class="option"
-            class:highlight={frequency === highlightedFrequency}
+            bind:this={optionsElements[frequency]}
             style:color={color}
             style:background-color={bgColor}
+            on:focus={() => highlightedFrequency = frequency}
             on:click={() => select(frequency)}
           >
             {num}
@@ -113,7 +138,8 @@
   <div class="special-options">
     {#if selectedFrequencyIsCustom}
       <button
-        class="custom highlight"
+        class="custom"
+        on:focus={() => highlightedFrequency = selectedFrequency}
         on:click={window.close.bind(window)}
         >
         {i18n('custom')}: {selectedFrequency}
@@ -123,6 +149,7 @@
     <button
       class="never"
       title="[Delete]"
+      on:focus={() => highlightedFrequency = 'never'}
       on:click={remove}
       >
       {i18n('never')}
@@ -131,8 +158,12 @@
 
 </div>
 
-<h2>{i18n('next_visit')}</h2>
-<p class="next-visit">{nextVisit.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</p>
+{#if nextVisit}
+  <div transition:slide|local={{ duration: 200 }}>
+    <h2>{i18n('next_visit')}</h2>
+    <p class="next-visit">{nextVisit.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</p>
+  </div>
+{/if}
 
 <style>
   .periodic-options{
@@ -165,7 +196,6 @@
     border: 0;
   }
   .option, .never, .custom{
-    cursor: pointer;
     transition: all 0.3s;
     border-radius: 1px;
     text-align: center;
@@ -181,7 +211,7 @@
     margin: 0.2em 0 0.2em 0;
     text-align: center;
   }
-  .highlight, .option:hover{
+  .option:focus, .option:hover{
     /* Override inline color and background-color */
     color: white !important;
     background-color: var(--light-blue) !important;
@@ -206,6 +236,9 @@
   }
   .special-options button:not(:last-child){
     margin-right: 0.5em;
+  }
+  .custom{
+    background-color: var(--light-blue) !important;
   }
   .custom:hover{
     background-color: var(--darker-light-blue) !important;
