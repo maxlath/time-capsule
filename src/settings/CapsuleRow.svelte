@@ -41,7 +41,7 @@
     <span class="hostname">{new URL(bookmark.url).hostname}</span>
   </td>
   <td class="frequency" title={bookmark.frequencyLabel}>{bookmark.frequency}</td>
-  <td class="repeat">{bookmark.repeat ? bookmark.repeat : '∞'}</td>
+  <td class="repeat">{bookmark.repeat != null ? bookmark.repeat : '∞'}</td>
   <td class="nextVisit">{new Date(bookmark.nextVisit).toLocaleString()}</td>
   <td class="referenceDate">{new Date(bookmark.referenceDate).toLocaleString()}</td>
   <td>

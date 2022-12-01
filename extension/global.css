@@ -68,6 +68,11 @@ button{
   border: 0;
 }
 
+button:disabled{
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 input[type="text"], input[type="search"]{
   border: 1px solid var(--grey-aaa);
 }

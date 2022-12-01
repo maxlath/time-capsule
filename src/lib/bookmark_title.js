@@ -1,5 +1,5 @@
 import { unitsLabels, incrementByTimeUnit, timeIsInThePast } from './times.js'
-import { parseFrequency } from './utils.js'
+import { isPositiveIntegerString, parseFrequency } from './utils.js'
 
 const separator = ' /ᐒ/ '
 const pattern = /\s\/ᐒ\/\s([\d.]{1,3})([HDWMYT])\s(.*)$/
@@ -11,7 +11,7 @@ export const formatBookmarkTitle = ({ title, frequency, nextVisit, referenceDate
     title = title.replace(pattern, '')
   }
   let metadata = `ref=${new Date(referenceDate).toISOString()} next=${new Date(nextVisit).toISOString()}`
-  if (repeat) metadata += ` repeat=${repeat}`
+  if (repeat != null) metadata += ` repeat=${repeat}`
   return `${title}${separator}${frequency} ${metadata}`
 }
 
@@ -35,7 +35,7 @@ export const parseBookmarkTitle = title => {
     if (metadata.startsWith('ref')) {
       const parsedMetadata = metadata.split(' ').reduce(parseMetadata, {})
       ;({ ref: referenceDate, next: nextVisit, repeat } = parsedMetadata)
-      if (/^\d+$/.test(repeat)) repeat = parseInt(repeat)
+      if (isPositiveIntegerString(repeat)) repeat = parseInt(repeat)
     } else {
       // Legacy format
       referenceDate = nextVisit = metadata
@@ -48,7 +48,7 @@ export const parseBookmarkTitle = title => {
       // than an ISO time string in the bookmark index
       nextVisit: new Date(nextVisit).getTime(),
       referenceDate: new Date(referenceDate).getTime(),
-      repeat,
+      repeat: repeat != null ? repeat : '∞',
     }
   }
 }

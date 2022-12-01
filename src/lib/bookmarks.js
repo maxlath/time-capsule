@@ -9,6 +9,7 @@ export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
 export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit }) {
   const { id, title, frequency, referenceDate } = bookmarkData
+  if (repeat == null && bookmarkData.repeat != null) repeat = bookmarkData.repeat
   const updatedTitle = formatBookmarkTitle({
     title,
     frequency: newFrequency != null ? newFrequency : frequency,

@@ -36,11 +36,19 @@
     })
     dispatch('done')
   }
+
+  let nextVisitInputEl
+  $: canValidate = nextVisitInputEl?.validity.valid
 </script>
 
 <label>
   <span>Next visit</span>
-  <input type="datetime-local" bind:value={nextVisit}>
+  <input
+    type="datetime-local"
+    min={getDateTimeLocalInputValue()}
+    bind:value={nextVisit}
+    bind:this={nextVisitInputEl}
+  >
 </label>
 
 <label>
@@ -70,7 +78,11 @@
   </fieldset>
 {/if}
 
-<button class="validate" on:click={validate}>
+<button
+  class="validate"
+  disabled={!canValidate}
+  on:click={validate}
+>
   Validate
 </button>
 
@@ -82,6 +94,9 @@
   label span, legend{
     display: block;
     margin-bottom: 0.3em;
+  }
+  input:invalid{
+    border: 1px solid red;
   }
   .validate{
     padding: 0.5em;

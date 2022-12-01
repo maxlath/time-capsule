@@ -35,3 +35,5 @@ export function parseFrequency (frequency) {
   const unit = frequency.slice(-1)
   return { num, unit }
 }
+
+export const isPositiveIntegerString = str => /^\d+$/.test(str)
