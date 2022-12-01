@@ -2,6 +2,9 @@
   import { inMenu as categories } from './options.js'
   import { i18n } from '../lib/i18n.js'
   import { createEventDispatcher } from 'svelte'
+  import { parseFrequency } from '../lib/utils.js'
+  import { unitsLabels } from '../lib/times.js'
+  import { getNextVisit } from '../lib/bookmark_title.js'
 
   export let selectedFrequency
 
@@ -68,9 +71,24 @@
     selectedFrequency = 'never'
     dispatch('done')
   }
+
+  let frequencyNum, frequencyUnit, frequencyUnitLabel
+  $: {
+    ;({ num: frequencyNum, unit: frequencyUnit } = parseFrequency(highlightedFrequency))
+    if (frequencyNum === 1) {
+      frequencyUnitLabel = unitsLabels[frequencyUnit].replace('(s)', '')
+    } else {
+      frequencyUnitLabel = unitsLabels[frequencyUnit].replace(/[()]/g, '')
+    }
+  }
+  $: nextVisit = getNextVisit({ frequency: highlightedFrequency, referenceDate: Date.now() })
 </script>
 
 <svelte:window on:keydown={onKeydown}/>
+
+{#if frequencyUnit}
+  <h2>{i18n('browse_every_time_unit', [ frequencyNum.toString(), i18n(frequencyUnitLabel) ])}</h2>
+{/if}
 
 <div class="periodic-options">
   {#each Object.entries(categories) as [ category, { optionsData } ] }
@@ -92,23 +110,29 @@
     </ul>
   {/each}
 
-  {#if selectedFrequencyIsCustom}
-    <button
-      class="custom highlight"
-      on:click={window.close.bind(window)}
-      >
-      {i18n('custom')}: {selectedFrequency}
-    </button>
-  {/if}
+  <div class="special-options">
+    {#if selectedFrequencyIsCustom}
+      <button
+        class="custom highlight"
+        on:click={window.close.bind(window)}
+        >
+        {i18n('custom')}: {selectedFrequency}
+      </button>
+    {/if}
 
-  <button
-    class="never"
-    title="[Delete]"
-    on:click={remove}
-    >
-    {i18n('never')}
-  </button>
+    <button
+      class="never"
+      title="[Delete]"
+      on:click={remove}
+      >
+      {i18n('never')}
+    </button>
+  </div>
+
 </div>
+
+<h2>{i18n('next_visit')}</h2>
+<p class="next-visit">{nextVisit.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</p>
 
 <style>
   .periodic-options{
@@ -120,6 +144,11 @@
   .category-header{
     font-size: 1.1em;
     text-align: center;
+  }
+  h2{
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 0;
   }
   h3{
     margin-top: 0.8em;
@@ -157,13 +186,26 @@
     color: white !important;
     background-color: var(--light-blue) !important;
   }
-  .never, .custom{
+  .special-options{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+  }
+  .special-options button{
     font-weight: bold;
     color: white;
-    /* Larger to give the room to the French 'Personnalisé' translation */
-    /* and anticipating for the future German translation ;) */
-    width: 8em;
-    margin: 1em auto;
+    flex: 1 0 0;
+    max-width: 50%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  .special-options button:not(:first-child){
+    margin-left: 0.5em;
+  }
+  .special-options button:not(:last-child){
+    margin-right: 0.5em;
   }
   .custom:hover{
     background-color: var(--darker-light-blue) !important;
@@ -173,5 +215,8 @@
   }
   .never:hover{
     background-color: #c55;
+  }
+  .next-visit{
+    text-align: center;
   }
 </style>

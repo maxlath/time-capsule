@@ -6,6 +6,7 @@
   import { BubbleUpComponentEvent, onChange } from '../lib/svelte.js'
   import { createEventDispatcher } from 'svelte'
   import { sleep } from '../lib/utils.js'
+  import CapsuleEditorTabs from './CapsuleEditorTabs.svelte'
 
   export let bookmark, url, context = null
 
@@ -58,19 +59,7 @@
   {/if}
 
   {#if isTimeCapsulableUrl}
-    <div
-      class="tabs"
-      class:in-settings={context === 'settings'}
-      >
-      <button
-        on:click={() => selectedTab = 'simple'}
-        class:active={selectedTab === 'simple'}
-      >Simple</button>
-      <button
-        on:click={() => selectedTab = 'advanced'}
-        class:active={selectedTab === 'advanced'}
-      >Advanced</button>
-    </div>
+    <CapsuleEditorTabs bind:selectedTab />
     {#if selectedTab === 'simple'}
       <OptionsSelector bind:selectedFrequency />
     {:else if selectedTab === 'advanced'}
@@ -87,50 +76,11 @@
 {/if}
 
 <style>
-  /* h2{
-    text-align: center;
-    font-size: 1rem;
-    margin-bottom: 0;
-  } */
-
-  .tabs{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-  .tabs.in-settings{
-    margin-top: 1.5rem;
-  }
-  .tabs button{
-    flex: 1 0 0;
-    padding: 0.5em;
-  }
-  .tabs button:first-child{
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-  }
-  .tabs button:last-child{
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-  }
-  .tabs button:hover, .tabs button.active{
-    background-color: var(--grey-ddd);
-  }
-  .tabs button.active{
-    cursor: default;
-  }
-/*
-  .next-visit p{
-    text-align: center;
-  } */
-
   .invalid{
     padding: 2em 1em;
     font-style: italic;
     color: var(--grey-666);
   }
-
   .close{
     line-height: 1.8rem;
     font-size: 2.5rem;
@@ -144,7 +94,6 @@
   .close:hover{
     color: var(--grey-222);
   }
-
   .celebration-wrapper{
     display: flex;
     flex-direction: row;

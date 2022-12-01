@@ -31,6 +31,7 @@ export function range (from, to) {
 }
 
 export function parseFrequency (frequency) {
+  if (frequency === 'never') return {}
   const num = parseInt(frequency.slice(0, -1))
   const unit = frequency.slice(-1)
   return { num, unit }

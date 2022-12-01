@@ -41,52 +41,58 @@
   $: canValidate = nextVisitInputEl?.validity.valid
 </script>
 
-<label>
-  <span>Next visit</span>
-  <input
-    type="datetime-local"
-    min={getDateTimeLocalInputValue()}
-    bind:value={nextVisit}
-    bind:this={nextVisitInputEl}
-  >
-</label>
+<div class="options-selector-advanced">
+  <label>
+    <span>Next visit</span>
+    <input
+      type="datetime-local"
+      min={getDateTimeLocalInputValue()}
+      bind:value={nextVisit}
+      bind:this={nextVisitInputEl}
+    >
+  </label>
 
-<label>
-  <span>Repetitions</span>
-  <select bind:value={repeat}>
-    {#each repetitionsOptions as numOption}
-      <option value={numOption}>{numOption}</option>
-    {/each}
-  </select>
-</label>
-
-{#if repeat !== 0}
-  <fieldset transition:slide|local={{ duration: 200 }}>
-    <legend>Frequency</legend>
-
-    <select bind:value={frequencyNum}>
-      {#each frequencyNumOptions as numOption}
+  <label>
+    <span>Repetitions</span>
+    <select bind:value={repeat}>
+      {#each repetitionsOptions as numOption}
         <option value={numOption}>{numOption}</option>
       {/each}
     </select>
+  </label>
 
-    <select bind:value={frequencyUnit}>
-      {#each Object.entries(unitsLabels) as [ unit, label ]}
-        <option value={unit}>{label}</option>
-      {/each}
-    </select>
-  </fieldset>
-{/if}
+  {#if repeat !== 0}
+    <fieldset transition:slide|local={{ duration: 200 }}>
+      <legend>Frequency</legend>
 
-<button
-  class="validate"
-  disabled={!canValidate}
-  on:click={validate}
->
-  Validate
-</button>
+      <select bind:value={frequencyNum}>
+        {#each frequencyNumOptions as numOption}
+          <option value={numOption}>{numOption}</option>
+        {/each}
+      </select>
+
+      <select bind:value={frequencyUnit}>
+        {#each Object.entries(unitsLabels) as [ unit, label ]}
+          <option value={unit}>{label}</option>
+        {/each}
+      </select>
+    </fieldset>
+  {/if}
+
+  <button
+    class="validate"
+    disabled={!canValidate}
+    on:click={validate}
+  >
+    Validate
+  </button>
+</div>
 
 <style>
+  .options-selector-advanced{
+    align-self: stretch;
+    padding: 0.5em;
+  }
   label, fieldset{
     display: block;
     margin: 1em 0;
@@ -101,5 +107,6 @@
   .validate{
     padding: 0.5em;
     border-radius: 3px;
+    background-color: var(--grey-ddd);
   }
 </style>
