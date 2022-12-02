@@ -1,9 +1,9 @@
-import { unitsLabels, incrementByTimeUnit, timeIsInThePast } from './times.js'
+import { incrementByTimeUnit, timeIsInThePast } from './times.js'
 import { isPositiveIntegerString } from './utils.js'
 import { parseFrequency } from './frequency.js'
 
 const separator = ' /ᐒ/ '
-const pattern = /\s\/ᐒ\/\s([\d.]{1,3})([HDWMYT])\s(.*)$/
+const pattern = /\s\/ᐒ\/\s(.*)$/
 
 export const formatBookmarkTitle = ({ title, frequency, nextVisit, referenceDate, repeat, updating }) => {
   nextVisit = nextVisit || getNextVisit({ frequency, referenceDate })
@@ -11,7 +11,9 @@ export const formatBookmarkTitle = ({ title, frequency, nextVisit, referenceDate
   if (updating) {
     title = title.replace(pattern, '')
   }
-  let metadata = `ref=${new Date(referenceDate).toISOString()} next=${new Date(nextVisit).toISOString()}`
+  let metadata = ''
+  if (frequency != null) metadata += `freq=${frequency} `
+  metadata += `ref=${new Date(referenceDate).toISOString()} next=${new Date(nextVisit).toISOString()}`
   if (repeat != null) metadata += ` repeat=${repeat}`
   return `${title}${separator}${frequency} ${metadata}`
 }
@@ -31,20 +33,22 @@ export const getNextVisit = ({ frequency, referenceDate }) => {
 export const parseBookmarkTitle = title => {
   const match = title.match(pattern)
   if (match) {
-    const [ , num, unit, metadata ] = match
-    let referenceDate, nextVisit, repeat
-    if (metadata.startsWith('ref')) {
+    let [ , metadata ] = match
+    let frequency, referenceDate, nextVisit, repeat
+    if (metadata.includes('=')) {
       const parsedMetadata = metadata.split(' ').reduce(parseMetadata, {})
-      ;({ ref: referenceDate, next: nextVisit, repeat } = parsedMetadata)
+      ;({ freq: frequency, ref: referenceDate, next: nextVisit, repeat } = parsedMetadata)
       if (isPositiveIntegerString(repeat)) repeat = parseInt(repeat)
     } else {
       // Legacy format
+      [ frequency, metadata ] = metadata.split(' ')
       referenceDate = nextVisit = metadata
     }
+    const { num, unit, unitLabel } = parseFrequency(frequency)
     return {
       cleanedTitle: title.split(separator)[0],
       frequency: `${num}${unit}`,
-      frequencyLabel: `${num} ${unitsLabels[unit]}`,
+      frequencyLabel: `${num} ${unitLabel}`,
       // epoch time number should take less memory and computation power
       // than an ISO time string in the bookmark index
       nextVisit: new Date(nextVisit).getTime(),
