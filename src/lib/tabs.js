@@ -33,3 +33,8 @@ export function getCurrentUrlBookmarkId () {
   return getCurrentUrlBookmarkData()
   .then(bookmarkData => bookmarkData && bookmarkData.id)
 }
+
+export async function urlIsAlreadyOpened (url) {
+  const tabs = await browser.tabs.query({ url })
+  return tabs.length > 0
+}

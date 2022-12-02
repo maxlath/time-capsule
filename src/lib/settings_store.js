@@ -36,3 +36,8 @@ browser.storage.onChanged.addListener(changes => {
     if (currentValue !== newValue) stores[key].set(newValue)
   }
 })
+
+export async function getSettingValue (key) {
+  const { [key]: value } = await browser.storage.sync.get(key)
+  return value
+}
