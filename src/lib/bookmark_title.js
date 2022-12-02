@@ -1,5 +1,6 @@
 import { unitsLabels, incrementByTimeUnit, timeIsInThePast } from './times.js'
-import { isPositiveIntegerString, parseFrequency } from './utils.js'
+import { isPositiveIntegerString } from './utils.js'
+import { parseFrequency } from './frequency.js'
 
 const separator = ' /ᐒ/ '
 const pattern = /\s\/ᐒ\/\s([\d.]{1,3})([HDWMYT])\s(.*)$/

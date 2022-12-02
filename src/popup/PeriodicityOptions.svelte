@@ -1,11 +1,10 @@
 <script>
   import { inMenu as categories } from './options.js'
   import { i18n } from '../lib/i18n.js'
-  import { createEventDispatcher } from 'svelte'
-  import { parseFrequency } from '../lib/utils.js'
-  import { unitsLabels } from '../lib/times.js'
+  import { createEventDispatcher, onMount } from 'svelte'
   import { getNextVisit } from '../lib/bookmark_title.js'
   import { slide } from 'svelte/transition'
+  import { parseFrequency } from '../lib/frequency.js'
 
   export let selectedFrequency
 
@@ -90,12 +89,7 @@
 
   let frequencyNum, frequencyUnit, frequencyUnitLabel
   $: {
-    ;({ num: frequencyNum, unit: frequencyUnit } = parseFrequency(highlightedFrequency))
-    if (frequencyNum === 1) {
-      frequencyUnitLabel = unitsLabels[frequencyUnit].replace('(s)', '')
-    } else if (frequencyNum != null) {
-      frequencyUnitLabel = unitsLabels[frequencyUnit].replace(/[()]/g, '')
-    }
+    ;({ num: frequencyNum, unitLabel: frequencyUnitLabel } = parseFrequency(highlightedFrequency))
   }
 
   let nextVisit

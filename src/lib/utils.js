@@ -30,11 +30,4 @@ export function range (from, to) {
   return Array.from(Array(to + 1).keys()).slice(from)
 }
 
-export function parseFrequency (frequency) {
-  if (frequency === 'never') return {}
-  const num = parseInt(frequency.slice(0, -1))
-  const unit = frequency.slice(-1)
-  return { num, unit }
-}
-
 export const isPositiveIntegerString = str => /^\d+$/.test(str)

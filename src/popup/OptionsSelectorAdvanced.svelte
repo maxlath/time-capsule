@@ -2,8 +2,9 @@
   import { createEventDispatcher } from 'svelte'
   import { slide } from 'svelte/transition'
   import { saveCapsule } from '../lib/actions.js'
+  import { parseFrequency } from '../lib/frequency.js'
   import { getDateTimeLocalInputValue, unitsLabels } from '../lib/times.js'
-  import { parseFrequency, range } from '../lib/utils.js'
+  import { range } from '../lib/utils.js'
 
   export let url, bookmark, context
 
