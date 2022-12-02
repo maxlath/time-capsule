@@ -40,7 +40,7 @@
 
   $: onChange(selectedFrequency, onSelectedFrequencyChange)
 
-  const selectedTabSetting = getSettingStore('popup:selectedTab', 'simple')
+  const selectedTab = getSettingStore('popup:selectedTab', 'simple')
 </script>
 
 {#if celebratedNewFrequency}
@@ -63,9 +63,9 @@
 
   {#if isTimeCapsulableUrl}
     <CapsuleEditorTabs />
-    {#if $selectedTabSetting === 'simple'}
+    {#if $selectedTab === 'simple'}
       <OptionsSelector bind:selectedFrequency />
-    {:else if $selectedTabSetting === 'advanced'}
+    {:else if $selectedTab === 'advanced'}
       <OptionsSelectorAdvanced
         bind:bookmark
         {url}

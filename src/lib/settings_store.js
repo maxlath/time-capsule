@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store'
+import { writable, get } from 'svelte/store'
 
 const stores = {}
 
@@ -28,3 +28,11 @@ function initStore (key, initialValue) {
     subscribe: store.subscribe,
   }
 }
+
+// See https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/onChanged
+browser.storage.onChanged.addListener(changes => {
+  for (const [ key, { newValue } ] of Object.entries(changes)) {
+    const currentValue = get(stores[key])
+    if (currentValue !== newValue) stores[key].set(newValue)
+  }
+})

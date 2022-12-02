@@ -2,19 +2,27 @@
   import { i18n } from '../lib/i18n.js'
   import Preferences from './Preferences.svelte'
   import Capsules from './Capsules.svelte'
+  import { getSettingStore } from '../lib/settings_store.js'
 
   const tabs = [
-    { key: 'capsules', label: i18n('Capsules') },
     { key: 'preferences', label: i18n('Preferences') },
+    { key: 'capsules', label: i18n('Capsules') },
   ]
 
-  let currentTab = tabs[0]
+  const selectedTab = getSettingStore('settings:selectedTab', 'preferences')
+
+  $: currentTab = tabs.find(tab => tab.key === $selectedTab)
 </script>
 
 <nav>
   <img class="logo" src="/icons/time-capsule-32.png" alt="logo" />
   {#each tabs as tab}
-    <button on:click={() => currentTab = tab} class:active={currentTab === tab}>{tab.label}</button>
+    <button
+      on:click={() => $selectedTab = tab.key}
+      class:active={tab.key === $selectedTab}
+    >
+      {tab.label}
+    </button>
   {/each}
 </nav>
 

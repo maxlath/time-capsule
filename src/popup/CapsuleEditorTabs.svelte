@@ -1,19 +1,19 @@
 <script>
   import { getSettingStore } from '../lib/settings_store.js'
-  const selectedTabSetting = getSettingStore('popup:selectedTab', 'simple')
+  const selectedTab = getSettingStore('popup:selectedTab', 'simple')
 </script>
 
 <div class="tabs">
   <button
-    on:click={() => $selectedTabSetting = 'simple'}
-    class:active={$selectedTabSetting === 'simple'}
+    on:click={() => $selectedTab = 'simple'}
+    class:active={$selectedTab === 'simple'}
   >
     Simple
   </button>
 
   <button
-    on:click={() => $selectedTabSetting = 'advanced'}
-    class:active={$selectedTabSetting === 'advanced'}
+    on:click={() => $selectedTab = 'advanced'}
+    class:active={$selectedTab === 'advanced'}
   >
     Advanced
   </button>
