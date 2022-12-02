@@ -45,22 +45,18 @@
       const { options } = currentCategory
       const number = options.at((columnNumber - 1) % options.length)
       highlightedFrequency = `${number}${currentFrequencyLetter}`
-      optionsElements[highlightedFrequency].focus()
     } else if (key === 'ArrowRight') {
       const { options } = currentCategory
       const number = options.at((columnNumber + 1) % options.length)
       highlightedFrequency = `${number}${currentFrequencyLetter}`
-      optionsElements[highlightedFrequency].focus()
     } else if (key === 'ArrowUp') {
       const category = categoriesList.at((lineNumber - 1) % categoriesList.length)
       const number = category.options[columnNumber]
       highlightedFrequency = `${number}${category.letter}`
-      optionsElements[highlightedFrequency].focus()
     } else if (key === 'ArrowDown') {
       const category = categoriesList.at((lineNumber + 1) % categoriesList.length)
       const number = category.options[columnNumber]
       highlightedFrequency = `${number}${category.letter}`
-      optionsElements[highlightedFrequency].focus()
     } else if (key === 'Enter') {
       if (Array.from(e.target.classList).includes('option')) {
         selectedFrequency = highlightedFrequency
@@ -86,6 +82,12 @@
     selectedFrequency = 'never'
     dispatch('done')
   }
+
+  onMount(() => {
+    optionsElements[highlightedFrequency]?.focus()
+  })
+
+  $: optionsElements[highlightedFrequency]?.focus()
 
   let frequencyNum, frequencyUnit, frequencyUnitLabel
   $: {
