@@ -53,7 +53,7 @@ export const parseBookmarkTitle = title => {
       // than an ISO time string in the bookmark index
       nextVisit: new Date(nextVisit).getTime(),
       referenceDate: new Date(referenceDate).getTime(),
-      repeat: repeat != null ? repeat : '∞',
+      repeat: repeat != null ? repeat : null,
     }
   }
 }

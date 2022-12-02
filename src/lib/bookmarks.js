@@ -2,6 +2,7 @@ import { first } from './utils.js'
 import { initBookmarks } from './bookmarks_init.js'
 import { formatBookmarkTitle, parseBookmarkTitle } from './bookmark_title.js'
 import { nextVisitIsToday } from './next_visit_is_today.js'
+import { getSettingValue } from './settings_store.js'
 
 export const getById = id => browser.bookmarks.get(id).then(first)
 
@@ -9,7 +10,14 @@ export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
 export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit }) {
   const { id, title, frequency, referenceDate } = bookmarkData
-  if (repeat == null && bookmarkData.repeat != null) repeat = bookmarkData.repeat
+  if (repeat == null) {
+    if (bookmarkData.repeat != null) {
+      repeat = bookmarkData.repeat
+    } else {
+      const defaultRepeats = await getSettingValue('settings:defaultRepeats')
+      repeat = defaultRepeats
+    }
+  }
   const updatedTitle = formatBookmarkTitle({
     title,
     frequency: newFrequency != null ? newFrequency : frequency,
@@ -45,10 +53,16 @@ export const waitForFolder = initBookmarks().then(f => {
 
 export async function add (url, title, frequency) {
   await waitForFolder
+  const defaultRepeats = await getSettingValue('settings:defaultRepeats')
   return browser.bookmarks.create({
     parentId: folderId,
     url,
-    title: formatBookmarkTitle({ title, frequency, referenceDate: Date.now() })
+    title: formatBookmarkTitle({
+      title,
+      frequency,
+      referenceDate: Date.now(),
+      repeat: defaultRepeats,
+    })
   })
 }
 

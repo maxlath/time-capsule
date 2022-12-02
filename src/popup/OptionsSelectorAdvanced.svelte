@@ -5,12 +5,14 @@
   import { parseFrequency } from '../lib/frequency.js'
   import { getDateTimeLocalInputValue, unitsLabels } from '../lib/times.js'
   import { range } from '../lib/utils.js'
+  import { repeatsOptions } from '../lib/repeats.js'
+  import { getSettingValue } from '../lib/settings_store.js'
 
   export let url, bookmark, context
 
   const dispatch = createEventDispatcher()
 
-  let repeat = '∞'
+  let repeat
   let frequencyNum = 1
   let frequencyUnit = 'M'
   let nextVisit
@@ -23,8 +25,12 @@
     nextVisit = getDateTimeLocalInputValue()
   }
 
+  getSettingValue('settings:defaultRepeats')
+  .then(defaultRepeatValue => {
+    if (bookmark.repeat == null) repeat = defaultRepeatValue
+  })
+
   const frequencyNumOptions = range(1, 100)
-  const repetitionsOptions = [ '∞' ].concat(range(0, 10))
 
   async function validate () {
     await saveCapsule({
@@ -54,9 +60,9 @@
   </label>
 
   <label>
-    <span>Repetitions</span>
+    <span>Repeats</span>
     <select bind:value={repeat}>
-      {#each repetitionsOptions as numOption}
+      {#each repeatsOptions as numOption}
         <option value={numOption}>{numOption}</option>
       {/each}
     </select>

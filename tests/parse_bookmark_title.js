@@ -1,5 +1,5 @@
 import { parseBookmarkTitle } from '../src/lib/bookmark_title.js'
-import 'should'
+import should from 'should'
 
 describe('parseBookmarkTitle', () => {
   it('should parse legacy title format', () => {
@@ -23,10 +23,10 @@ describe('parseBookmarkTitle', () => {
     capsuleData.repeat.should.equal(5)
   })
 
-  it('should should default to repeat=∞', () => {
+  it('should should default to repeat=null', () => {
     const title = 'Anamnesis (philosophy) - Wikipedia /ᐒ/ freq=6D ref=2022-11-28T16:48:06.111Z next=2022-12-04T16:48:06.111Z'
     const capsuleData = parseBookmarkTitle(title)
-    capsuleData.repeat.should.equal('∞')
+    should(capsuleData.repeat).not.be.ok()
   })
 
   it('should parse repeat=0', () => {
