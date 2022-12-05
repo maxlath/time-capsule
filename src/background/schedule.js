@@ -3,7 +3,8 @@ import { openBookmark } from './open_bookmark.js'
 
 const timeoutIds = {}
 
-export const schedule = (now, bookmark) => {
+export const schedule = bookmark => {
+  const now = Date.now()
   const time = bookmark.nextVisit - now
   if (time <= 0) {
     console.log('passed date, opening now:', bookmark)
@@ -22,7 +23,7 @@ export const schedule = (now, bookmark) => {
 
 export const scheduleFromUnparsedBookmark = unparsedBookmark => {
   const parsedBookmark = parse(unparsedBookmark)
-  if (nextVisitIsToday(parsedBookmark)) schedule(Date.now(), parsedBookmark)
+  if (nextVisitIsToday(parsedBookmark)) schedule(parsedBookmark)
 }
 
 export const cancelPending = bookmarkId => {

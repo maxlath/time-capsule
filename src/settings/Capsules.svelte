@@ -1,9 +1,8 @@
 <script>
-  import { i18n } from '../lib/i18n.js'
   import CapsuleEditor from '../popup/CapsuleEditor.svelte'
   import CapsuleTable from './CapsuleTable.svelte'
 
-  document.title = `Time Capsule - ${i18n('Capsules')}`
+  export let bookmarksPromise = null
 
   let editedBookmark
 </script>
@@ -25,7 +24,7 @@
     </div>
   </div>
 {:else}
-  <CapsuleTable bind:editedBookmark />
+  <CapsuleTable {bookmarksPromise} bind:editedBookmark />
 {/if}
 
 <style>

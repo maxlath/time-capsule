@@ -1,26 +1,39 @@
 <script>
-  import { i18n } from '../lib/i18n.js'
   import { repeatsOptions } from '../lib/repeats.js'
-  document.title = `Time Capsule - ${i18n('Preferences')}`
   import { getSettingStore } from '../lib/settings_store.js'
+  import { range } from '../lib/utils.js'
 
-  const allowDuplicatedTabs = getSettingStore('settings:allowDuplicatedTabs', false)
-  const defaultRepeats = getSettingStore('settings:defaultRepeats', '∞')
+  const maxCapsules = getSettingStore('settings:maxCapsules')
+  const allowDuplicatedTabs = getSettingStore('settings:allowDuplicatedTabs')
+  const defaultRepeats = getSettingStore('settings:defaultRepeats')
+
+  const maxCapsulesOptions = range(1, 10).concat([ 15, 20, 25, 30, 40, 50 ])
 </script>
 
 <div class="preferences">
-  <label>
-    <input type="checkbox" bind:checked={$allowDuplicatedTabs}>
-    Open a capsule even if its URL is already opened in a tab
-  </label>
+  <div class="setting">
+    <select id="maxCapsules" bind:value={$maxCapsules}>
+      {#each maxCapsulesOptions as numOption}
+        <option value={numOption}>{numOption}</option>
+      {/each}
+    </select>
+    <label for="maxCapsules">Maximum number of capsules that can be opened at once</label>
+    <p class="help">Above this threshold, only one tab will be opened, with a list of all the capsules</p>
+  </div>
 
-  <label>
-    <p>Default number of times a capsule should be re-opened before being automatically deleted</p>
-    <select bind:value={$defaultRepeats}>
+  <div class="setting">
+    <select id="repeats" bind:value={$defaultRepeats}>
       {#each repeatsOptions as numOption}
         <option value={numOption}>{numOption}</option>
       {/each}
     </select>
+    <label for="repeats">Default number of repeats</label>
+    <p class="help">Times a capsule should be re-opened before being automatically deleted</p>
+  </div>
+
+  <label class="setting">
+    <input type="checkbox" bind:checked={$allowDuplicatedTabs}>
+    Open a capsule even if its URL is already opened in a tab
   </label>
 </div>
 
@@ -28,12 +41,16 @@
   .preferences{
     padding: 1em;
   }
-  label{
-    display: block;
-    margin-bottom: 1em;
+  .setting{
+    margin: 2em 1em;
   }
-  label p{
-    display: block;
+  .help{
     margin-bottom: 0.5em;
+    font-size: 0.9rem;
+    margin-left: 4em;
+    color: var(--grey-444);
+  }
+  select{
+    padding: 0.3em 0.5em;
   }
 </style>

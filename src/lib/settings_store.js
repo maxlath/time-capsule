@@ -2,16 +2,26 @@ import { writable, get } from 'svelte/store'
 
 const stores = {}
 
-export function getSettingStore (key, initialValue) {
-  stores[key] = stores[key] || initStore(key, initialValue)
+const defaultValues = {
+  'popup:selectedTab': 'simple',
+  'settings:allowDuplicatedTabs': false,
+  'settings:defaultRepeats': '∞',
+  'settings:maxCapsules': 10,
+  'settings:selectedTab': 'preferences',
+}
+
+export function getSettingStore (key) {
+  stores[key] = stores[key] || initStore(key)
   return stores[key]
 }
 
-function initStore (key, initialValue) {
+function initStore (key) {
+  checkKeyStatus(key)
   const start = () => {
     const stop = () => delete stores[key]
     return stop
   }
+  const initialValue = defaultValues[key]
   const store = writable(initialValue, start)
 
   browser.storage.sync.get(key)
@@ -38,6 +48,11 @@ browser.storage.onChanged.addListener(changes => {
 })
 
 export async function getSettingValue (key) {
+  checkKeyStatus(key)
   const { [key]: value } = await browser.storage.sync.get(key)
-  return value
+  return value != null ? value : defaultValues[key]
+}
+
+const checkKeyStatus = key => {
+  if (defaultValues[key] == null) throw new Error(`unknown setting key: ${key}`)
 }

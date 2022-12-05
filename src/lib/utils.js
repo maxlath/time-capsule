@@ -31,3 +31,16 @@ export function range (from, to) {
 }
 
 export const isPositiveIntegerString = str => /^\d+$/.test(str)
+
+export const partition = (collection, splitFn) => {
+  const a = []
+  const b = []
+  for (const obj of collection) {
+    if (splitFn(obj)) {
+      a.push(obj)
+    } else {
+      b.push(obj)
+    }
+  }
+  return [ a, b ]
+}

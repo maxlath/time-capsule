@@ -40,7 +40,7 @@
 
   $: onChange(selectedFrequency, onSelectedFrequencyChange)
 
-  const selectedTab = getSettingStore('popup:selectedTab', 'simple')
+  const selectedTab = getSettingStore('popup:selectedTab')
 </script>
 
 {#if celebratedNewFrequency}

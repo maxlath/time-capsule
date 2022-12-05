@@ -3,28 +3,40 @@
   import Preferences from './Preferences.svelte'
   import Capsules from './Capsules.svelte'
   import { getSettingStore } from '../lib/settings_store.js'
+  import NavBar from './NavBar.svelte'
 
+  // New tab: logs/opened lately, with the possibility to edit/delete/recreate capsules from those logs
   const tabs = [
     { key: 'preferences', label: i18n('Preferences') },
     { key: 'capsules', label: i18n('Capsules') },
   ]
 
-  const selectedTab = getSettingStore('settings:selectedTab', 'preferences')
+  const selectedTab = getSettingStore('settings:selectedTab')
 
-  $: currentTab = tabs.find(tab => tab.key === $selectedTab)
+  let currentTab
+  $: {
+    currentTab = tabs.find(tab => tab.key === $selectedTab)
+    document.title = `Time Capsule - ${currentTab.label}`
+  }
+
+  setTimeout(() => {
+    const tabFromUrl = new URLSearchParams(window.location.search).get('tab')
+    if (tabFromUrl) $selectedTab = tabFromUrl
+  }, 200)
 </script>
 
-<nav>
-  <img class="logo" src="/icons/time-capsule-32.png" alt="logo" />
-  {#each tabs as tab}
-    <button
-      on:click={() => $selectedTab = tab.key}
-      class:active={tab.key === $selectedTab}
-    >
-      {tab.label}
-    </button>
-  {/each}
-</nav>
+<NavBar>
+  <div slot="start">
+    {#each tabs as tab}
+      <button
+        on:click={() => $selectedTab = tab.key}
+        class:active={tab.key === $selectedTab}
+      >
+        {tab.label}
+      </button>
+    {/each}
+  </div>
+</NavBar>
 
 <div>
   {#if currentTab.key === 'preferences'}<Preferences />
@@ -33,16 +45,6 @@
 </div>
 
 <style>
-  nav{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
-  }
-  .logo{
-    margin: 0.8em 1em;
-  }
   button{
     padding: 1rem;
     align-self: stretch;

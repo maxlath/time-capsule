@@ -3,10 +3,11 @@ node_modules
 misc
 packages
 extension/icons/*
+extension/*/*.css
+extension/*/*.js
+extension/browser-polyfill.min.js
+
 # force add those that we want to track
 *png
 *svg
 *.map
-extension/*/*.css
-extension/*/*.js
-extension/browser-polyfill.min.js

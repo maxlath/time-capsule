@@ -1,8 +1,9 @@
 import { first } from './utils.js'
-import { initBookmarks } from './bookmarks_init.js'
+import { initBookmarksFolders } from './bookmarks_init.js'
 import { formatBookmarkTitle, parseBookmarkTitle } from './bookmark_title.js'
 import { getSettingValue } from './settings_store.js'
 import { get as getDayEnd } from './day_end.js'
+import { timeIsInThePast } from './times.js'
 
 export const getById = id => browser.bookmarks.get(id).then(first)
 
@@ -38,21 +39,26 @@ export const parse = bookmarkData => {
   return Object.assign(data, bookmarkData)
 }
 
-// The initBookmarks function needs to be called only once, given that even if the bookmark
+// The initBookmarksFolders function needs to be called only once, given that even if the bookmark
 // folder gets deleted, the folder id remains valid: newly created bookmarks
 // will trigger the folder to be re-created
 
 export let folderId
 export let folder
+export let archiveFolder
+export let archiveFolderId
 
-// store the promise
-export const waitForFolder = initBookmarks().then(f => {
-  folder = f
-  folderId = folder.id
-})
+export const waitForFolders = initBookmarksFolders()
+  .then(folders => {
+    folder = folders.mainFolder
+    folderId = folders.mainFolder.id
+    archiveFolder = folders.archiveFolder
+    archiveFolderId = folders.archiveFolder.id
+  })
+  .catch(console.error)
 
 export async function add (url, title, frequency) {
-  await waitForFolder
+  await waitForFolders
   const defaultRepeats = await getSettingValue('settings:defaultRepeats')
   return browser.bookmarks.create({
     parentId: folderId,
@@ -67,7 +73,7 @@ export async function add (url, title, frequency) {
 }
 
 export async function recover (deletedBookmark) {
-  await waitForFolder
+  await waitForFolders
   return browser.bookmarks.create({
     parentId: folderId,
     url: deletedBookmark.url,
@@ -87,34 +93,40 @@ export async function getByUrl (url) {
   // Filter-out URLs such as 'about:*' and 'file:*'
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
   if (!url.startsWith('http')) return
-  await waitForFolder
+  await waitForFolders
   const res = await browser.bookmarks.search({ url })
   return res.filter(isInFolder)[0]
 }
 
-// Could possibly be extracted to become specific to background
-// and not overload the popup
-export async function getTodaysBookmarksData () {
-  await waitForFolder
-  const res = await browser.bookmarks.getSubTree(folderId)
-  if (res?.[0] == null) return []
-  return res[0].children
-  .map(parse)
-  .filter(nextVisitIsToday)
-}
-
 async function ensureBookmarkFolderIsManagedFolder (bookmark) {
-  await waitForFolder
+  await waitForFolders
   if (bookmark.parent !== folderId) {
     console.log('moving bookmark to managed folder', bookmark)
-    browser.bookmarks.move(bookmark.id, { parentId: folderId })
+    return browser.bookmarks.move(bookmark.id, { parentId: folderId })
   }
 }
 
 export async function getBookmarks () {
-  await waitForFolder
+  await waitForFolders
   const [ { children: bookmarks } ] = await browser.bookmarks.getSubTree(folderId)
   return bookmarks.map(parse)
 }
 
-export const nextVisitIsToday = bookmark => bookmark && bookmark.nextVisit < getDayEnd()
+export async function getTodaysBookmarksData () {
+  const bookmarks = await getBookmarks()
+  return bookmarks.filter(nextVisitIsToday)
+}
+
+export async function getBookmarksByIds (ids) {
+  const bookmarks = await browser.bookmarks.get(ids)
+  return bookmarks.map(parse)
+}
+
+export const nextVisitIsToday = bookmark => bookmark?.nextVisit < getDayEnd()
+
+export const nextVisitIsInThePast = bookmark => timeIsInThePast(bookmark.nextVisit)
+
+export async function archiveById (id) {
+  await waitForFolders
+  return browser.bookmarks.move(id, { parentId: archiveFolderId })
+}

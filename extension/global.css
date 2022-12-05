@@ -21,6 +21,7 @@
   --darker-light-blue: #0077b4;
   --success-color: #22ee22;
   --danger-color: #ff4e4e;
+  --warning-color: #ffd402aa;
   --body-bg-color: #f0f0f0;
   --active-settings-tab: #592acb;
 }
@@ -46,6 +47,7 @@
 
     --body-bg-color: #090e12;
     --active-settings-tab: #924bff;
+    --warning-color: #ca9f00aa;
   }
   a{
     color: #61a7ec;

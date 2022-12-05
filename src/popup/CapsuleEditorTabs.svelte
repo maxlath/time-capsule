@@ -1,6 +1,6 @@
 <script>
   import { getSettingStore } from '../lib/settings_store.js'
-  const selectedTab = getSettingStore('popup:selectedTab', 'simple')
+  const selectedTab = getSettingStore('popup:selectedTab')
 </script>
 
 <div class="tabs">

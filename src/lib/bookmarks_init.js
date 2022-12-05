@@ -1,37 +1,29 @@
-import { ErrorRethrow } from '../lib/utils.js'
-
 const folderName = 'Time Capsules [managed folder]'
+const archiveFolderName = 'Time Capsules [Archive][managed folder]'
 
-export function initBookmarks () {
-  return browser.bookmarks.getTree()
-  .then(findMatch)
-  .then(createFolderIfMissing)
-  .catch(ErrorRethrow('initFolder'))
+export async function initBookmarksFolders () {
+  const nodes = await browser.bookmarks.getTree()
+  const mainFolder = findMatch(nodes, folderName) || await createFolder(folderName)
+  const archiveFolder = findMatch(nodes, archiveFolderName) || await createFolder(archiveFolderName)
+  return {
+    mainFolder,
+    archiveFolder,
+  }
 }
 
-const findMatch = array => {
+const findMatch = (array, folderTitle) => {
   for (const node of array) {
-    if (matchingNode(node)) {
+    if (node.title === folderTitle) {
       return node
     } else if (node.children) {
-      const childreMatch = findMatch(node.children)
-      if (childreMatch) return childreMatch
+      const childrenMatch = findMatch(node.children, folderTitle)
+      if (childrenMatch) return childrenMatch
     }
   }
-
-  return false
 }
 
-const matchingNode = node => node.title === folderName
-
-const createFolderIfMissing = match => {
-  if (match) {
-    return match
-  } else {
-    return browser.bookmarks.create({ title: folderName })
-    .then(newFolder => {
-      console.log('added folder: ' + newFolder.title)
-      return newFolder
-    })
-  }
+const createFolder = async folderTitle => {
+  const newFolder = await browser.bookmarks.create({ title: folderTitle })
+  console.log('created folder: ' + newFolder.title, newFolder)
+  return newFolder
 }

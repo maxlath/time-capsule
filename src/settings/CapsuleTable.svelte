@@ -7,15 +7,18 @@
   import { columns, filterByText } from './capsule_table_helpers.js'
   import Flash from '../popup/Flash.svelte'
 
-  export let editedBookmark
+  export let bookmarksPromise, editedBookmark
 
-  let bookmarks, filteredBookmarks, sortedBookmark, bookmarksPage, textFilter = '', flash
+  let bookmarks, filteredBookmarks, sortedBookmark, bookmarksPage, flash
+  let textFilter = ''
   let sortField = 'nextVisit'
   let reverseSort = false
 
-  const waitForBookmarks = getBookmarks()
-    .then(b => bookmarks = b)
-    .catch(err => flash = err)
+  bookmarksPromise = bookmarksPromise || getBookmarks()
+
+  bookmarksPromise
+  .then(b => bookmarks = b)
+  .catch(err => flash = err)
 
   function resort (e) {
     if (e.target.name === sortField) {
@@ -40,7 +43,7 @@
 </script>
 
 <Flash state={flash} />
-{#await waitForBookmarks}
+{#await bookmarksPromise}
   <Spinner />
 {:then}
   <div class="controls">
@@ -72,9 +75,11 @@
       </tr>
     </thead>
     <tbody>
-      {#each bookmarksPage as bookmark (bookmark.id)}
-        <CapsuleRow {bookmark} on:edit={() => editedBookmark = bookmark} />
-      {/each}
+      {#if bookmarksPage}
+        {#each bookmarksPage as bookmark (bookmark.id)}
+          <CapsuleRow {bookmark} on:edit={() => editedBookmark = bookmark} />
+        {/each}
+      {/if}
     </tbody>
   </table>
 {/await}
