@@ -1,8 +1,8 @@
 import { first } from './utils.js'
 import { initBookmarks } from './bookmarks_init.js'
 import { formatBookmarkTitle, parseBookmarkTitle } from './bookmark_title.js'
-import { nextVisitIsToday } from './next_visit_is_today.js'
 import { getSettingValue } from './settings_store.js'
+import { get as getDayEnd } from './day_end.js'
 
 export const getById = id => browser.bookmarks.get(id).then(first)
 
@@ -116,3 +116,5 @@ export async function getBookmarks () {
   const [ { children: bookmarks } ] = await browser.bookmarks.getSubTree(folderId)
   return bookmarks.map(parse)
 }
+
+export const nextVisitIsToday = bookmark => bookmark && bookmark.nextVisit < getDayEnd()
