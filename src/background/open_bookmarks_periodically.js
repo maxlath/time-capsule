@@ -14,6 +14,7 @@ const openTodaysBookmarks = async () => {
     const todaysBookmarks = await getTodaysBookmarksData()
     const maxCapsules = await getSettingValue('settings:maxCapsules')
     const [ bookmarksToOpenImmediately, bookmarksForLaterToday ] = partition(todaysBookmarks, nextVisitIsInThePast)
+    console.log("today's program", { bookmarksToOpenImmediately, bookmarksForLaterToday })
     if (bookmarksToOpenImmediately.length > maxCapsules) {
       const ids = bookmarksToOpenImmediately.map(bookmark => bookmark.id)
       bookmarksForLaterToday.forEach(schedule)
