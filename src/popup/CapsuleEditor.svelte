@@ -1,6 +1,7 @@
 <script>
-  import FrequencySelector from './FrequencySelector.svelte'
-  import OptionsSelectorAdvanced from './OptionsSelectorAdvanced.svelte'
+  import OneTimeCapsuleEditor from './OneTimeCapsuleEditor.svelte'
+  import PeriodicalCapsuleEditor from './PeriodicalCapsuleEditor.svelte'
+  import AdvancedCapsuleEditor from './AdvancedCapsuleEditor.svelte'
   import { i18n } from '../lib/i18n.js'
   import { BubbleUpComponentEvent } from '../lib/svelte.js'
   import { createEventDispatcher } from 'svelte'
@@ -28,15 +29,22 @@
 
 {#if isTimeCapsulableUrl}
   <CapsuleEditorTabs />
-  {#if $selectedTab === 'simple'}
-    <FrequencySelector
+  {#if $selectedTab === 'one-time'}
+    <OneTimeCapsuleEditor
+      bind:bookmark
+      {url}
+      {context}
+      on:done={bubbleUpComponentEvent}
+    />
+  {:else if $selectedTab === 'periodical'}
+    <PeriodicalCapsuleEditor
       bind:bookmark
       {url}
       {context}
       on:done={bubbleUpComponentEvent}
     />
    {:else if $selectedTab === 'advanced'}
-    <OptionsSelectorAdvanced
+    <AdvancedCapsuleEditor
       bind:bookmark
       {url}
       {context}

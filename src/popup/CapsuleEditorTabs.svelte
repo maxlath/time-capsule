@@ -5,10 +5,17 @@
 
 <div class="tabs">
   <button
-    on:click={() => $selectedTab = 'simple'}
-    class:active={$selectedTab === 'simple'}
+    on:click={() => $selectedTab = 'one-time'}
+    class:active={$selectedTab === 'one-time'}
   >
-    Simple
+    One Time
+  </button>
+
+  <button
+    on:click={() => $selectedTab = 'periodical'}
+    class:active={$selectedTab === 'periodical'}
+  >
+    Periodical
   </button>
 
   <button

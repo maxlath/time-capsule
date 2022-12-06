@@ -3,7 +3,7 @@ import { writable, get } from 'svelte/store'
 const stores = {}
 
 const defaultValues = {
-  'popup:selectedTab': 'simple',
+  'popup:selectedTab': 'periodical',
   'settings:allowDuplicatedTabs': false,
   'settings:defaultRepeats': '∞',
   'settings:maxCapsules': 10,
