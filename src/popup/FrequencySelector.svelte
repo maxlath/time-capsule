@@ -3,13 +3,12 @@
   import TypingHelp from './TypingHelp.svelte'
   import { createEventDispatcher } from 'svelte'
   import { BubbleUpComponentEvent } from '../lib/svelte.js'
+  import { getMatchingPart, findFrequencyPattern, isKeyboardSelectorKey } from '../lib/frequency_selector_helpers.js'
 
   export let selectedFrequency
 
   const dispatch = createEventDispatcher()
   const bubbleUpComponentEvent = BubbleUpComponentEvent(dispatch)
-
-  const isKeyboardSelectorKey = key => /^[\d.HDWMYT]{1}$/.test(key)
 
   let showKeyboardSelector = false
   let foundFrequency
@@ -17,7 +16,9 @@
   function onKeydown ({ key }) {
     if (isKeyboardSelectorKey(key)) {
       showKeyboardSelector = true
-      foundFrequency = matchFrequencyPattern(key)
+      // Keep only the last 4 keys
+      lastKeys = lastKeys.slice(-3) + key
+      foundFrequency = findFrequencyPattern(lastKeys)
       if (foundFrequency) {
         selectedFrequency = foundFrequency
       }
@@ -26,30 +27,8 @@
     }
   }
 
-  // leading figure can't be 0
-  const frequencyPattern = /^[^\d.]?([1-9][\d.]{0,2})([HDWMYT])$/i
-  const frequencyStartPattern = /([1-9][\d.]{0,2})([HDWMYT])?$/i
-
   let lastKeys = ''
   let matchingPart
-
-  function matchFrequencyPattern (key) {
-    // Keep only the last 4 keys
-    lastKeys = lastKeys.slice(-3) + key
-    const match = lastKeys.match(frequencyPattern)
-    if (match) {
-      let [ , num, unit ] = match
-      // prevent to pass sequences like 000
-      num = parseFloat(num).toString()
-      unit = unit.toUpperCase()
-      return `${num}${unit}`
-    }
-  }
-
-  function getMatchingPart (str) {
-    const match = str.match(frequencyStartPattern)
-    return match ? match[0] : ''
-  }
 
   $: matchingPart = getMatchingPart(lastKeys)
 </script>
