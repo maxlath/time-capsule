@@ -40,7 +40,7 @@
     const currentCategory = categoriesByLetter[currentFrequencyLetter]
     const lineNumber = categoriesLetters.indexOf(currentFrequencyLetter)
     let columnNumber = currentCategory?.options.indexOf(currentFrequencyNumber)
-    if (columnNumber < 0) columnNumber = 0
+    if (columnNumber == null || columnNumber < 0) columnNumber = 0
     if (key === 'ArrowLeft') {
       const { options } = currentCategory
       const number = options.at((columnNumber - 1) % options.length)
