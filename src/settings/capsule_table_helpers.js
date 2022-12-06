@@ -3,7 +3,6 @@ export const columns = [
   { label: 'Frequency', field: 'frequency' },
   { label: 'Repeat', field: 'repeat' },
   { label: 'Next_Visit', field: 'nextVisit' },
-  { label: 'Reference_Date', field: 'referenceDate' },
   { label: 'Actions' },
 ]
 

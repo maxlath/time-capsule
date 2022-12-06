@@ -43,8 +43,7 @@
   <td class="frequency" title={bookmark.frequencyLabel}>{bookmark.frequency}</td>
   <td class="repeat">{bookmark.repeat != null ? bookmark.repeat : '∞'}</td>
   <td class="nextVisit">{new Date(bookmark.nextVisit).toLocaleString()}</td>
-  <td class="referenceDate">{new Date(bookmark.referenceDate).toLocaleString()}</td>
-  <td>
+  <td class="actions">
     {#if bookmark.deleted}
       <button class="undelete" on:click={undeleteBookmark}>{i18n('Undo')}</button>
     {:else}
@@ -58,6 +57,7 @@
   td{
     font-weight: normal;
     padding: 0.2em;
+    text-align: right;
   }
   .title{
     text-align: left;
@@ -65,7 +65,7 @@
     flex-direction: row;
     align-items: flex-end;
     justify-content: flex-start;
-    max-width: 38em;
+    max-width: 45em;
   }
   .title a{
     display: inline-block;
@@ -78,10 +78,7 @@
     color: var(--grey-444);
     font-size: 0.8rem;
   }
-  .frequency{
-    text-align: right;
-  }
-  .nextVisit, .referenceDate{
+  .nextVisit{
     padding: 0 0.5em;
   }
   button{
