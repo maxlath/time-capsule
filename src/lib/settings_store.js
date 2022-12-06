@@ -21,12 +21,12 @@ function initStore (key) {
     const stop = () => delete stores[key]
     return stop
   }
-  const initialValue = defaultValues[key]
-  const store = writable(initialValue, start)
+  const store = writable(null, start)
 
   browser.storage.sync.get(key)
   .then(({ [key]: value }) => {
     if (value != null) store.set(value)
+    else store.set(defaultValues[key])
   })
   .catch(console.error)
 

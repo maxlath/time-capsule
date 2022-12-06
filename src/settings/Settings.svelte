@@ -15,8 +15,10 @@
 
   let currentTab
   $: {
-    currentTab = tabs.find(tab => tab.key === $selectedTab)
-    document.title = `Time Capsule - ${currentTab.label}`
+    if ($selectedTab) {
+      currentTab = tabs.find(tab => tab.key === $selectedTab)
+      document.title = `Time Capsule - ${currentTab.label}`
+    }
   }
 
   setTimeout(() => {
@@ -39,8 +41,11 @@
 </NavBar>
 
 <div>
-  {#if currentTab.key === 'preferences'}<Preferences />
-  {:else if currentTab.key === 'capsules'}<Capsules />
+  {#if currentTab}
+    {#if currentTab.key === 'preferences'}<Preferences />
+    {:else if currentTab.key === 'capsules'}<Capsules />
+    {:else if currentTab.key === 'logs'}<Logs />
+    {/if}
   {/if}
 </div>
 
