@@ -1,5 +1,5 @@
 <script>
-  import OptionsSelector from './OptionsSelector.svelte'
+  import FrequencySelector from './FrequencySelector.svelte'
   import OptionsSelectorAdvanced from './OptionsSelectorAdvanced.svelte'
   import { setFrequency } from '../lib/actions.js'
   import { i18n } from '../lib/i18n.js'
@@ -64,7 +64,7 @@
   {#if isTimeCapsulableUrl}
     <CapsuleEditorTabs />
     {#if $selectedTab === 'simple'}
-      <OptionsSelector bind:selectedFrequency />
+      <FrequencySelector bind:selectedFrequency />
     {:else if $selectedTab === 'advanced'}
       <OptionsSelectorAdvanced
         bind:bookmark
