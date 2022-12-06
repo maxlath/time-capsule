@@ -7,6 +7,7 @@
   import { range } from '../lib/utils.js'
   import { repeatsOptions } from '../lib/repeats.js'
   import { getSettingValue } from '../lib/settings_store.js'
+  import { getNextVisit } from '../lib/bookmark_title.js'
 
   export let url, bookmark, context
 
@@ -44,22 +45,38 @@
     dispatch('done')
   }
 
+  function resetNextVisit () {
+    const frequency = `${frequencyNum}${frequencyUnit}`
+    nextVisit = getDateTimeLocalInputValue(getNextVisit({
+      frequency,
+      referenceDate: Date.now()
+    }))
+  }
+
   let nextVisitInputEl
   $: canValidate = nextVisitInputEl?.validity.valid
 </script>
 
 <div class="options-selector-advanced">
-  <label>
-    <span>Next visit</span>
-    <input
-      type="datetime-local"
-      min={getDateTimeLocalInputValue()}
-      bind:value={nextVisit}
-      bind:this={nextVisitInputEl}
-    >
-  </label>
+  <div class="option-group">
+    <label for="nextVisit">Next visit</label>
+    <div class="input-group">
+      <input
+        id="nextVisit"
+        type="datetime-local"
+        min={getDateTimeLocalInputValue()}
+        bind:value={nextVisit}
+        bind:this={nextVisitInputEl}
+      >
+      <button
+        class="reset-next-visit"
+        on:click={resetNextVisit}
+        title="Reset the date for the next visit, using the selected frequency"
+      >reset</button>
+    </div>
+  </div>
 
-  <label>
+  <label class="option-group">
     <span>Repeats</span>
     <select bind:value={repeat}>
       {#each repeatsOptions as numOption}
@@ -69,7 +86,10 @@
   </label>
 
   {#if repeat !== 0}
-    <fieldset transition:slide|local={{ duration: 200 }}>
+    <fieldset
+      class="option-group"
+      transition:slide|local={{ duration: 200 }}
+    >
       <legend>Frequency</legend>
 
       <select bind:value={frequencyNum}>
@@ -100,13 +120,24 @@
     align-self: stretch;
     padding: 0.5em;
   }
-  label, fieldset{
+  .option-group{
     display: block;
     margin: 1em 0;
   }
-  label span, legend{
+  .option-group label, .option-group span, .option-group legend{
     display: block;
     margin-bottom: 0.3em;
+  }
+  .input-group{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .reset-next-visit{
+    margin-inline-start: 1em;
+    margin-block-end: 0.3em;
+    text-decoration: underline;
   }
   input:invalid{
     border: 1px solid red;
