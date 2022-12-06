@@ -89,7 +89,7 @@
 
   $: optionsElements[highlightedFrequency]?.focus()
 
-  let frequencyNum, frequencyUnit, frequencyUnitLabel
+  let frequencyNum, frequencyUnitLabel
   $: {
     ;({ num: frequencyNum, unitLabel: frequencyUnitLabel } = parseFrequency(highlightedFrequency))
   }
@@ -106,7 +106,7 @@
 
 <svelte:window on:keydown={onKeydown}/>
 
-{#if frequencyUnit}
+{#if frequencyUnitLabel}
   <h2>{i18n('browse_every_time_unit', [ frequencyNum.toString(), i18n(frequencyUnitLabel) ])}</h2>
 {/if}
 
