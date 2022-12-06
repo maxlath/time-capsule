@@ -3,7 +3,7 @@
   import TypingHelp from './TypingHelp.svelte'
   import { createEventDispatcher } from 'svelte'
   import { onChange } from '../lib/svelte.js'
-  import { getMatchingPart, findFrequencyPattern, isKeyboardSelectorKey } from '../lib/periodical_capsule_editor_helpers.js'
+  import { getMatchingPart, findFrequencyPattern, isKeyboardSelectorKey } from './periodical_capsule_editor_helpers.js'
   import { setFrequency } from '../lib/actions.js'
   import { sleep } from '../lib/utils.js'
 
