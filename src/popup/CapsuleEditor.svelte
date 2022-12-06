@@ -1,11 +1,9 @@
 <script>
   import FrequencySelector from './FrequencySelector.svelte'
   import OptionsSelectorAdvanced from './OptionsSelectorAdvanced.svelte'
-  import { setFrequency } from '../lib/actions.js'
   import { i18n } from '../lib/i18n.js'
-  import { BubbleUpComponentEvent, onChange } from '../lib/svelte.js'
+  import { BubbleUpComponentEvent } from '../lib/svelte.js'
   import { createEventDispatcher } from 'svelte'
-  import { sleep } from '../lib/utils.js'
   import CapsuleEditorTabs from './CapsuleEditorTabs.svelte'
   import { getSettingStore } from '../lib/settings_store.js'
 
@@ -14,68 +12,39 @@
   const dispatch = createEventDispatcher()
   const bubbleUpComponentEvent = BubbleUpComponentEvent(dispatch)
 
-  let nextVisit, selectedFrequency, newBookmark
-
-  if (bookmark) {
-    nextVisit = new Date(bookmark.nextVisit).toLocaleString()
-    selectedFrequency = bookmark.frequency
-  }
-
   // Filter-out URLs such as (about|file|data):*
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
   const isTimeCapsulableUrl = url && url.startsWith('http')
 
-  let celebratedNewFrequency, animationIsDone
-  async function onSelectedFrequencyChange () {
-    if (selectedFrequency !== bookmark?.frequency) {
-      celebratedNewFrequency = selectedFrequency
-      // Wait a bit to let the frequency to be saved and show the success animation
-      animationIsDone = sleep(500)
-      newBookmark = await setFrequency({ url, frequency: selectedFrequency, context })
-      bookmark = bookmark ? Object.assign(bookmark, newBookmark) : newBookmark
-      await animationIsDone
-      dispatch('done')
-    }
-  }
-
-  $: onChange(selectedFrequency, onSelectedFrequencyChange)
-
   const selectedTab = getSettingStore('popup:selectedTab')
 </script>
 
-{#if celebratedNewFrequency}
-  <div class="celebration-wrapper">
-    {#if celebratedNewFrequency === 'never'}
-      <p class="never">
-        <img src="/icons/red-trash-bin.svg" alt="delete icon" />
-      </p>
-    {:else}
-      <p>{celebratedNewFrequency}</p>
-    {/if}
-  </div>
-{:else}
-  {#if context === 'settings'}
-    <button
-      class="close"
-      on:click={() => dispatch('done')}
-    >⨯</button>
-  {/if}
+{#if context === 'settings'}
+  <button
+    class="close"
+    on:click={() => dispatch('done')}
+  >⨯</button>
+{/if}
 
-  {#if isTimeCapsulableUrl}
-    <CapsuleEditorTabs />
-    {#if $selectedTab === 'simple'}
-      <FrequencySelector bind:selectedFrequency />
-    {:else if $selectedTab === 'advanced'}
-      <OptionsSelectorAdvanced
-        bind:bookmark
-        {url}
-        {context}
-        on:done={bubbleUpComponentEvent}
-      />
-    {/if}
-  {:else}
-    <p class="invalid">{i18n('url_cant_be_time_capsuled')}</p>
+{#if isTimeCapsulableUrl}
+  <CapsuleEditorTabs />
+  {#if $selectedTab === 'simple'}
+    <FrequencySelector
+      bind:bookmark
+      {url}
+      {context}
+      on:done={bubbleUpComponentEvent}
+    />
+   {:else if $selectedTab === 'advanced'}
+    <OptionsSelectorAdvanced
+      bind:bookmark
+      {url}
+      {context}
+      on:done={bubbleUpComponentEvent}
+    />
   {/if}
+{:else}
+  <p class="invalid">{i18n('url_cant_be_time_capsuled')}</p>
 {/if}
 
 <style>
@@ -96,43 +65,5 @@
   }
   .close:hover{
     color: var(--grey-222);
-  }
-  .celebration-wrapper{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 15em;
-  }
-  .celebration-wrapper p{
-    font-size: 3em;
-    font-weight: bold;
-    color: var(--success-color);
-    animation-name: grow-out-text;
-    animation-duration: 0.5s;
-  }
-  .celebration-wrapper p.never{
-    color: var(--danger-color);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 2em;
-    width: 2em;
-    animation-name: grow-out-svg;
-    animation-duration: 0.5s;
-  }
-  @keyframes grow-out-text{
-    to {
-      font-size: 6em;
-      opacity: 0;
-    }
-  }
-  @keyframes grow-out-svg{
-    to {
-      height: 4em;
-      width: 4em;
-      opacity: 0;
-    }
   }
 </style>
