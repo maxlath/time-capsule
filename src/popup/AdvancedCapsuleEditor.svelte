@@ -28,7 +28,7 @@
 
   getSettingValue('settings:defaultRepeats')
   .then(defaultRepeatValue => {
-    if (bookmark.repeat == null) repeat = defaultRepeatValue
+    if (bookmark?.repeat == null) repeat = defaultRepeatValue
   })
 
   const frequencyNumOptions = range(1, 100)

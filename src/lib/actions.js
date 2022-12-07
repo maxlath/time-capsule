@@ -13,7 +13,7 @@ export async function saveCapsule ({ url, bookmark, nextVisit, frequency, repeat
       enable(frequency)
     }
   }
-  const bookmarkId = bookmark.id
+  const bookmarkId = bookmark?.id
   if (frequency === 'never') {
     if (bookmarkId) await removeById(bookmarkId)
   } else if (bookmarkId) {
