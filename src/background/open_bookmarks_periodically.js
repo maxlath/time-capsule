@@ -7,24 +7,20 @@ import { getSettingValue } from '../lib/settings_store.js'
 import { processBookmarkWithoutOpening } from './open_bookmark.js'
 
 const openTodaysBookmarks = async () => {
-  try {
-    // this function as the monopoly on setting the day end
-    // and every one else simply reading from it
-    set()
-    const todaysBookmarks = await getTodaysBookmarksData()
-    const maxCapsules = await getSettingValue('settings:maxCapsules')
-    const [ bookmarksToOpenImmediately, bookmarksForLaterToday ] = partition(todaysBookmarks, nextVisitIsInThePast)
-    console.log("today's program", { bookmarksToOpenImmediately, bookmarksForLaterToday })
-    if (bookmarksToOpenImmediately.length > maxCapsules) {
-      const ids = bookmarksToOpenImmediately.map(bookmark => bookmark.id)
-      bookmarksForLaterToday.forEach(schedule)
-      await Promise.all(bookmarksToOpenImmediately.map(processBookmarkWithoutOpening))
-      browser.tabs.create({ url: `/overflow/overflow.html?ids=${ids.join('|')}` })
-    } else {
-      todaysBookmarks.forEach(schedule)
-    }
-  } catch (err) {
-    console.error('openTodaysBookmarks', err)
+  // this function as the monopoly on setting the day end
+  // and every one else simply reading from it
+  set()
+  const todaysBookmarks = await getTodaysBookmarksData()
+  const maxCapsules = await getSettingValue('settings:maxCapsules')
+  const [ bookmarksToOpenImmediately, bookmarksForLaterToday ] = partition(todaysBookmarks, nextVisitIsInThePast)
+  console.log("today's program", { bookmarksToOpenImmediately, bookmarksForLaterToday })
+  if (bookmarksToOpenImmediately.length > maxCapsules) {
+    const ids = bookmarksToOpenImmediately.map(bookmark => bookmark.id)
+    bookmarksForLaterToday.forEach(schedule)
+    await Promise.all(bookmarksToOpenImmediately.map(processBookmarkWithoutOpening))
+    browser.tabs.create({ url: `/overflow/overflow.html?ids=${ids.join('|')}` })
+  } else {
+    todaysBookmarks.forEach(schedule)
   }
 }
 
