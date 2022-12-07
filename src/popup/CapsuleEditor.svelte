@@ -7,15 +7,12 @@
   import { createEventDispatcher } from 'svelte'
   import CapsuleEditorTabs from './CapsuleEditorTabs.svelte'
   import { getSettingStore } from '../lib/settings_store.js'
+  import { isCapsulableUrl } from '../lib/utils.js'
 
   export let bookmark, url, context = null
 
   const dispatch = createEventDispatcher()
   const bubbleUpComponentEvent = BubbleUpComponentEvent(dispatch)
-
-  // Filter-out URLs such as (about|file|data):*
-  // See https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
-  const isTimeCapsulableUrl = url && url.startsWith('http')
 
   const selectedTab = getSettingStore('popup:selectedTab')
 </script>
@@ -27,7 +24,7 @@
   >⨯</button>
 {/if}
 
-{#if isTimeCapsulableUrl}
+{#if isCapsulableUrl(url)}
   <CapsuleEditorTabs />
   {#if $selectedTab === 'one-time'}
     <OneTimeCapsuleEditor

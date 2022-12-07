@@ -1,3 +1,4 @@
-export function getLastFocusedId () {
-  return browser.windows.getLastFocused().then(data => data.id)
+export async function getLastFocusedWindowId () {
+  const data = await browser.windows.getLastFocused()
+  return data.id
 }

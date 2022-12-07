@@ -1,11 +1,11 @@
 import { enable, disable } from './icon.js'
 import { removeById, updateCapsuleData, add } from './bookmarks.js'
-import { getActiveTab, getUrlBookmarkData } from './tabs.js'
+import { getActiveTab, getActiveTabUrlBookmarkData } from './tabs.js'
 
 export async function saveCapsule ({ url, bookmark, nextVisit, frequency, repeat, context }) {
   if (!frequency) throw new Error('missing frequency')
   if (!(url || bookmark)) throw new Error('missing url')
-  bookmark = bookmark || await getUrlBookmarkData(url)
+  bookmark = bookmark || await getActiveTabUrlBookmarkData(url)
   if (context === 'popup') {
     if (frequency === 'never') {
       disable()
@@ -43,7 +43,7 @@ export async function setFrequency ({ url, frequency, context }) {
 }
 
 async function saveUrlPeriodicity ({ url, frequency }) {
-  const bookmarkData = await getUrlBookmarkData(url)
+  const bookmarkData = await getActiveTabUrlBookmarkData(url)
   const bookmarkId = bookmarkData?.id
   if (frequency === 'never') {
     if (bookmarkId) await removeById(bookmarkId)

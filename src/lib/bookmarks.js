@@ -9,7 +9,7 @@ export const getById = id => browser.bookmarks.get(id).then(first)
 
 export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
-export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit }) {
+export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit, newUrl, newTitle }) {
   const { id, title, frequency, referenceDate } = bookmarkData
   if (repeat == null) {
     if (bookmarkData.repeat != null) {
@@ -20,14 +20,16 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
     }
   }
   const updatedTitle = formatBookmarkTitle({
-    title,
+    title: newTitle || title,
     frequency: newFrequency != null ? newFrequency : frequency,
     referenceDate: nextVisit || referenceDate || Date.now(),
     nextVisit,
     repeat,
     updating: true,
   })
-  const bookmark = await browser.bookmarks.update(id, { title: updatedTitle })
+  const updateData = { title: updatedTitle }
+  if (newUrl) updateData.url = newUrl
+  const bookmark = await browser.bookmarks.update(id, updateData)
   await ensureBookmarkFolderIsManagedFolder(bookmark)
   return parse(bookmark)
 }
@@ -120,6 +122,11 @@ export async function getTodaysBookmarksData () {
 export async function getBookmarksByIds (ids) {
   const bookmarks = await browser.bookmarks.get(ids)
   return bookmarks.map(parse)
+}
+
+export async function getBookmarkById (id) {
+  const [ bookmark ] = await getBookmarksByIds(id)
+  return bookmark
 }
 
 export const nextVisitIsToday = bookmark => bookmark?.nextVisit < getDayEnd()

@@ -1,16 +1,17 @@
 <script>
   import CapsuleEditor from './CapsuleEditor.svelte'
   import Spinner from './Spinner.svelte'
-  import { getUrl, getCurrentUrlBookmarkData } from '../lib/tabs.js'
+  import { getActiveTabBookmarkData } from '../lib/tabs.js'
   import Flash from './Flash.svelte'
   import SettingsCogButton from './SettingsCogButton.svelte'
+  import PossiblyObsoleteCapsuleEditor from './PossiblyObsoleteCapsuleEditor.svelte'
 
-  let waitingForBookmarkData, currentUrl, bookmark, flash
+  let activeTab, bookmark, possibleUpdate, flash
 
-  getUrl().then(url => currentUrl = url)
-
-  waitingForBookmarkData = getCurrentUrlBookmarkData()
-    .then(bookmarkData => bookmark = bookmarkData)
+  const waitingForBookmarkData = getActiveTabBookmarkData()
+    .then((res = {}) => {
+      ;({ activeTab, bookmark, possibleUpdate } = res)
+    })
     .catch(err => flash = err)
 </script>
 
@@ -19,12 +20,16 @@
 {#await waitingForBookmarkData}
   <Spinner />
 {:then}
-  <CapsuleEditor
-    bind:bookmark
-    url={currentUrl}
-    context="popup"
-    on:done={() => window.close()}
-    />
+  {#if possibleUpdate}
+    <PossiblyObsoleteCapsuleEditor {bookmark} {possibleUpdate} {activeTab} />
+  {:else}
+    <CapsuleEditor
+      bind:bookmark
+      url={activeTab.url}
+      context="popup"
+      on:done={() => window.close()}
+      />
+  {/if}
 {/await}
 
 <Flash state={flash} />
