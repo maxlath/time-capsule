@@ -48,3 +48,13 @@ export const partition = (collection, splitFn) => {
 // Filter-out URLs such as (about|chrome|file|data):*
 // See https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
 export const isCapsulableUrl = url => url?.startsWith('http')
+
+export const uniq = array => Array.from(new Set(array))
+
+export const keyBy = (collection, attribute) => {
+  return collection.reduce((index, obj) => {
+    const key = obj[attribute]
+    index[key] = obj
+    return index
+  }, {})
+}

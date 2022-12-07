@@ -8,6 +8,7 @@ const defaultValues = {
   'settings:defaultRepeats': '∞',
   'settings:maxCapsules': 10,
   'settings:selectedTab': 'preferences',
+  'settings:logsMaxRecords': 100,
 }
 
 export function getSettingStore (key) {
@@ -42,8 +43,10 @@ function initStore (key) {
 // See https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/onChanged
 browser.storage.onChanged.addListener(changes => {
   for (const [ key, { newValue } ] of Object.entries(changes)) {
-    const currentValue = get(stores[key])
-    if (currentValue !== newValue) stores[key].set(newValue)
+    if (stores[key] != null) {
+      const currentValue = get(stores[key])
+      if (currentValue !== newValue) stores[key].set(newValue)
+    }
   }
 })
 

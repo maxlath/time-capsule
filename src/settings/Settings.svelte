@@ -4,11 +4,13 @@
   import Capsules from './Capsules.svelte'
   import { getSettingStore } from '../lib/settings_store.js'
   import NavBar from './NavBar.svelte'
+  import Logs from './Logs.svelte'
 
   // New tab: logs/opened lately, with the possibility to edit/delete/recreate capsules from those logs
   const tabs = [
     { key: 'preferences', label: i18n('Preferences') },
     { key: 'capsules', label: i18n('Capsules') },
+    { key: 'logs', label: i18n('Logs') },
   ]
 
   const selectedTab = getSettingStore('settings:selectedTab')

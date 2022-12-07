@@ -1,4 +1,5 @@
 <script>
+  import { i18n } from '../lib/i18n.js'
   import { repeatsOptions } from '../lib/repeats.js'
   import { getSettingStore } from '../lib/settings_store.js'
   import { range } from '../lib/utils.js'
@@ -6,11 +7,15 @@
   const maxCapsules = getSettingStore('settings:maxCapsules')
   const allowDuplicatedTabs = getSettingStore('settings:allowDuplicatedTabs')
   const defaultRepeats = getSettingStore('settings:defaultRepeats')
+  const logsMaxRecords = getSettingStore('settings:logsMaxRecords')
 
   const maxCapsulesOptions = range(1, 10).concat([ 15, 20, 25, 30, 40, 50 ])
+  const logsMaxRecordsOptions = [ 10, 100, 1000, 10000 ]
 </script>
 
 <div class="preferences">
+  <h2>{i18n('Capsules')}</h2>
+
   <div class="setting">
     <select id="maxCapsules" bind:value={$maxCapsules}>
       {#each maxCapsulesOptions as numOption}
@@ -35,6 +40,19 @@
     <input type="checkbox" bind:checked={$allowDuplicatedTabs}>
     Open a capsule even if its URL is already opened in a tab
   </label>
+
+  <hr>
+
+  <h2>{i18n('Logs')}</h2>
+
+  <div class="setting">
+    <select id="maxCapsules" bind:value={$logsMaxRecords}>
+      {#each logsMaxRecordsOptions as numOption}
+        <option value={numOption}>{numOption}</option>
+      {/each}
+    </select>
+    <label for="logsMaxRecords">Maximum number of entries to keep in the logs</label>
+  </div>
 </div>
 
 <style>
@@ -52,5 +70,12 @@
   }
   select{
     padding: 0.3em 0.5em;
+  }
+  hr{
+    margin: 2em 0;
+    opacity: 0.5;
+  }
+  h2{
+    font-size: 1.2rem;
   }
 </style>

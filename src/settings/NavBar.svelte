@@ -28,4 +28,10 @@
     margin-inline-start: auto;
     margin-inline-end: 1em;
   }
+  /*Small screens*/
+  @media screen and (max-width: 600px) {
+    nav{
+      flex-direction: column;
+    }
+  }
 </style>

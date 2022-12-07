@@ -2,6 +2,7 @@ import { createTab, getActiveTab, getTabById, urlIsAlreadyOpened } from '../lib/
 import { getById, archiveById, updateCapsuleData } from '../lib/bookmarks.js'
 import { getSettingValue } from '../lib/settings_store.js'
 import { isCapsulableUrl } from '../lib/utils.js'
+import { createLogRecord } from '../lib/logs.js'
 
 export async function openBookmark (bookmark) {
   return processBookmark({ bookmark, open: true })
@@ -41,6 +42,7 @@ async function openBookmarkIfNeeded (bookmark) {
     console.log('opening', bookmark)
     const tab = await createTab({ url, active: false })
     setTimeout(checkTabState({ tab, bookmark }), 500)
+    await createLogRecord({ event: 'opened-bookmark', bookmarkId: bookmark.id, timestamp: Date.now() })
   } else {
     console.log('already opened: skipping', bookmark)
   }

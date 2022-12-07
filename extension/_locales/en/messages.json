@@ -43,5 +43,7 @@
   "Undo": { "message": "Undo" },
   "Edit": { "message": "Edit" },
   "Actions": { "message": "Actions" },
-  "Filter": { "message": "Filter" }
+  "Filter": { "message": "Filter" },
+  "Logs": { "message": "Logs" },
+  "Opened": { "message": "Opened" }
 }
