@@ -45,5 +45,6 @@
   "Actions": { "message": "Actions" },
   "Filter": { "message": "Filter" },
   "Logs": { "message": "Logs" },
-  "Opened": { "message": "Opened" }
+  "Opened": { "message": "Opened" },
+  "Skipped": { "message": "Skipped" }
 }

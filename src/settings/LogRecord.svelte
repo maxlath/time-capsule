@@ -2,23 +2,38 @@
   import { i18n } from '../lib/i18n.js'
 
   const eventLabels = {
-    'opened-bookmark': i18n('Opened')
+    'opened-bookmark': i18n('Opened'),
+    'skipped-already-opened-bookmark': i18n('Skipped'),
   }
 </script>
-
 <script>
   export let record
-  const { event, bookmark, timestamp } = record
+  const { event, url, title, timestamp, remainingRepeats } = record
 </script>
 
 <li>
   <span
     class="event"
     class:opened={event === 'opened-bookmark'}
-  >{eventLabels[event]}</span>
-  <span class="bookmark-url">
-    <a href={bookmark.url}>{bookmark.cleanedTitle}</a>
+    class:skipped={event === 'skipped-already-opened-bookmark'}
+  >
+    {eventLabels[event]}
   </span>
+
+  <span class="bookmark-url">
+    <a href={url}>{title}</a>
+  </span>
+
+  <ul class="flags">
+    {#if Number.isInteger(remainingRepeats)}
+      {#if remainingRepeats === 0}
+        <li class="warning">deleted</li>
+      {:else}
+        <li class="info">{remainingRepeats} remaining repeats</li>
+      {/if}
+    {/if}
+  </ul>
+
   <span class="timestamp">{new Date(timestamp).toLocaleString()}</span>
 </li>
 
@@ -36,7 +51,7 @@
   li span{
     margin: 0 0.5em;
   }
-  .event{
+  .event, .warning, .info{
     padding: 0.2em 0.5em;
     border-radius: 3px;
   }
@@ -46,8 +61,16 @@
   .bookmark-url{
     min-width: min(90vw, 15em);
   }
-  .timestamp{
+  .flags{
     margin-inline-start: auto;
+  }
+  .warning{
+    background-color: var(--warning-color);
+  }
+  .info{
+    background-color: var(--darker-light-blue);
+  }
+  .timestamp{
     flex: 0 0 auto;
   }
 </style>
