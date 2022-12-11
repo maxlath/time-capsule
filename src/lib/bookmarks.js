@@ -4,6 +4,7 @@ import { formatBookmarkTitle, parseBookmarkTitle } from './bookmark_title.js'
 import { getSettingValue } from './settings_store.js'
 import { get as getDayEnd } from './day_end.js'
 import { timeIsInThePast } from './times.js'
+import { createLogRecord } from './logs.js'
 
 export const getById = id => browser.bookmarks.get(id).then(first)
 
@@ -30,11 +31,15 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
   const updateData = { title: updatedTitle }
   if (newUrl) updateData.url = newUrl
   const bookmark = await browser.bookmarks.update(id, updateData)
+  await createLogRecord({ event: 'updated-bookmark', bookmark })
   await ensureBookmarkFolderIsManagedFolder(bookmark)
   return parse(bookmark)
 }
 
-export const removeById = browser.bookmarks.remove.bind(browser.bookmarks)
+export async function removeBookmark (bookmark) {
+  await browser.bookmarks.remove(bookmark.id)
+  await createLogRecord({ event: 'removed-bookmark', bookmark })
+}
 
 export const parse = bookmarkData => {
   const data = parseBookmarkTitle(bookmarkData.title) || {}
@@ -60,10 +65,8 @@ export const waitForFolders = initBookmarksFolders()
   .catch(console.error)
 
 export async function add (url, title, frequency) {
-  await waitForFolders
   const defaultRepeats = await getSettingValue('settings:defaultRepeats')
-  return browser.bookmarks.create({
-    parentId: folderId,
+  return createBookmark({
     url,
     title: formatBookmarkTitle({
       title,
@@ -75,12 +78,21 @@ export async function add (url, title, frequency) {
 }
 
 export async function recover (deletedBookmark) {
-  await waitForFolders
-  return browser.bookmarks.create({
-    parentId: folderId,
+  return createBookmark({
     url: deletedBookmark.url,
     title: deletedBookmark.title
   })
+}
+
+async function createBookmark ({ url, title }) {
+  await waitForFolders
+  const bookmark = await browser.bookmarks.create({
+    parentId: folderId,
+    url,
+    title,
+  })
+  await createLogRecord({ event: 'created-bookmark', bookmark })
+  return bookmark
 }
 
 export function isInFolder (bookmarkData) {

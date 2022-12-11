@@ -46,5 +46,8 @@
   "Filter": { "message": "Filter" },
   "Logs": { "message": "Logs" },
   "Opened": { "message": "Opened" },
+  "Created": { "message": "Created" },
+  "Updated": { "message": "Updated" },
+  "Removed": { "message": "Removed" },
   "Skipped": { "message": "Skipped" }
 }

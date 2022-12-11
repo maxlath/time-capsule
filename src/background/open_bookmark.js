@@ -1,5 +1,5 @@
 import { createTab, getActiveTab, getTabById, urlIsAlreadyOpened } from '../lib/tabs.js'
-import { getById, removeById, updateCapsuleData } from '../lib/bookmarks.js'
+import { getById, removeBookmark, updateCapsuleData } from '../lib/bookmarks.js'
 import { getSettingValue } from '../lib/settings_store.js'
 import { isCapsulableUrl } from '../lib/utils.js'
 import { createLogRecord } from '../lib/logs.js'
@@ -25,8 +25,7 @@ async function processBookmark ({ bookmark, open }) {
   if (open) await openBookmarkIfNeeded(bookmark)
   await updateCapsuleData({ bookmarkData })
   if (bookmarkData.repeat < 0) {
-    // Keep the bookmark at hand for the logs
-    return removeById(bookmark.id)
+    return removeBookmark(bookmark)
   }
 }
 
@@ -42,22 +41,10 @@ async function openBookmarkIfNeeded (bookmark) {
   if (!bookmarkUrlIsAlreadyOpened || allowDuplicatedTabs) {
     const tab = await createTab({ url, active: false })
     setTimeout(checkTabState({ tab, bookmark }), 500)
-    await logEvent('opened-bookmark', bookmark)
+    await createLogRecord({ event: 'opened-bookmark', bookmark })
   } else {
-    await logEvent('skipped-already-opened-bookmark', bookmark)
+    await createLogRecord({ event: 'skipped-already-opened-bookmark', bookmark })
   }
-}
-
-async function logEvent (event, bookmark) {
-  console.log(event, bookmark)
-  await createLogRecord({
-    event,
-    timestamp: Date.now(),
-    bookmarkId: bookmark.id,
-    url: bookmark.url,
-    title: bookmark.cleanedTitle,
-    remainingRepeats: bookmark.repeat,
-  })
 }
 
 const checkTabState = ({ tab, bookmark, attempt = 0 }) => async () => {

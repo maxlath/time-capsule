@@ -1,14 +1,9 @@
-<script context="module">
-  import { i18n } from '../lib/i18n.js'
-
-  const eventLabels = {
-    'opened-bookmark': i18n('Opened'),
-    'skipped-already-opened-bookmark': i18n('Skipped'),
-  }
-</script>
 <script>
+  import { events } from '../lib/logs.js'
   export let record
-  const { event, url, title, timestamp, remainingRepeats } = record
+
+  const { event, url, title, frequency, timestamp, remainingRepeats } = record
+  const eventLabel = events[event].label
 </script>
 
 <li>
@@ -16,13 +11,18 @@
     class="event"
     class:opened={event === 'opened-bookmark'}
     class:skipped={event === 'skipped-already-opened-bookmark'}
+    class:created={event === 'created-bookmark'}
+    class:updated={event === 'updated-bookmark'}
+    class:removed={event === 'removed-bookmark'}
   >
-    {eventLabels[event]}
+    {eventLabel}
   </span>
 
   <span class="bookmark-url">
     <a href={url}>{title}</a>
   </span>
+
+  <span class="frequency">{frequency}</span>
 
   <ul class="flags">
     {#if Number.isInteger(remainingRepeats)}
@@ -51,12 +51,27 @@
   li span{
     margin: 0 0.5em;
   }
+  .event{
+    width: 6em;
+  }
   .event, .warning, .info{
     padding: 0.2em 0.5em;
     border-radius: 3px;
   }
   .opened{
     background-color: var(--success-color);
+  }
+  .skipped{
+    background-color: var(--grey-ddd);
+  }
+  .created{
+    background-color: var(--light-blue);
+  }
+  .updated{
+    background-color: var(--darker-light-blue);
+  }
+  .removed{
+    background-color: var(--danger-color);
   }
   .bookmark-url{
     min-width: min(90vw, 15em);
@@ -72,5 +87,8 @@
   }
   .timestamp{
     flex: 0 0 auto;
+  }
+  .frequency{
+    color: var(--grey-666);
   }
 </style>

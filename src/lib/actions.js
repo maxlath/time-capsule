@@ -1,5 +1,5 @@
 import { enable, disable } from './icon.js'
-import { removeById, updateCapsuleData, add } from './bookmarks.js'
+import { removeBookmark, updateCapsuleData, add } from './bookmarks.js'
 import { getActiveTab, getActiveTabUrlBookmarkData } from './tabs.js'
 
 export async function saveCapsule ({ url, bookmark, nextVisit, frequency, repeat, context }) {
@@ -15,7 +15,7 @@ export async function saveCapsule ({ url, bookmark, nextVisit, frequency, repeat
   }
   const bookmarkId = bookmark?.id
   if (frequency === 'never') {
-    if (bookmarkId) await removeById(bookmarkId)
+    if (bookmarkId) await removeBookmark(bookmark)
   } else if (bookmarkId) {
     return updateCapsuleData({
       bookmarkData: bookmark,
@@ -39,16 +39,17 @@ export async function setFrequency ({ url, frequency, context }) {
       enable(frequency)
     }
   }
+  // TODO: Reset repeat to default value
   return saveUrlPeriodicity({ url, frequency })
 }
 
 async function saveUrlPeriodicity ({ url, frequency }) {
-  const bookmarkData = await getActiveTabUrlBookmarkData(url)
-  const bookmarkId = bookmarkData?.id
+  const bookmark = await getActiveTabUrlBookmarkData(url)
+  const bookmarkId = bookmark?.id
   if (frequency === 'never') {
-    if (bookmarkId) await removeById(bookmarkId)
+    if (bookmarkId) await removeBookmark(bookmark)
   } else if (bookmarkId) {
-    return updateCapsuleData({ bookmarkData, newFrequency: frequency })
+    return updateCapsuleData({ bookmarkData: bookmark, newFrequency: frequency })
   } else {
     const tabData = await getActiveTab()
     return add(tabData.url, tabData.title, frequency)
