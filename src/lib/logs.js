@@ -20,11 +20,11 @@ export async function createLogRecord ({ event, bookmark, changes }) {
   let logs = await getLogRecords()
   logs.unshift(record)
   logs = await enforceRecordsLimits(logs)
-  await browser.storage.sync.set({ logs })
+  await browser.storage.local.set({ logs })
 }
 
 export async function getLogRecords () {
-  let { logs } = await browser.storage.sync.get('logs')
+  let { logs } = await browser.storage.local.get('logs')
   if (!(logs instanceof Array)) logs = []
   // Return possibly less records than stored, to be consistent with the current setting value
   return enforceRecordsLimits(logs)

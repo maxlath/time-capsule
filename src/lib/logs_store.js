@@ -8,8 +8,8 @@ export const logsStore = readable(null, function start (set) {
       set(changes.logs.newValue)
     }
   }
-  browser.storage.sync.onChanged.addListener(onStorageChange)
+  browser.storage.local.onChanged.addListener(onStorageChange)
   return function stop () {
-    browser.storage.sync.onChanged.removeListener(onStorageChange)
+    browser.storage.local.onChanged.removeListener(onStorageChange)
   }
 })

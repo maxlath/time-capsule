@@ -24,7 +24,7 @@ function initStore (key) {
   }
   const store = writable(null, start)
 
-  browser.storage.sync.get(key)
+  browser.storage.local.get(key)
   .then(({ [key]: value }) => {
     if (value != null) store.set(value)
     else store.set(defaultValues[key])
@@ -33,7 +33,7 @@ function initStore (key) {
 
   return {
     set (value) {
-      browser.storage.sync.set({ [key]: value }).catch(console.error)
+      browser.storage.local.set({ [key]: value }).catch(console.error)
       store.set(value)
     },
     subscribe: store.subscribe,
@@ -41,7 +41,7 @@ function initStore (key) {
 }
 
 // See https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/onChanged
-browser.storage.sync.onChanged.addListener(changes => {
+browser.storage.local.onChanged.addListener(changes => {
   for (const [ key, { newValue } ] of Object.entries(changes)) {
     if (stores[key] != null) {
       const currentValue = get(stores[key])
@@ -52,7 +52,7 @@ browser.storage.sync.onChanged.addListener(changes => {
 
 export async function getSettingValue (key) {
   checkKeyStatus(key)
-  const { [key]: value } = await browser.storage.sync.get(key)
+  const { [key]: value } = await browser.storage.local.get(key)
   return value != null ? value : defaultValues[key]
 }
 
