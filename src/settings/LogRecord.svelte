@@ -2,7 +2,7 @@
   import { events } from '../lib/logs.js'
   export let record
 
-  const { event, url, title, frequency, timestamp, remainingRepeats } = record
+  const { event, url, title, timestamp, remainingRepeats, changes = {} } = record
   const eventLabel = events[event].label
 </script>
 
@@ -22,7 +22,14 @@
     <a href={url}>{title}</a>
   </span>
 
-  <span class="frequency">{frequency}</span>
+  {#each Object.entries(changes) as [ attribute, { old: oldValue, new: newValue } ] }
+    <span
+      class="change"
+      title={`old ${attribute}: ${oldValue} | new ${attribute}: ${newValue}`}
+    >
+      {`new ${attribute}`}: {newValue}
+    </span>
+  {/each}
 
   <ul class="flags">
     {#if Number.isInteger(remainingRepeats)}
@@ -47,9 +54,6 @@
     gap: 1em;
     padding: 0.5em;
     border-bottom: 1px solid var(--grey-ccc);
-  }
-  li span{
-    margin: 0 0.5em;
   }
   .event{
     width: 6em;
@@ -87,8 +91,5 @@
   }
   .timestamp{
     flex: 0 0 auto;
-  }
-  .frequency{
-    color: var(--grey-666);
   }
 </style>

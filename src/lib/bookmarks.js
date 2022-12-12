@@ -11,7 +11,9 @@ export const getById = id => browser.bookmarks.get(id).then(first)
 export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
 export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit, newUrl, newTitle }) {
-  const { id, title, frequency, referenceDate } = bookmarkData
+  const { id, url, title, frequency, referenceDate } = bookmarkData
+  const oldFrequency = frequency
+  const oldUrl = url
   if (repeat == null) {
     if (bookmarkData.repeat != null) {
       repeat = bookmarkData.repeat
@@ -31,7 +33,12 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
   const updateData = { title: updatedTitle }
   if (newUrl) updateData.url = newUrl
   const bookmark = await browser.bookmarks.update(id, updateData)
-  await createLogRecord({ event: 'updated-bookmark', bookmark })
+  if (newFrequency || newUrl) {
+    const changes = {}
+    if (newFrequency) changes.frequency = { old: oldFrequency, new: newFrequency }
+    if (newUrl) changes.url = { old: oldUrl, new: newUrl }
+    await createLogRecord({ event: 'updated-bookmark', bookmark, changes })
+  }
   await ensureBookmarkFolderIsManagedFolder(bookmark)
   return parse(bookmark)
 }

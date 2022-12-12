@@ -2,7 +2,7 @@ import { parse } from './bookmarks.js'
 import { getSettingValue } from './settings_store.js'
 import { i18n } from '../lib/i18n.js'
 
-export async function createLogRecord ({ event, bookmark }) {
+export async function createLogRecord ({ event, bookmark, changes }) {
   if (bookmark.cleanedTitle == null) {
     bookmark = parse(bookmark)
   }
@@ -15,6 +15,7 @@ export async function createLogRecord ({ event, bookmark }) {
     title: bookmark.cleanedTitle,
     frequency: bookmark.frequency,
     remainingRepeats: bookmark.repeat,
+    changes,
   }
   let logs = await getLogRecords()
   logs.unshift(record)
