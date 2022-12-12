@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
   import { slide } from 'svelte/transition'
   import { saveCapsule } from '../lib/actions.js'
   import { parseFrequency } from '../lib/frequency.js'
@@ -8,6 +8,7 @@
   import { repeatsOptions } from '../lib/repeats.js'
   import { getSettingValue } from '../lib/settings_store.js'
   import { getNextVisit } from '../lib/bookmark_title.js'
+  import { onChange } from '../lib/svelte.js'
 
   export let url, bookmark, context
 
@@ -53,8 +54,14 @@
     }))
   }
 
-  let nextVisitInputEl
-  $: canValidate = nextVisitInputEl?.validity.valid
+  let nextVisitInputEl, canValidate
+  function udpateValidateButton () {
+    canValidate = nextVisitInputEl?.validity.valid
+  }
+
+  onMount(udpateValidateButton)
+
+  $: onChange(nextVisit, udpateValidateButton)
 </script>
 
 <div class="options-selector-advanced">
