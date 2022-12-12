@@ -18,9 +18,10 @@
     {eventLabel}
   </span>
 
-  <span class="bookmark-url">
+  <div class="bookmark-url">
     <a href={url}>{title}</a>
-  </span>
+    <span class="hostname">{new URL(url).hostname}</span>
+  </div>
 
   {#each Object.entries(changes) as [ attribute, { old: oldValue, new: newValue } ] }
     <span
@@ -79,6 +80,15 @@
   }
   .bookmark-url{
     min-width: min(90vw, 15em);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+  .hostname{
+    margin-left: 0.5em;
+    color: var(--grey-444);
+    font-size: 0.8rem;
   }
   .flags{
     margin-inline-start: auto;
