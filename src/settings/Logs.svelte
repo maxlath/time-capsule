@@ -1,31 +1,25 @@
 <script>
-  import { getLogRecords } from '../lib/logs.js'
-  import Flash from '../popup/Flash.svelte'
   import Spinner from '../popup/Spinner.svelte'
   import LogRecord from './LogRecord.svelte'
+  import { logsStore } from '../lib/logs_store.js'
+  import { getSettingStore } from '../lib/settings_store.js'
 
-  let logRecords, flash
+  const logsMaxRecords = getSettingStore('settings:logsMaxRecords')
 
-  const waitForLogRecords = getLogRecords()
-    .then(res => {
-      logRecords = res
-    })
-    .catch(err => flash = err)
+  $: displayedRecords = $logsStore != null ? $logsStore.slice(0, $logsMaxRecords) : null
 </script>
 
-<Flash state={flash} />
-
-{#await waitForLogRecords}
-  <Spinner />
-{:then}
+{#if displayedRecords}
   <ul>
-    {#each logRecords as record}
+    {#each displayedRecords as record (record.bookmarkId + record.timestamp)}
       <LogRecord {record} />
     {:else}
       <li>empty</li>
     {/each}
   </ul>
-{/await}
+{:else}
+  <Spinner />
+{/if}
 
 <style>
   ul{

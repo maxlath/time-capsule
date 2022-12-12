@@ -41,7 +41,7 @@ function initStore (key) {
 }
 
 // See https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/onChanged
-browser.storage.onChanged.addListener(changes => {
+browser.storage.sync.onChanged.addListener(changes => {
   for (const [ key, { newValue } ] of Object.entries(changes)) {
     if (stores[key] != null) {
       const currentValue = get(stores[key])
