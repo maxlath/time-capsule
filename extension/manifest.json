@@ -34,6 +34,12 @@
         "default": "Alt+C"
       },
       "description": "Open periodicity menu"
+    },
+    "open-periodicity-settings": {
+      "suggested_key": {
+        "default": "Shift+Alt+C"
+      },
+      "description": "Open periodicity settings"
     }
   },
   "options_ui": {
