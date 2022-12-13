@@ -1,5 +1,6 @@
 import { getLastFocusedWindowId } from './windows.js'
 import { getBookmarkById, getCapsuleBookmarkByUrl } from './bookmarks.js'
+import { isCapsulableUrl } from './utils.js'
 
 export const createTab = browser.tabs.create.bind(browser.tabs)
 export const getTabById = browser.tabs.get.bind(browser.tabs)
@@ -32,7 +33,9 @@ export async function getActiveTabBookmarkData () {
       title: activeTabTitle
     }
   }
-  res.bookmark = await getCapsuleBookmarkByUrl(activeTabUrl)
+  if (isCapsulableUrl(activeTabUrl)) {
+    res.bookmark = await getCapsuleBookmarkByUrl(activeTabUrl)
+  }
   if (res.bookmark) return res
 
   const { possiblyOutdatedBookmarkData = {} } = await browser.storage.local.get('possiblyOutdatedBookmarkData')

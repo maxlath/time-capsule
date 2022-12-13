@@ -129,7 +129,7 @@ export async function getBookmarksByUrl (url) {
   if (!url) throw new Error('url is missing')
   // Filter-out URLs such as 'about:*' and 'file:*'
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
-  if (!url.startsWith('http')) return
+  if (!url.startsWith('http')) return {}
   await waitForFolders
   const res = await browser.bookmarks.search({ url })
   const [ capsulesBookmarks, others ] = partition(res, isInFolder)
