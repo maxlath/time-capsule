@@ -1,7 +1,9 @@
 import { disable } from '../lib/icon.js'
 import { getActiveTab, getActiveTabUrl } from '../lib/tabs.js'
-import { folderId } from '../lib/bookmarks.js'
-import { updateIcon } from './update_icon.js'
+import { folderId, getBookmarkById, getCapsuleBookmarkByUrl } from '../lib/bookmarks.js'
+import { updateIconFromBookmark, updateIconFromUrl } from './update_icon.js'
+
+let activeTabId, activeTabBookmarkUrl, activeTabBookmarkId
 
 // On update of any tab, if it is the current tab, update the icon
 // doc: https://developer.chrome.com/extensions/tabs#event-onUpdated
@@ -12,7 +14,13 @@ async function onTabUpdated (tabId, changeInfo, tab) {
   if (!changedTabUrl) return
   const activeTab = await getActiveTab()
   // activeTab might be undefined?!?
-  if (activeTab.id === tabId) await updateIcon({ url: changedTabUrl, tabId })
+  if (activeTab.id === tabId) {
+    const bookmark = await getCapsuleBookmarkByUrl(changedTabUrl)
+    activeTabBookmarkId = bookmark?.id
+    activeTabBookmarkUrl = bookmark?.url
+    activeTabId = tabId
+    await updateIconFromBookmark({ bookmark, tabId })
+  }
 }
 
 // When a tab becomes the active tab, update the icon
@@ -20,7 +28,11 @@ async function onTabUpdated (tabId, changeInfo, tab) {
 async function onTabActivated (activeTab) {
   const { tabId } = activeTab
   const url = await getActiveTabUrl()
-  await updateIcon({ url, tabId })
+  activeTabId = tabId
+  const bookmark = await getCapsuleBookmarkByUrl(url)
+  activeTabBookmarkId = bookmark?.id
+  activeTabBookmarkUrl = bookmark?.url
+  await updateIconFromBookmark({ bookmark, tabId })
 }
 
 // Update the icon when a bookmark is deleted
@@ -35,11 +47,31 @@ async function onRemovedBookmark (bookmarkId, removeInfo) {
   }
 }
 
+async function onCreatedBookmark (bookmarkId, bookmarkInfo) {
+  if (activeTabBookmarkUrl === bookmarkInfo.url) {
+    activeTabBookmarkId = bookmarkId
+    await fetchBookmarkAndUpdateIcon(bookmarkId)
+  }
+}
+
+async function onUpdatedBookmark (bookmarkId) {
+  if (activeTabBookmarkId === bookmarkId) {
+    await fetchBookmarkAndUpdateIcon(bookmarkId)
+  }
+}
+
+async function fetchBookmarkAndUpdateIcon (bookmarkId) {
+  const bookmark = await getBookmarkById(bookmarkId)
+  await updateIconFromBookmark({ bookmark, tabId: activeTabId })
+}
+
+// const lazyOnUpdatedBookmark = debounce(onUpdatedBookmark, 100)
+
 async function onRuntimeMessage (message) {
   const { event } = message
   if (event === 'popup-updated-capsule' || event === 'popup-deleted-capsule') {
     const activeTab = await getActiveTab()
-    await updateIcon({ url: activeTab.url, tabId: activeTab.id })
+    await updateIconFromUrl({ url: activeTab.url, tabId: activeTab.id })
   } else {
     console.error('unknown runtime message', message)
   }
@@ -48,4 +80,7 @@ async function onRuntimeMessage (message) {
 browser.tabs.onUpdated.addListener(onTabUpdated)
 browser.tabs.onActivated.addListener(onTabActivated)
 browser.bookmarks.onRemoved.addListener(onRemovedBookmark)
+browser.bookmarks.onCreated.addListener(onCreatedBookmark)
+browser.bookmarks.onChanged.addListener(onUpdatedBookmark)
+browser.bookmarks.onMoved.addListener(onUpdatedBookmark)
 browser.runtime.onMessage.addListener(onRuntimeMessage)

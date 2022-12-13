@@ -1,5 +1,5 @@
 import { createTab, getActiveTab, getTabById, urlIsAlreadyOpened } from '../lib/tabs.js'
-import { getById, removeBookmark, updateCapsuleData } from '../lib/bookmarks.js'
+import { getById, removeOrArchiveBookmark, updateCapsuleData } from '../lib/bookmarks.js'
 import { getSettingValue } from '../lib/settings_store.js'
 import { isCapsulableUrl } from '../lib/utils.js'
 import { createLogRecord } from '../lib/logs.js'
@@ -25,7 +25,7 @@ async function processBookmark ({ bookmark, open }) {
   if (open) await openBookmarkIfNeeded(bookmark)
   await updateCapsuleData({ bookmarkData })
   if (bookmarkData.repeat < 0) {
-    return removeBookmark(bookmark)
+    return removeOrArchiveBookmark(bookmark)
   }
 }
 

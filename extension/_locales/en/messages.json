@@ -32,6 +32,7 @@
   "url_cant_be_time_capsuled": { "message": "This URL can't be saved as a Time Capsule" },
   "Preferences": { "message": "Preferences" },
   "Delete": { "message": "Delete" },
+  "Archive": { "message": "Archive" },
   "Capsules": { "message": "Capsules" },
   "Title": { "message": "Title" },
   "Frequency": { "message": "Frequency" },
@@ -50,5 +51,7 @@
   "Updated": { "message": "Updated" },
   "Archived": { "message": "Archived" },
   "Removed": { "message": "Removed" },
-  "Skipped": { "message": "Skipped" }
+  "Skipped": { "message": "Skipped" },
+  "Hotkey": { "message": "Hotkey" },
+  "del_key": { "message": "Del" }
 }

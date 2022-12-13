@@ -1,5 +1,5 @@
 <script>
-  import { removeBookmark, updateCapsuleData } from '../lib/bookmarks.js'
+  import { removeOrArchiveBookmark, updateCapsuleData } from '../lib/bookmarks.js'
 
   export let bookmark, possibleUpdate, activeTab
 
@@ -18,7 +18,7 @@
 
   async function deleteBookmark () {
     try {
-      await removeBookmark(bookmark)
+      await removeOrArchiveBookmark(bookmark)
       await browser.runtime.sendMessage(null, {
         event: 'popup-deleted-capsule',
         tabId: activeTab.id,

@@ -1,5 +1,5 @@
 <script>
-  import { recover, removeBookmark } from '../lib/bookmarks.js'
+  import { recover, removeOrArchiveBookmark } from '../lib/bookmarks.js'
   import { i18n } from '../lib/i18n.js'
   import { createEventDispatcher } from 'svelte'
 
@@ -14,7 +14,7 @@
   async function deleteBookmark () {
     bookmark.deleted = true
     try {
-      await removeBookmark(bookmark)
+      await removeOrArchiveBookmark(bookmark)
     } catch (err) {
       console.error(err)
       bookmark.deleted = false

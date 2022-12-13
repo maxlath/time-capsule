@@ -44,19 +44,25 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
   return serializeBookmark(bookmark)
 }
 
-export async function removeBookmark (bookmark) {
+export async function removeOrArchiveBookmark (bookmark) {
   const keepExpiredCapsulesAsNormalBookmarks = await getSettingValue('settings:keepExpiredCapsulesAsNormalBookmarks')
   if (keepExpiredCapsulesAsNormalBookmarks) {
     await archiveBookmark(bookmark)
   } else {
-    await browser.bookmarks.remove(bookmark.id)
-    await createLogRecord({ event: 'removed-bookmark', bookmark })
+    await removeBookmark(bookmark)
   }
 }
 
-async function archiveBookmark (bookmark) {
-  await browser.bookmarks.update(bookmark.id, { title: bookmark.cleanedTitle })
+export async function removeBookmark (bookmark) {
+  await browser.bookmarks.remove(bookmark.id)
+  await createLogRecord({ event: 'removed-bookmark', bookmark })
+}
+
+export async function archiveBookmark (bookmark) {
   await browser.bookmarks.move(bookmark.id, { parentId: archiveFolderId })
+  // Update after having changed folder, to avoid triggering event listeners
+  // with an unformated bookmark
+  await browser.bookmarks.update(bookmark.id, { title: bookmark.cleanedTitle })
   await createLogRecord({ event: 'archived-bookmark', bookmark })
 }
 

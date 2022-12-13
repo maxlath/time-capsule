@@ -96,11 +96,7 @@
 
   let nextVisit
   $: {
-    if (highlightedFrequency === 'never') {
-      nextVisit = null
-    } else {
-      nextVisit = getNextVisit({ frequency: highlightedFrequency, referenceDate: Date.now() })
-    }
+    nextVisit = getNextVisit({ frequency: highlightedFrequency, referenceDate: Date.now() })
   }
 </script>
 
@@ -114,11 +110,12 @@
   {#each Object.entries(categories) as [ category, { optionsData } ] }
     <h3 class="category-header">{i18n(category)}</h3>
     <ul>
-      {#each optionsData as { num, frequency, color, bgColor }}
+      {#each optionsData as { num, unit, frequency, frequencyLabel, color, bgColor }}
         <li>
           <button
             class="option"
             bind:this={optionsElements[frequency]}
+            title="Set the frequency to {frequencyLabel} [{i18n('Hotkey')}: {num}{unit}]"
             style:color={color}
             style:background-color={bgColor}
             on:focus={() => highlightedFrequency = frequency}
@@ -141,17 +138,7 @@
         {i18n('custom')}: {selectedFrequency}
       </button>
     {/if}
-
-    <button
-      class="never"
-      title="[Delete]"
-      on:focus={() => highlightedFrequency = 'never'}
-      on:click={remove}
-      >
-      {i18n('never')}
-    </button>
   </div>
-
 </div>
 
 {#if nextVisit}
@@ -191,12 +178,12 @@
   button{
     border: 0;
   }
-  .option, .never, .custom{
+  .option, .custom{
     transition: all 0.3s;
     border-radius: 1px;
     text-align: center;
   }
-  .never, .custom{
+ .custom{
     padding: 0.5em 1em 0.5em 1em;
     margin: 0.2em;
   }
@@ -238,12 +225,6 @@
   }
   .custom:hover{
     background-color: var(--darker-light-blue) !important;
-  }
-  .never{
-    background-color: #e88;
-  }
-  .never:hover{
-    background-color: #c55;
   }
   .next-visit{
     text-align: center;

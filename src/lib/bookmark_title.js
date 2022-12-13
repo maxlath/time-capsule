@@ -44,11 +44,11 @@ export const parseBookmarkTitle = title => {
       [ frequency, metadata ] = metadata.split(' ')
       referenceDate = nextVisit = metadata
     }
-    const { num, unit, unitLabel } = parseFrequency(frequency)
+    const { frequencyLabel } = parseFrequency(frequency)
     return {
       cleanedTitle: title.split(separator)[0],
-      frequency: `${num}${unit}`,
-      frequencyLabel: `${num} ${unitLabel}`,
+      frequency,
+      frequencyLabel,
       // epoch time number should take less memory and computation power
       // than an ISO time string in the bookmark index
       nextVisit: new Date(nextVisit).getTime(),

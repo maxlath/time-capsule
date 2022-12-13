@@ -71,6 +71,10 @@ button{
   border: 0;
 }
 
+button:hover{
+  opacity: 0.95;
+}
+
 button:disabled{
   cursor: not-allowed;
   opacity: 0.6;

@@ -1,3 +1,4 @@
+import { parseFrequency } from '../lib/frequency.js'
 import { getColor } from './colors.js'
 
 export const inMenu = {
@@ -32,9 +33,13 @@ Object.values(inMenu).forEach(categoryData => {
   const { letter, daysFactor } = categoryData
   categoryData.optionsData = categoryData.options.map(num => {
     const bgColor = getColor(num, daysFactor)
+    const frequency = `${num}${letter}`
+    const { frequencyLabel } = parseFrequency(frequency)
     return {
       num,
-      frequency: `${num}${letter}`,
+      unit: letter,
+      frequency,
+      frequencyLabel,
       bgColor,
       // Adjusting thresold darkest color to match "1 year"
       // and have the full years line in the same color
