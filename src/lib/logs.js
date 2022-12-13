@@ -1,10 +1,10 @@
-import { parse } from './bookmarks.js'
 import { getSettingValue } from './settings_store.js'
 import { i18n } from '../lib/i18n.js'
+import { serializeBookmark } from './bookmark_title.js'
 
 export async function createLogRecord ({ event, bookmark, changes }) {
   if (bookmark.cleanedTitle == null) {
-    bookmark = parse(bookmark)
+    bookmark = serializeBookmark(bookmark)
   }
   console.log(event, bookmark)
   const record = {

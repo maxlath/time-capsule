@@ -1,4 +1,5 @@
-import { parse, nextVisitIsToday } from '../lib/bookmarks.js'
+import { nextVisitIsToday } from '../lib/bookmarks.js'
+import { serializeBookmark } from '../lib/bookmark_title.js'
 import { openBookmark } from './open_bookmark.js'
 
 const timeoutIds = {}
@@ -22,7 +23,7 @@ export const schedule = bookmark => {
 }
 
 export const scheduleFromUnparsedBookmark = unparsedBookmark => {
-  const parsedBookmark = parse(unparsedBookmark)
+  const parsedBookmark = serializeBookmark(unparsedBookmark)
   if (nextVisitIsToday(parsedBookmark)) schedule(parsedBookmark)
 }
 

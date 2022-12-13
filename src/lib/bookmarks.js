@@ -1,6 +1,6 @@
 import { first } from './utils.js'
 import { initBookmarksFolders } from './bookmarks_init.js'
-import { formatBookmarkTitle, parseBookmarkTitle } from './bookmark_title.js'
+import { formatBookmarkTitle, serializeBookmark } from './bookmark_title.js'
 import { getSettingValue } from './settings_store.js'
 import { get as getDayEnd } from './day_end.js'
 import { timeIsInThePast } from './times.js'
@@ -40,17 +40,12 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
     await createLogRecord({ event: 'updated-bookmark', bookmark, changes })
   }
   await ensureBookmarkFolderIsManagedFolder(bookmark)
-  return parse(bookmark)
+  return serializeBookmark(bookmark)
 }
 
 export async function removeBookmark (bookmark) {
   await browser.bookmarks.remove(bookmark.id)
   await createLogRecord({ event: 'removed-bookmark', bookmark })
-}
-
-export const parse = bookmarkData => {
-  const data = parseBookmarkTitle(bookmarkData.title) || {}
-  return Object.assign(data, bookmarkData)
 }
 
 // The initBookmarksFolders function needs to be called only once, given that even if the bookmark
@@ -130,7 +125,7 @@ async function ensureBookmarkFolderIsManagedFolder (bookmark) {
 export async function getBookmarks () {
   await waitForFolders
   const [ { children: bookmarks } ] = await browser.bookmarks.getSubTree(folderId)
-  return bookmarks.map(parse)
+  return bookmarks.map(serializeBookmark)
 }
 
 export async function getTodaysBookmarksData () {
@@ -140,7 +135,7 @@ export async function getTodaysBookmarksData () {
 
 export async function getBookmarksByIds (ids) {
   const bookmarks = await browser.bookmarks.get(ids)
-  return bookmarks.map(parse)
+  return bookmarks.map(serializeBookmark)
 }
 
 export async function getBookmarkById (id) {

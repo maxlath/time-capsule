@@ -1,6 +1,7 @@
 import { enable, disable } from '../lib/icon.js'
-import { getById, getByUrl, parse } from '../lib/bookmarks.js'
+import { getById, getByUrl } from '../lib/bookmarks.js'
 import { possiblyOutdatedBookmarkData } from './open_bookmark.js'
+import { serializeBookmark } from '../lib/bookmark_title.js'
 
 export async function updateIcon ({ url, tabId }) {
   const bookmark = await getByUrl(url)
@@ -17,9 +18,9 @@ export async function updateIcon ({ url, tabId }) {
 }
 
 const pageFound = ({ bookmark, possibleUpdate }) => {
-  const parsedData = parse(bookmark)
-  if (parsedData) {
-    enable(parsedData.frequency, {
+  bookmark = serializeBookmark(bookmark)
+  if (bookmark) {
+    enable(bookmark.frequency, {
       warning: possibleUpdate != null
     })
   } else {

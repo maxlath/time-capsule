@@ -63,3 +63,8 @@ function parseMetadata (obj, part) {
   obj[key] = value
   return obj
 }
+
+export const serializeBookmark = bookmark => {
+  const data = parseBookmarkTitle(bookmark.title) || {}
+  return Object.assign(data, bookmark)
+}
