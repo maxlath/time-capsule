@@ -13,6 +13,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    background-color: var(--body-bg-color);
+    z-index: 1;
   }
   .header{
     display: flex;
@@ -32,6 +34,13 @@
   @media screen and (max-width: 600px) {
     nav{
       flex-direction: column;
+    }
+  }
+  /*Large screens*/
+  @media screen and (min-width: 600px) {
+    nav{
+      position: sticky;
+      top: 0;
     }
   }
 </style>
