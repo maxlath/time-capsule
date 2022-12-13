@@ -1,5 +1,6 @@
 import { nextVisitIsToday } from '../lib/bookmarks.js'
 import { serializeBookmark } from '../lib/bookmark_title.js'
+import { toIso } from '../lib/times.js'
 import { openBookmark } from './open_bookmark.js'
 
 const timeoutIds = {}
@@ -17,7 +18,7 @@ export const schedule = bookmark => {
       openBookmark(bookmark)
       delete timeoutIds[bookmarkId]
     }
-    console.log('scheduling', { bookmark, time, now })
+    console.log('scheduling', { bookmark, time, now: toIso(now), then: toIso(now + time) })
     timeoutIds[bookmarkId] = setTimeout(openAndClean, time)
   }
 }

@@ -90,3 +90,5 @@ export function getDateTimeLocalInputValue (date) {
   const localTime = date.toTimeString().split(':').slice(0, 2).join(':')
   return `${localYear}-${localMonth}-${localDay}T${localTime}`
 }
+
+export const toIso = time => new Date(time).toISOString()
