@@ -87,8 +87,9 @@
     color: var(--grey-666);
   }
   .close{
-    line-height: 1.8rem;
+    line-height: 1.6rem;
     font-size: 2.5rem;
+    padding: 0.2rem 0.2rem 0.6rem 0.2rem;
     font-weight: bold;
     position: absolute;
     top: 0;
