@@ -9,6 +9,7 @@ const defaultValues = {
   'settings:maxCapsules': 10,
   'settings:selectedTab': 'preferences',
   'settings:logsMaxRecords': 100,
+  'settings:keepExpiredCapsulesAsNormalBookmarks': false,
 }
 
 export function getSettingStore (key) {

@@ -1,4 +1,4 @@
-import { first } from './utils.js'
+import { first, partition } from './utils.js'
 import { initBookmarksFolders } from './bookmarks_init.js'
 import { formatBookmarkTitle, serializeBookmark } from './bookmark_title.js'
 import { getSettingValue } from './settings_store.js'
@@ -11,6 +11,7 @@ export const getById = id => browser.bookmarks.get(id).then(first)
 export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
 export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit, newUrl, newTitle }) {
+  // NB: bookmarkData can be an archived bookmark, which will miss title metadata
   const { id, url, title, frequency, referenceDate } = bookmarkData
   const oldFrequency = frequency
   const oldUrl = url
@@ -44,8 +45,19 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
 }
 
 export async function removeBookmark (bookmark) {
-  await browser.bookmarks.remove(bookmark.id)
-  await createLogRecord({ event: 'removed-bookmark', bookmark })
+  const keepExpiredCapsulesAsNormalBookmarks = await getSettingValue('settings:keepExpiredCapsulesAsNormalBookmarks')
+  if (keepExpiredCapsulesAsNormalBookmarks) {
+    await archiveBookmark(bookmark)
+  } else {
+    await browser.bookmarks.remove(bookmark.id)
+    await createLogRecord({ event: 'removed-bookmark', bookmark })
+  }
+}
+
+async function archiveBookmark (bookmark) {
+  await browser.bookmarks.update(bookmark.id, { title: bookmark.cleanedTitle })
+  await browser.bookmarks.move(bookmark.id, { parentId: archiveFolderId })
+  await createLogRecord({ event: 'archived-bookmark', bookmark })
 }
 
 // The initBookmarksFolders function needs to be called only once, given that even if the bookmark
@@ -102,16 +114,29 @@ export function isInFolder (bookmarkData) {
   return bookmarkData && bookmarkData.parentId === folderId
 }
 
-// functions that depend on the bookmark folder id availability
-// but need to be directly defined/accessible on the API object
-export async function getByUrl (url) {
+function isInArchiveFolder (bookmarkData) {
+  if (folderId == null) throw new Error('folder id is not defined yet')
+  return bookmarkData && bookmarkData.parentId === archiveFolderId
+}
+
+export async function getBookmarksByUrl (url) {
   if (!url) throw new Error('url is missing')
   // Filter-out URLs such as 'about:*' and 'file:*'
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
   if (!url.startsWith('http')) return
   await waitForFolders
   const res = await browser.bookmarks.search({ url })
-  return res.filter(isInFolder)[0]
+  const [ capsulesBookmarks, others ] = partition(res, isInFolder)
+  const archivedBookmarks = others.filter(isInArchiveFolder)
+  return {
+    capsulesBookmark: capsulesBookmarks[0],
+    archivedBookmark: archivedBookmarks[0],
+  }
+}
+
+export async function getCapsuleBookmarkByUrl (url) {
+  const { capsulesBookmark } = await getBookmarksByUrl(url)
+  if (capsulesBookmark) return serializeBookmark(capsulesBookmark)
 }
 
 async function ensureBookmarkFolderIsManagedFolder (bookmark) {

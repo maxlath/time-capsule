@@ -1,6 +1,5 @@
 import { getLastFocusedWindowId } from './windows.js'
-import { getByUrl as getBookmarkByUrl, getBookmarkById } from './bookmarks.js'
-import { serializeBookmark } from './bookmark_title.js'
+import { getBookmarkById, getCapsuleBookmarkByUrl } from './bookmarks.js'
 
 export const createTab = browser.tabs.create.bind(browser.tabs)
 export const getTabById = browser.tabs.get.bind(browser.tabs)
@@ -19,11 +18,6 @@ export const getActiveTabId = () => getActiveTab().then(tab => tab.id)
 
 export const getActiveTabUrl = () => getActiveTab().then(tab => tab.url)
 
-export async function getActiveTabUrlBookmarkData (url) {
-  const bookmarkData = await getBookmarkByUrl(url)
-  if (bookmarkData) return serializeBookmark(bookmarkData)
-}
-
 export async function urlIsAlreadyOpened (url) {
   const tabs = await browser.tabs.query({ url })
   return tabs.length > 0
@@ -38,7 +32,7 @@ export async function getActiveTabBookmarkData () {
       title: activeTabTitle
     }
   }
-  res.bookmark = await getActiveTabUrlBookmarkData(activeTabUrl)
+  res.bookmark = await getCapsuleBookmarkByUrl(activeTabUrl)
   if (res.bookmark) return res
 
   const { possiblyOutdatedBookmarkData = {} } = await browser.storage.local.get('possiblyOutdatedBookmarkData')

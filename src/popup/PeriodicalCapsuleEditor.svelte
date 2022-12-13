@@ -4,8 +4,9 @@
   import { createEventDispatcher } from 'svelte'
   import { onChange } from '../lib/svelte.js'
   import { getMatchingPart, findFrequencyPattern, isKeyboardSelectorKey } from './periodical_capsule_editor_helpers.js'
-  import { setFrequency } from '../lib/actions.js'
+  import { saveCapsule } from '../lib/actions.js'
   import { sleep } from '../lib/utils.js'
+  import { getCapsuleBookmarkByUrl } from '../lib/bookmarks.js'
 
   export let bookmark, url, context
 
@@ -43,7 +44,12 @@
       celebratedNewFrequency = selectedFrequency
       // Wait a bit to let the frequency to be saved and show the success animation
       animationIsDone = sleep(500)
-      newBookmark = await setFrequency({ url, frequency: selectedFrequency, context })
+      newBookmark = await saveCapsule({
+        bookmark: await getCapsuleBookmarkByUrl(url),
+        url,
+        frequency: selectedFrequency,
+        context
+      })
       bookmark = bookmark ? Object.assign(bookmark, newBookmark) : newBookmark
       await animationIsDone
       dispatch('done')

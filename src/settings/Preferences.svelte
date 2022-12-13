@@ -8,6 +8,7 @@
   const allowDuplicatedTabs = getSettingStore('settings:allowDuplicatedTabs')
   const defaultRepeats = getSettingStore('settings:defaultRepeats')
   const logsMaxRecords = getSettingStore('settings:logsMaxRecords')
+  const keepExpiredCapsulesAsNormalBookmarks = getSettingStore('settings:keepExpiredCapsulesAsNormalBookmarks')
 
   const maxCapsulesOptions = range(1, 10).concat([ 15, 20, 25, 30, 40, 50 ])
   const logsMaxRecordsOptions = [ 10, 100, 1000, 10000 ]
@@ -41,6 +42,11 @@
     Open a capsule even if its URL is already opened in a tab
   </label>
 
+  <label class="setting">
+    <input type="checkbox" bind:checked={$keepExpiredCapsulesAsNormalBookmarks}>
+    Keep expired capsules as normal bookmarks, instead of deleting them
+  </label>
+
   <hr>
 
   <h2>{i18n('Logs')}</h2>
@@ -60,6 +66,7 @@
     padding: 1em;
   }
   .setting{
+    display: block;
     margin: 2em 1em;
   }
   .help{

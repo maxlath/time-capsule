@@ -48,6 +48,7 @@
   "Opened": { "message": "Opened" },
   "Created": { "message": "Created" },
   "Updated": { "message": "Updated" },
+  "Archived": { "message": "Archived" },
   "Removed": { "message": "Removed" },
   "Skipped": { "message": "Skipped" }
 }

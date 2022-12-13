@@ -4,6 +4,7 @@
 
   const { event, url, title, timestamp, remainingRepeats, changes = {} } = record
   const eventLabel = events[event].label
+  const displayRepeats = !/^(removed|archived)/.test(event)
 </script>
 
 <li>
@@ -13,6 +14,7 @@
     class:skipped={event === 'skipped-already-opened-bookmark'}
     class:created={event === 'created-bookmark'}
     class:updated={event === 'updated-bookmark'}
+    class:archived={event === 'archived-bookmark'}
     class:removed={event === 'removed-bookmark'}
   >
     {eventLabel}
@@ -33,12 +35,11 @@
   {/each}
 
   <ul class="flags">
-    {#if Number.isInteger(remainingRepeats)}
-      {#if remainingRepeats === 0}
-        <li class="warning">deleted</li>
-      {:else}
-        <li class="info">{remainingRepeats} remaining repeats</li>
-      {/if}
+    {#if displayRepeats && Number.isInteger(remainingRepeats)}
+      <li
+        class="info"
+        class:warning={remainingRepeats < 1}
+      >{remainingRepeats} remaining repeats</li>
     {/if}
   </ul>
 
@@ -75,6 +76,9 @@
   .updated{
     background-color: var(--darker-light-blue);
   }
+  .archived{
+    background-color: var(--warning-color);
+  }
   .removed{
     background-color: var(--danger-color);
   }
@@ -93,11 +97,11 @@
   .flags{
     margin-inline-start: auto;
   }
-  .warning{
-    background-color: var(--warning-color);
-  }
   .info{
     background-color: var(--darker-light-blue);
+  }
+  .warning{
+    background-color: var(--warning-color);
   }
   .timestamp{
     flex: 0 0 auto;

@@ -48,6 +48,9 @@ export const events = {
   'updated-bookmark': {
     label: i18n('Updated'),
   },
+  'archived-bookmark': {
+    label: i18n('Archived'),
+  },
   'removed-bookmark': {
     label: i18n('Removed'),
   },

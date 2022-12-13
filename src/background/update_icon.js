@@ -1,10 +1,10 @@
 import { enable, disable } from '../lib/icon.js'
-import { getById, getByUrl } from '../lib/bookmarks.js'
+import { getById, getCapsuleBookmarkByUrl } from '../lib/bookmarks.js'
 import { possiblyOutdatedBookmarkData } from './open_bookmark.js'
 import { serializeBookmark } from '../lib/bookmark_title.js'
 
 export async function updateIcon ({ url, tabId }) {
-  const bookmark = await getByUrl(url)
+  const bookmark = await getCapsuleBookmarkByUrl(url)
   if (bookmark) return pageFound({ bookmark })
   if (tabId) {
     const { bookmarkId, possibleUpdate } = possiblyOutdatedBookmarkData[tabId] || {}
