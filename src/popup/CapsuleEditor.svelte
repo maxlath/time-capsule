@@ -22,20 +22,24 @@
   let celebrationData, flash
 
   async function archive () {
-    celebrationData = { action: 'archived' }
-    await archiveBookmark(bookmark)
+    if (bookmark) {
+      celebrationData = { action: 'archived' }
+      await archiveBookmark(bookmark)
+    }
     onEditorDone()
   }
   async function remove () {
-    celebrationData = { action: 'removed' }
-    await removeBookmark(bookmark)
+    if (bookmark) {
+      celebrationData = { action: 'removed' }
+      await removeBookmark(bookmark)
+    }
     onEditorDone()
   }
 
   function onKeydown (e) {
     const { key } = e
-    if (key === 'Delete') remove()
-    else if (key === 'a') archive()
+    if (key === 'Delete' && bookmark) remove()
+    else if (key === 'a' && bookmark) archive()
     else if (key === 'o') $selectedTab = 'one-time'
     else if (key === 'p') $selectedTab = 'periodical'
     else if (key === 'd') $selectedTab = 'advanced'
