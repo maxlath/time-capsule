@@ -1,4 +1,5 @@
 <script>
+  import { i18n } from '../lib/i18n.js'
   import { getSettingStore } from '../lib/settings_store.js'
   const selectedTab = getSettingStore('popup:selectedTab')
 </script>
@@ -6,6 +7,7 @@
 <div class="tabs">
   <button
     on:click={() => $selectedTab = 'periodical'}
+    title="[{i18n('Hotkey')}: p]"
     class:active={$selectedTab === 'periodical'}
   >
     Periodical
@@ -13,6 +15,7 @@
 
   <button
     on:click={() => $selectedTab = 'one-time'}
+    title="[{i18n('Hotkey')}: o]"
     class:active={$selectedTab === 'one-time'}
   >
     One Time
@@ -20,6 +23,7 @@
 
   <button
     on:click={() => $selectedTab = 'advanced'}
+    title="[{i18n('Hotkey')}: d]"
     class:active={$selectedTab === 'advanced'}
   >
     Advanced

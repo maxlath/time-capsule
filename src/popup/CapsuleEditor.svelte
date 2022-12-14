@@ -35,6 +35,9 @@
     const { key } = e
     if (key === 'Delete') remove()
     else if (key === 'a') archive()
+    else if (key === 'o') $selectedTab = 'one-time'
+    else if (key === 'p') $selectedTab = 'periodical'
+    else if (key === 'd') $selectedTab = 'advanced'
   }
 
   let animationIsDone
