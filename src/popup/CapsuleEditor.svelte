@@ -9,6 +9,8 @@
   import { isCapsulableUrl, sleep } from '../lib/utils.js'
   import { archiveBookmark, removeBookmark } from '../lib/bookmarks.js'
   import Celebration from './Celebration.svelte'
+  import ArchiveIcon from '../icons/ArchiveIcon.svelte'
+  import TrashIcon from '../icons/TrashIcon.svelte'
 
   export let bookmark, url, context = null
 
@@ -91,14 +93,16 @@
         title="Remove this Time Capsule, but keep the bookmark [{i18n('Hotkey')}: a]"
         on:click={archive}
         >
-        {i18n('Archive')}
+        <div class="icon-wrapper"><ArchiveIcon /></div>
+        <span>{i18n('Archive')}</span>
       </button>
       <button
         class="delete"
         title="Delete both the Time Capsule and the bookmark [{i18n('Hotkey')}: {i18n('del_key')}]"
         on:click={remove}
         >
-        {i18n('Delete')}
+        <div class="icon-wrapper"><TrashIcon /></div>
+        <span>{i18n('Delete')}</span>
       </button>
     </div>
   {/if}
@@ -129,13 +133,26 @@
   .buttons{
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     gap: 1em;
+    margin-top: 1em;
   }
   button{
     border-radius: 3px;
-    padding: 0.5em;
+    padding: 0.5em 1em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0.5em;
+  }
+  .icon-wrapper{
+    flex: 0 0 1em;
+    height: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .archive{
     background-color: var(--warning-color);

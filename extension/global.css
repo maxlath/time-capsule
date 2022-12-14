@@ -64,6 +64,8 @@ body, button, input{
 body{
   margin: 0;
   font-family: sans-serif;
+  /* Default color of svg icons */
+  fill: var(--grey-111);
 }
 
 button{
