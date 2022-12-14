@@ -14,13 +14,14 @@ export const formatBookmarkTitle = ({ title, frequency, nextVisit, referenceDate
   let metadata = ''
   if (frequency) metadata += `freq=${frequency} `
   if (referenceDate) metadata += `ref=${new Date(referenceDate).toISOString()} `
-  if (nextVisit) metadata += `next=${new Date(nextVisit).toISOString()} `
+  metadata += `next=${new Date(nextVisit).toISOString()} `
   if (repeat != null) metadata += ` repeat=${repeat} `
   return `${title}${separator}${metadata}`.trim()
 }
 
 export const getNextVisit = ({ frequency, referenceDate }) => {
   const { num, unit } = parseFrequency(frequency)
+  referenceDate = referenceDate || Date.now()
   let nextVisit = incrementByTimeUnit[unit](referenceDate, num)
   // TODO: For inner-day frequencies (minutes, hours), it could be more efficient
   // to replace the referenceDate day by today, then iterate,

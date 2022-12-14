@@ -86,6 +86,9 @@ export const waitForFolders = initBookmarksFolders()
 
 export async function addCapsule ({ url, title, frequency, repeat, nextVisit }) {
   const defaultRepeats = await getSettingValue('settings:defaultRepeats')
+  if (frequency === undefined && (repeat !== 0 || nextVisit == null)) {
+    throw new Error('a frequency or a next visit date is required')
+  }
   return createBookmark({
     url,
     title: formatBookmarkTitle({
