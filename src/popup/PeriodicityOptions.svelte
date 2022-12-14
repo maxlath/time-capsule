@@ -103,12 +103,12 @@
   {#each Object.entries(categoriesInMenu) as [ category, { optionsData } ] }
     <h3 class="category-header">{i18n(category)}</h3>
     <ul>
-      {#each optionsData as { num, unit, frequency, frequencyLabel, color, bgColor }}
+      {#each optionsData as { num, unit, frequency, frequencyUnitLabel, color, bgColor }}
         <li>
           <button
             class="option"
             bind:this={optionsElements[frequency]}
-            title="Set the frequency to {frequencyLabel} [{i18n('Hotkey')}: {num}{unit}]"
+            title="{i18n('browse_every_time_unit', [ num.toString(), i18n(frequencyUnitLabel) ])} [{i18n('Hotkey')}: {num}{unit}]"
             style:color={color}
             style:background-color={bgColor}
             on:focus={() => highlightedFrequency = frequency}

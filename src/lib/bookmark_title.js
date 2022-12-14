@@ -12,10 +12,11 @@ export const formatBookmarkTitle = ({ title, frequency, nextVisit, referenceDate
     title = title.replace(pattern, '')
   }
   let metadata = ''
-  if (frequency != null) metadata += `freq=${frequency} `
-  metadata += `ref=${new Date(referenceDate).toISOString()} next=${new Date(nextVisit).toISOString()}`
-  if (repeat != null) metadata += ` repeat=${repeat}`
-  return `${title}${separator}${frequency} ${metadata}`
+  if (frequency) metadata += `freq=${frequency} `
+  if (referenceDate) metadata += `ref=${new Date(referenceDate).toISOString()} `
+  if (nextVisit) metadata += `next=${new Date(nextVisit).toISOString()} `
+  if (repeat != null) metadata += ` repeat=${repeat} `
+  return `${title}${separator}${metadata}`.trim()
 }
 
 export const getNextVisit = ({ frequency, referenceDate }) => {
@@ -44,17 +45,22 @@ export const parseBookmarkTitle = title => {
       [ frequency, metadata ] = metadata.split(' ')
       referenceDate = nextVisit = metadata
     }
-    const { frequencyLabel } = parseFrequency(frequency)
-    return {
+    const capsuleData = {
       cleanedTitle: title.split(separator)[0],
-      frequency,
-      frequencyLabel,
       // epoch time number should take less memory and computation power
       // than an ISO time string in the bookmark index
       nextVisit: new Date(nextVisit).getTime(),
-      referenceDate: new Date(referenceDate).getTime(),
       repeat: repeat != null ? repeat : null,
     }
+    if (frequency) {
+      const { frequencyLabel } = parseFrequency(frequency)
+      capsuleData.frequency = frequency
+      capsuleData.frequencyLabel = frequencyLabel
+    }
+    if (referenceDate) {
+      capsuleData.referenceDate = new Date(referenceDate).getTime()
+    }
+    return capsuleData
   }
 }
 

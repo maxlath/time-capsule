@@ -1,9 +1,9 @@
-import { updateCapsuleData, add, getBookmarksByUrl } from './bookmarks.js'
+import { updateCapsuleData, getBookmarksByUrl, addCapsule } from './bookmarks.js'
 import { getActiveTab } from './tabs.js'
 import { serializeBookmark } from './bookmark_title.js'
 
-export async function saveCapsule ({ url, bookmark, nextVisit, frequency, repeat, context }) {
-  if (!frequency) throw new Error('missing frequency')
+export async function saveCapsule ({ url, bookmark, nextVisit, frequency, repeat }) {
+  if (!frequency && repeat !== 0) throw new Error('missing frequency')
   if (!(url || bookmark)) throw new Error('missing url')
   let archivedBookmark
   if (!bookmark) {
@@ -21,6 +21,12 @@ export async function saveCapsule ({ url, bookmark, nextVisit, frequency, repeat
     })
   } else {
     const tabData = await getActiveTab()
-    return add(tabData.url, tabData.title, frequency)
+    return addCapsule({
+      url: tabData.url,
+      title: tabData.title,
+      repeat,
+      frequency,
+      nextVisit,
+    })
   }
 }

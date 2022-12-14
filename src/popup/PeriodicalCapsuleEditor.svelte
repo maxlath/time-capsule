@@ -38,7 +38,7 @@
 
   async function onDone () {
     if (selectedFrequency !== bookmark?.frequency) {
-      dispatch('celebrate', { celebratedNewFrequency: selectedFrequency })
+      dispatch('celebrate', { frequency: selectedFrequency })
       newBookmark = await saveCapsule({
         bookmark: await getCapsuleBookmarkByUrl(url),
         url,
@@ -55,7 +55,7 @@
 
 <svelte:window on:keydown={onKeydown} />
 
-<div>
+<div class="peridical-capsule-editor">
   {#if showKeyboardSelector}
     <div class="typing-view">
       <p class="typing" class:success={foundFrequency}>{matchingPart}</p>
@@ -70,6 +70,10 @@
 </div>
 
 <style>
+  .peridical-capsule-editor{
+    min-width: 18em;
+    min-height: 16em;
+  }
   .typing-view{
     width: 18em;
     height: 16em;

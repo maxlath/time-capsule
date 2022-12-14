@@ -34,12 +34,13 @@ Object.values(categoriesInMenu).forEach(categoryData => {
   categoryData.optionsData = categoryData.options.map(num => {
     const bgColor = getColor(num, daysFactor)
     const frequency = `${num}${letter}`
-    const { frequencyLabel } = parseFrequency(frequency)
+    const { frequencyLabel, unitLabel } = parseFrequency(frequency)
     return {
       num,
       unit: letter,
       frequency,
       frequencyLabel,
+      frequencyUnitLabel: unitLabel,
       bgColor,
       // Adjusting thresold darkest color to match "1 year"
       // and have the full years line in the same color

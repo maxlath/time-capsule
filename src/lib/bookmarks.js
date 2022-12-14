@@ -25,7 +25,7 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
   }
   const updatedTitle = formatBookmarkTitle({
     title: newTitle || title,
-    frequency: newFrequency != null ? newFrequency : frequency,
+    frequency: newFrequency !== undefined ? newFrequency : frequency,
     referenceDate: nextVisit || referenceDate || Date.now(),
     nextVisit,
     repeat,
@@ -34,9 +34,9 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
   const updateData = { title: updatedTitle }
   if (newUrl) updateData.url = newUrl
   const bookmark = await browser.bookmarks.update(id, updateData)
-  if (newFrequency || newUrl) {
+  if (newFrequency !== undefined || newUrl) {
     const changes = {}
-    if (newFrequency) changes.frequency = { old: oldFrequency, new: newFrequency }
+    if (newFrequency !== undefined) changes.frequency = { old: oldFrequency, new: newFrequency }
     if (newUrl) changes.url = { old: oldUrl, new: newUrl }
     await createLogRecord({ event: 'updated-bookmark', bookmark, changes })
   }
@@ -84,15 +84,15 @@ export const waitForFolders = initBookmarksFolders()
   })
   .catch(console.error)
 
-export async function add (url, title, frequency) {
+export async function addCapsule ({ url, title, frequency, repeat, nextVisit }) {
   const defaultRepeats = await getSettingValue('settings:defaultRepeats')
   return createBookmark({
     url,
     title: formatBookmarkTitle({
       title,
       frequency,
-      referenceDate: Date.now(),
-      repeat: defaultRepeats,
+      nextVisit,
+      repeat: repeat != null ? repeat : defaultRepeats,
     })
   })
 }

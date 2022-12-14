@@ -5,17 +5,17 @@
 
 <div class="tabs">
   <button
-    on:click={() => $selectedTab = 'one-time'}
-    class:active={$selectedTab === 'one-time'}
-  >
-    One Time
-  </button>
-
-  <button
     on:click={() => $selectedTab = 'periodical'}
     class:active={$selectedTab === 'periodical'}
   >
     Periodical
+  </button>
+
+  <button
+    on:click={() => $selectedTab = 'one-time'}
+    class:active={$selectedTab === 'one-time'}
+  >
+    One Time
   </button>
 
   <button
@@ -40,6 +40,7 @@
     flex: 1 0 0;
     padding: 0.5em;
     text-align: center;
+    border: 1px solid var(--grey-ddd);
   }
   .tabs button:first-child{
     border-top-left-radius: 3px;

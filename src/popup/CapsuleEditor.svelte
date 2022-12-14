@@ -21,12 +21,12 @@
   let celebrationData
 
   async function archive () {
-    celebrationData = { celebratedAction: 'archived' }
+    celebrationData = { action: 'archived' }
     await archiveBookmark(bookmark)
     onEditorDone()
   }
   async function remove () {
-    celebrationData = { celebratedAction: 'removed' }
+    celebrationData = { action: 'removed' }
     await removeBookmark(bookmark)
     onEditorDone()
   }
@@ -39,7 +39,7 @@
 
   let animationIsDone
   function celebrate (e) {
-    celebrationData = e.detail
+    celebrationData = e.detail || {}
   }
 
   async function onEditorDone () {
@@ -68,6 +68,7 @@
       bind:bookmark
       {url}
       {context}
+      on:celebrate={celebrate}
       on:done={onEditorDone}
     />
   {:else if $selectedTab === 'periodical'}
@@ -83,6 +84,7 @@
       bind:bookmark
       {url}
       {context}
+      on:celebrate={celebrate}
       on:done={onEditorDone}
     />
   {/if}

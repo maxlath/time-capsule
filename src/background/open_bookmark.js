@@ -23,9 +23,10 @@ async function processBookmark ({ bookmark, open }) {
     bookmarkData.repeat -= 1
   }
   if (open) await openBookmarkIfNeeded(bookmark)
-  await updateCapsuleData({ bookmarkData })
-  if (bookmarkData.repeat < 0) {
+  if (Number.isInteger(bookmarkData.repeat) && bookmarkData.repeat < 0) {
     return removeOrArchiveBookmark(bookmark)
+  } else {
+    await updateCapsuleData({ bookmarkData })
   }
 }
 

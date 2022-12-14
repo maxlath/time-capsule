@@ -1,17 +1,21 @@
 <script>
   import ArchiveIcon from '../icons/ArchiveIcon.svelte'
+  import CheckIcon from '../icons/CheckIcon.svelte'
   import TrashIcon from '../icons/TrashIcon.svelte'
 
-  export let celebratedNewFrequency, celebratedAction
+  export let frequency = null
+  export let action = null
 </script>
 
 <div class="celebration-wrapper">
-  {#if celebratedAction === 'removed'}
+  {#if action === 'removed'}
     <div class="icon-wrapper removed"><TrashIcon /></div>
-  {:else if celebratedAction === 'archived'}
+  {:else if action === 'archived'}
     <div class="icon-wrapper archived"><ArchiveIcon /></div>
-  {:else if celebratedNewFrequency}
-    <p>{celebratedNewFrequency}</p>
+  {:else if frequency}
+    <p>{frequency}</p>
+  {:else}
+    <div class="icon-wrapper success"><CheckIcon /></div>
   {/if}
 </div>
 
@@ -39,6 +43,9 @@
     width: 2em;
     animation-name: grow-out-svg;
     animation-duration: 0.5s;
+  }
+  .success{
+    fill: var(--success-color);
   }
   .removed{
     fill: var(--danger-color);

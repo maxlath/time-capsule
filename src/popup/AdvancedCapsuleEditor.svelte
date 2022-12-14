@@ -21,7 +21,9 @@
 
   if (bookmark) {
     nextVisit = getDateTimeLocalInputValue(bookmark.nextVisit)
-    ;({ num: frequencyNum, unit: frequencyUnit } = parseFrequency(bookmark.frequency))
+    if (bookmark.frequency) {
+      ;({ num: frequencyNum, unit: frequencyUnit } = parseFrequency(bookmark.frequency))
+    }
     if (bookmark.repeat != null) repeat = bookmark.repeat
   } else {
     nextVisit = getDateTimeLocalInputValue()
@@ -35,11 +37,13 @@
   const frequencyNumOptions = range(1, 100)
 
   async function validate () {
+    if (!canValidate) return
+    dispatch('celebrate')
     await saveCapsule({
       url,
       bookmark,
       nextVisit,
-      frequency: `${frequencyNum}${frequencyUnit}`,
+      frequency: repeat > 0 ? `${frequencyNum}${frequencyUnit}` : null,
       repeat,
       context,
     })
@@ -52,6 +56,7 @@
       frequency,
       referenceDate: Date.now()
     }))
+    nextVisitInputEl.focus()
   }
 
   let nextVisitInputEl, canValidate
@@ -59,7 +64,10 @@
     canValidate = nextVisitInputEl?.validity.valid
   }
 
-  onMount(udpateValidateButton)
+  onMount(() => {
+    udpateValidateButton()
+    nextVisitInputEl.focus()
+  })
 
   $: onChange(nextVisit, udpateValidateButton)
 </script>
