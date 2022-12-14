@@ -10,7 +10,7 @@
   import { getNextVisit } from '../lib/bookmark_title.js'
   import { onChange } from '../lib/svelte.js'
 
-  export let url, bookmark, context
+  export let url, bookmark, context, flash
 
   const dispatch = createEventDispatcher()
 
@@ -37,17 +37,21 @@
   const frequencyNumOptions = range(1, 100)
 
   async function validate () {
-    if (!canValidate) return
-    dispatch('celebrate')
-    await saveCapsule({
-      url,
-      bookmark,
-      nextVisit,
-      frequency: repeat > 0 ? `${frequencyNum}${frequencyUnit}` : null,
-      repeat,
-      context,
-    })
-    dispatch('done')
+    try {
+      if (!canValidate) return
+      dispatch('celebrate')
+      await saveCapsule({
+        url,
+        bookmark,
+        nextVisit,
+        frequency: repeat > 0 ? `${frequencyNum}${frequencyUnit}` : null,
+        repeat,
+        context,
+      })
+      dispatch('done')
+    } catch (err) {
+      flash = err
+    }
   }
 
   function resetNextVisit () {

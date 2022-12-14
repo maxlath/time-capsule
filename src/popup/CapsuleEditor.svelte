@@ -11,6 +11,7 @@
   import Celebration from './Celebration.svelte'
   import ArchiveIcon from '../icons/ArchiveIcon.svelte'
   import TrashIcon from '../icons/TrashIcon.svelte'
+  import Flash from './Flash.svelte'
 
   export let bookmark, url, context = null
 
@@ -18,7 +19,7 @@
 
   const selectedTab = getSettingStore('popup:selectedTab')
 
-  let celebrationData
+  let celebrationData, flash
 
   async function archive () {
     celebrationData = { action: 'archived' }
@@ -62,6 +63,8 @@
   >⨯</button>
 {/if}
 
+<Flash state={flash} />
+
 {#if celebrationData}
   <Celebration {...celebrationData} />
 {:else if isCapsulableUrl(url)}
@@ -71,6 +74,7 @@
       bind:bookmark
       {url}
       {context}
+      bind:flash
       on:celebrate={celebrate}
       on:done={onEditorDone}
     />
@@ -79,6 +83,7 @@
       bind:bookmark
       {url}
       {context}
+      bind:flash
       on:celebrate={celebrate}
       on:done={onEditorDone}
     />
@@ -87,6 +92,7 @@
       bind:bookmark
       {url}
       {context}
+      bind:flash
       on:celebrate={celebrate}
       on:done={onEditorDone}
     />

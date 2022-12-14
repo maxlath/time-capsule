@@ -6,7 +6,7 @@
   import { saveCapsule } from '../lib/actions.js'
   import { getCapsuleBookmarkByUrl } from '../lib/bookmarks.js'
 
-  export let bookmark, url, context
+  export let bookmark, url, context, flash
 
   const dispatch = createEventDispatcher()
 
@@ -37,18 +37,22 @@
   $: matchingPart = getMatchingPart(lastKeys)
 
   async function onDone () {
-    if (selectedFrequency !== bookmark?.frequency) {
-      dispatch('celebrate', { frequency: selectedFrequency })
-      newBookmark = await saveCapsule({
-        bookmark: await getCapsuleBookmarkByUrl(url),
-        url,
-        frequency: selectedFrequency,
-        context
-      })
-      bookmark = bookmark ? Object.assign(bookmark, newBookmark) : newBookmark
-      dispatch('done')
-    } else {
-      dispatch('done')
+    try {
+      if (selectedFrequency !== bookmark?.frequency) {
+        dispatch('celebrate', { frequency: selectedFrequency })
+        newBookmark = await saveCapsule({
+          bookmark: await getCapsuleBookmarkByUrl(url),
+          url,
+          frequency: selectedFrequency,
+          context
+        })
+        bookmark = bookmark ? Object.assign(bookmark, newBookmark) : newBookmark
+        dispatch('done')
+      } else {
+        dispatch('done')
+      }
+    } catch (err) {
+      flash = err
     }
   }
 </script>

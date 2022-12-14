@@ -4,7 +4,7 @@
   import { getDateTimeLocalInputValue } from '../lib/times.js'
   import { onChange } from '../lib/svelte.js'
 
-  export let url, bookmark, context
+  export let url, bookmark, context, flash
 
   const dispatch = createEventDispatcher()
 
@@ -17,17 +17,21 @@
   }
 
   async function validate () {
-    if (!canValidate) return
-    dispatch('celebrate')
-    await saveCapsule({
-      url,
-      bookmark,
-      nextVisit,
-      frequency: null,
-      repeat: 0,
-      context,
-    })
-    dispatch('done')
+    try {
+      if (!canValidate) return
+      dispatch('celebrate')
+      await saveCapsule({
+        url,
+        bookmark,
+        nextVisit,
+        frequency: null,
+        repeat: 0,
+        context,
+      })
+      dispatch('done')
+    } catch (err) {
+      flash = err
+    }
   }
 
   function resetNextVisit () {
