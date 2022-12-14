@@ -65,8 +65,6 @@
         // Let the event bubble to trigger buttons
         return
       }
-    } else if (key === 'Delete') {
-      remove()
     }
 
     e.stopPropagation()
@@ -75,11 +73,6 @@
 
   function select (frequency) {
     highlightedFrequency = selectedFrequency = frequency
-    dispatch('done')
-  }
-
-  function remove () {
-    selectedFrequency = 'never'
     dispatch('done')
   }
 
@@ -100,7 +93,7 @@
   }
 </script>
 
-<svelte:window on:keydown={onKeydown}/>
+<svelte:window on:keydown={onKeydown} />
 
 {#if frequencyUnitLabel}
   <h2>{i18n('browse_every_time_unit', [ frequencyNum.toString(), i18n(frequencyUnitLabel) ])}</h2>

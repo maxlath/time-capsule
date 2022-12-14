@@ -3,29 +3,52 @@
   import PeriodicalCapsuleEditor from './PeriodicalCapsuleEditor.svelte'
   import AdvancedCapsuleEditor from './AdvancedCapsuleEditor.svelte'
   import { i18n } from '../lib/i18n.js'
-  import { BubbleUpComponentEvent } from '../lib/svelte.js'
   import { createEventDispatcher } from 'svelte'
   import CapsuleEditorTabs from './CapsuleEditorTabs.svelte'
   import { getSettingStore } from '../lib/settings_store.js'
-  import { isCapsulableUrl } from '../lib/utils.js'
+  import { isCapsulableUrl, sleep } from '../lib/utils.js'
   import { archiveBookmark, removeBookmark } from '../lib/bookmarks.js'
+  import Celebration from './Celebration.svelte'
 
   export let bookmark, url, context = null
 
   const dispatch = createEventDispatcher()
-  const bubbleUpComponentEvent = BubbleUpComponentEvent(dispatch)
 
   const selectedTab = getSettingStore('popup:selectedTab')
 
+  let celebrationData
+
   async function archive () {
+    celebrationData = { celebratedAction: 'archived' }
     await archiveBookmark(bookmark)
-    dispatch('done')
+    onEditorDone()
   }
   async function remove () {
+    celebrationData = { celebratedAction: 'removed' }
     await removeBookmark(bookmark)
+    onEditorDone()
+  }
+
+  function onKeydown (e) {
+    const { key } = e
+    if (key === 'Delete') remove()
+    else if (key === 'a') archive()
+  }
+
+  let animationIsDone
+  function celebrate (e) {
+    celebrationData = e.detail
+  }
+
+  async function onEditorDone () {
+    await animationIsDone
     dispatch('done')
   }
+
+  $: if (celebrationData) animationIsDone = sleep(500)
 </script>
+
+<svelte:window on:keydown={onKeydown} />
 
 {#if context === 'settings'}
   <button
@@ -34,28 +57,31 @@
   >⨯</button>
 {/if}
 
-{#if isCapsulableUrl(url)}
+{#if celebrationData}
+  <Celebration {...celebrationData} />
+{:else if isCapsulableUrl(url)}
   <CapsuleEditorTabs />
   {#if $selectedTab === 'one-time'}
     <OneTimeCapsuleEditor
       bind:bookmark
       {url}
       {context}
-      on:done={bubbleUpComponentEvent}
+      on:done={onEditorDone}
     />
   {:else if $selectedTab === 'periodical'}
     <PeriodicalCapsuleEditor
       bind:bookmark
       {url}
       {context}
-      on:done={bubbleUpComponentEvent}
+      on:celebrate={celebrate}
+      on:done={onEditorDone}
     />
    {:else if $selectedTab === 'advanced'}
     <AdvancedCapsuleEditor
       bind:bookmark
       {url}
       {context}
-      on:done={bubbleUpComponentEvent}
+      on:done={onEditorDone}
     />
   {/if}
   {#if bookmark}
