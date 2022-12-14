@@ -1,9 +1,7 @@
 import { disable } from '../lib/icon.js'
-import { getActiveTab, getActiveTabUrl } from '../lib/tabs.js'
-import { folderId, getBookmarkById, getCapsuleBookmarkByUrl } from '../lib/bookmarks.js'
+import { getActiveTab, getActiveTabBookmarkData, getActiveTabUrl } from '../lib/tabs.js'
+import { folderId, getCapsuleBookmarkByUrl } from '../lib/bookmarks.js'
 import { updateIconFromBookmark, updateIconFromUrl } from './update_icon.js'
-
-let activeTabId, activeTabBookmarkUrl, activeTabBookmarkId
 
 // On update of any tab, if it is the current tab, update the icon
 // doc: https://developer.chrome.com/extensions/tabs#event-onUpdated
@@ -16,9 +14,6 @@ async function onTabUpdated (tabId, changeInfo, tab) {
   // activeTab might be undefined?!?
   if (activeTab.id === tabId) {
     const bookmark = await getCapsuleBookmarkByUrl(changedTabUrl)
-    activeTabBookmarkId = bookmark?.id
-    activeTabBookmarkUrl = bookmark?.url
-    activeTabId = tabId
     await updateIconFromBookmark({ bookmark, tabId })
   }
 }
@@ -28,10 +23,7 @@ async function onTabUpdated (tabId, changeInfo, tab) {
 async function onTabActivated (activeTab) {
   const { tabId } = activeTab
   const url = await getActiveTabUrl()
-  activeTabId = tabId
   const bookmark = await getCapsuleBookmarkByUrl(url)
-  activeTabBookmarkId = bookmark?.id
-  activeTabBookmarkUrl = bookmark?.url
   await updateIconFromBookmark({ bookmark, tabId })
 }
 
@@ -48,24 +40,18 @@ async function onRemovedBookmark (bookmarkId, removeInfo) {
 }
 
 async function onCreatedBookmark (bookmarkId, bookmarkInfo) {
-  if (activeTabBookmarkUrl === bookmarkInfo.url) {
-    activeTabBookmarkId = bookmarkId
-    await fetchBookmarkAndUpdateIcon(bookmarkId)
+  const { bookmark: activeTabBookmark, activeTab } = await getActiveTabBookmarkData()
+  if (activeTabBookmark.url === bookmarkInfo.url) {
+    await updateIconFromBookmark({ bookmark: activeTabBookmark, tabId: activeTab.id })
   }
 }
 
 async function onUpdatedBookmark (bookmarkId) {
-  if (activeTabBookmarkId === bookmarkId) {
-    await fetchBookmarkAndUpdateIcon(bookmarkId)
+  const { bookmark: activeTabBookmark, activeTab } = await getActiveTabBookmarkData()
+  if (activeTabBookmark.id === bookmarkId) {
+    await updateIconFromBookmark({ bookmark: activeTabBookmark, tabId: activeTab.id })
   }
 }
-
-async function fetchBookmarkAndUpdateIcon (bookmarkId) {
-  const bookmark = await getBookmarkById(bookmarkId)
-  await updateIconFromBookmark({ bookmark, tabId: activeTabId })
-}
-
-// const lazyOnUpdatedBookmark = debounce(onUpdatedBookmark, 100)
 
 async function onRuntimeMessage (message) {
   const { event } = message
