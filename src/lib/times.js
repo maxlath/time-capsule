@@ -92,3 +92,26 @@ export function getDateTimeLocalInputValue (date) {
 }
 
 export const toIso = time => new Date(time).toISOString()
+
+export function getNextVisitSummary (date) {
+  date = new Date(date)
+  const timeFromNow = date.getTime() - Date.now()
+  if (timeFromNow > 2 * year) {
+    const yearsFromNow = Math.round(timeFromNow / year)
+    return `${yearsFromNow}Y`
+  } else if (timeFromNow > 3 * month) {
+    const monthsFromNow = Math.round(timeFromNow / month)
+    return `${monthsFromNow}M`
+  } else if (timeFromNow > 3 * week) {
+    const weeksFromNow = Math.round(timeFromNow / week)
+    return `${weeksFromNow}W`
+  } else if (timeFromNow > 3 * day) {
+    const daysFromNow = Math.round(timeFromNow / day)
+    return `${daysFromNow}D`
+  } else if (timeFromNow > 1 * hour) {
+    const hoursFromNow = Math.round(timeFromNow / hour)
+    return `${hoursFromNow}H`
+  } else {
+    return ''
+  }
+}

@@ -1,4 +1,5 @@
 import { getActiveTabId } from './tabs.js'
+import { getNextVisitSummary } from './times.js'
 const darkGrey = '#333333'
 const warningBgColor = '#ffd402'
 
@@ -7,16 +8,20 @@ const warningBgColor = '#ffd402'
 // from both the background and the popup context, (for instance, by setting on this
 // variable on background global window object via browser.extension.getBackgroundPage())
 // but that would be more pain than gains
-export async function enable (frequency, options = {}) {
+export async function enable ({ frequency, warning, nextVisit }) {
   const tabId = await getActiveTabId()
-  setActiveIcon(tabId)
-  if (options.warning) {
+  if (frequency) {
+    setPeriodicCapsuleIcon(tabId)
+  } else {
+    setOneTimeCapsuleIcon(tabId)
+  }
+  if (warning) {
     browser.browserAction.setBadgeText({ tabId, text: '!' })
     // Requires manifest_version=3
     // browser.browserAction.setBadgeTextColor({ tabId, color: '#ff0000' })
     browser.browserAction.setBadgeBackgroundColor({ tabId, color: warningBgColor })
   } else {
-    browser.browserAction.setBadgeText({ tabId, text: frequency || '' })
+    browser.browserAction.setBadgeText({ tabId, text: frequency || getNextVisitSummary(nextVisit) })
     browser.browserAction.setBadgeBackgroundColor({ tabId, color: darkGrey })
   }
 }
@@ -38,5 +43,6 @@ const setStatusIcon = substring => tabId => {
   })
 }
 
-const setActiveIcon = setStatusIcon('')
+const setPeriodicCapsuleIcon = setStatusIcon('')
+const setOneTimeCapsuleIcon = setStatusIcon('yellow-')
 const setDisableIcon = setStatusIcon('disabled-')

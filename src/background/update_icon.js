@@ -33,7 +33,11 @@ export async function updateIconFromBookmark ({ bookmark, tabId }) {
 const tabBookmarkFound = ({ bookmark, possibleUpdate }) => {
   bookmark = serializeBookmark(bookmark)
   if (bookmark) {
-    enable(bookmark.frequency, { warning: possibleUpdate != null })
+    enable({
+      frequency: bookmark.frequency,
+      nextVisit: bookmark.nextVisit,
+      warning: possibleUpdate != null
+    })
   } else {
     // Known case: if the bookmark title was manually modified and made unparsable
     disable()
