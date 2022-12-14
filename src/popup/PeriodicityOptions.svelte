@@ -1,5 +1,5 @@
 <script>
-  import { inMenu as categories } from './options.js'
+  import { categoriesInMenu } from './options.js'
   import { i18n } from '../lib/i18n.js'
   import { createEventDispatcher, onMount } from 'svelte'
   import { getNextVisit } from '../lib/bookmark_title.js'
@@ -12,7 +12,7 @@
 
   let highlightedFrequency = selectedFrequency || '1M'
 
-  const categoriesList = Object.values(categories)
+  const categoriesList = Object.values(categoriesInMenu)
   const categoriesLetters = categoriesList.map(category => category.letter)
   const categoriesByLetter = categoriesList.reduce((index, category) => {
     index[category.letter] = category
@@ -100,7 +100,7 @@
 {/if}
 
 <div class="periodic-options">
-  {#each Object.entries(categories) as [ category, { optionsData } ] }
+  {#each Object.entries(categoriesInMenu) as [ category, { optionsData } ] }
     <h3 class="category-header">{i18n(category)}</h3>
     <ul>
       {#each optionsData as { num, unit, frequency, frequencyLabel, color, bgColor }}

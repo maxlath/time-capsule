@@ -1,7 +1,7 @@
 import { parseFrequency } from '../lib/frequency.js'
 import { getColor } from './colors.js'
 
-export const inMenu = {
+export const categoriesInMenu = {
   hours: {
     letter: 'H',
     options: [ 1, 2, 3, 6, 12, 18 ],
@@ -29,7 +29,7 @@ export const inMenu = {
   }
 }
 
-Object.values(inMenu).forEach(categoryData => {
+Object.values(categoriesInMenu).forEach(categoryData => {
   const { letter, daysFactor } = categoryData
   categoryData.optionsData = categoryData.options.map(num => {
     const bgColor = getColor(num, daysFactor)
@@ -54,4 +54,4 @@ const typingOnly = {
   }
 }
 
-export const allOptions = Object.assign({}, typingOnly, inMenu)
+export const allOptions = Object.assign({}, typingOnly, categoriesInMenu)
