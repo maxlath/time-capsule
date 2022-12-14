@@ -22,10 +22,6 @@ export const sleep = (ms = 0) => {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-export function usesDarkMode () {
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches
-}
-
 export function range (from, to) {
   return Array.from(Array(to + 1).keys()).slice(from)
 }

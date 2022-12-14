@@ -1,6 +1,6 @@
 <script>
   export let context
-  import { usesDarkMode } from '../lib/utils.js'
+  import CogIcon from '../icons/CogIcon.svelte'
 
   function showSettings () {
     browser.tabs.create({ url: '/settings/settings.html' })
@@ -13,11 +13,7 @@
   class:in-popup={context === 'popup'}
   on:click={showSettings}
   >
-  {#if usesDarkMode()}
-    <img src="/icons/cog-light.svg" alt="settings icon" />
-  {:else}
-    <img src="/icons/cog.svg" alt="settings icon" />
-  {/if}
+  <CogIcon />
 </button>
 
 <style>
@@ -27,9 +23,9 @@
     right: 0.5em;
     border: 0;
   }
-  .settings img{
-    width: 1.6em;
-    height: 1.6em;
+  button{
+    width: 2em;
+    height: 2em;
   }
   .settings:hover{
     background: none;
