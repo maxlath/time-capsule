@@ -16,8 +16,7 @@ export async function enable (frequency, options = {}) {
     // browser.browserAction.setBadgeTextColor({ tabId, color: '#ff0000' })
     browser.browserAction.setBadgeBackgroundColor({ tabId, color: warningBgColor })
   } else {
-    const text = formatFrequency(frequency)
-    browser.browserAction.setBadgeText({ tabId, text })
+    browser.browserAction.setBadgeText({ tabId, text: frequency })
     browser.browserAction.setBadgeBackgroundColor({ tabId, color: darkGrey })
   }
 }
@@ -41,5 +40,3 @@ const setStatusIcon = substring => tabId => {
 
 const setActiveIcon = setStatusIcon('')
 const setDisableIcon = setStatusIcon('disabled-')
-
-const formatFrequency = freq => freq.slice(0, -1) + ' ' + freq.slice(-1)
