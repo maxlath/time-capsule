@@ -1,16 +1,15 @@
 <script>
+  import ArchiveIcon from '../icons/ArchiveIcon.svelte'
+  import TrashIcon from '../icons/TrashIcon.svelte'
+
   export let celebratedNewFrequency, celebratedAction
 </script>
 
 <div class="celebration-wrapper">
   {#if celebratedAction === 'removed'}
-    <p class="action removed">
-      <img src="/icons/red-trash-bin.svg" alt="delete icon" />
-    </p>
+    <div class="icon-wrapper removed"><TrashIcon /></div>
   {:else if celebratedAction === 'archived'}
-    <p class="action archived">
-      <img src="/icons/orange-archive.svg" alt="archive icon" />
-    </p>
+    <div class="icon-wrapper archived"><ArchiveIcon /></div>
   {:else if celebratedNewFrequency}
     <p>{celebratedNewFrequency}</p>
   {/if}
@@ -31,7 +30,7 @@
     animation-name: grow-out-text;
     animation-duration: 0.5s;
   }
-  .action{
+  .icon-wrapper{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -40,6 +39,12 @@
     width: 2em;
     animation-name: grow-out-svg;
     animation-duration: 0.5s;
+  }
+  .removed{
+    fill: var(--danger-color);
+  }
+  .archived{
+    fill: var(--warning-color);
   }
 
   @keyframes grow-out-text{
@@ -50,8 +55,8 @@
   }
   @keyframes grow-out-svg{
     to {
-      height: 4em;
-      width: 4em;
+      height: 6em;
+      width: 6em;
       opacity: 0;
     }
   }
