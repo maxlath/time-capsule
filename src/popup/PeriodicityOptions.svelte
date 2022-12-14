@@ -135,7 +135,10 @@
 </div>
 
 {#if nextVisit}
-  <div transition:slide|local={{ duration: 200 }}>
+  <div
+    class="next-visit-section"
+    transition:slide|local={{ duration: 200 }}
+  >
     <h2>{i18n('next_visit')}</h2>
     <p class="next-visit">{nextVisit.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</p>
   </div>
@@ -218,6 +221,9 @@
   }
   .custom:hover{
     background-color: var(--darker-light-blue) !important;
+  }
+  .next-visit-section{
+    margin: 1em 0;
   }
   .next-visit{
     text-align: center;
