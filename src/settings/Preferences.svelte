@@ -34,7 +34,7 @@
       {/each}
     </select>
     <label for="repeats">Default number of repeats</label>
-    <p class="help">Times a capsule should be re-opened before being automatically archived or deleted</p>
+    <p class="help">Times a periodical capsule should be re-opened before being automatically archived or deleted</p>
   </div>
 
   <label class="setting">
