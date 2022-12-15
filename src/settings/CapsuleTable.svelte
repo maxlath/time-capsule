@@ -43,6 +43,7 @@
 </script>
 
 <Flash state={flash} />
+
 {#await bookmarksPromise}
   <Spinner />
 {:then}
@@ -51,6 +52,12 @@
       {i18n('Filter')}
       <input type="search" bind:value={textFilter}>
     </label>
+
+    {#if bookmarks && bookmarksPage}
+      <span class="count">
+        {bookmarksPage.length}/{bookmarks.length}
+      </span>
+    {/if}
   </div>
   <table>
     <thead>
@@ -88,7 +95,6 @@
   .controls{
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
     padding: 0.5em;
     background-color: var(--grey-eee);
   }
@@ -100,6 +106,12 @@
     padding: 0.3em;
     border-radius: 3px;
     box-shadow: none;
+  }
+  .count{
+    align-self: center;
+    margin-inline-start: 1em;
+    color: var(--grey-444);
+    margin-inline-start: auto;
   }
   table{
     border-collapse: collapse;
@@ -117,10 +129,12 @@
     text-align: center;
     display: block;
     padding: 0.5em 1.5em 0.5em 0.5em;
-    width: 100%;
     font-size: 1rem;
     position: relative;
     background-color: var(--grey-eee);
+  }
+  th button{
+    width: 100%;
     transition: background-color 0.3s ease;
   }
   button:disabled{

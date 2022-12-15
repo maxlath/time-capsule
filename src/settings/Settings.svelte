@@ -42,7 +42,7 @@
   </div>
 </NavBar>
 
-<div>
+<div class="settings">
   {#if currentTab}
     {#if currentTab.key === 'preferences'}<Preferences />
     {:else if currentTab.key === 'capsules'}<Capsules />
@@ -52,6 +52,21 @@
 </div>
 
 <style>
+  :global(main){
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+  }
+  .settings{
+    flex: 1 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+    max-width: 100%;
+  }
   button{
     padding: 1rem;
     align-self: stretch;

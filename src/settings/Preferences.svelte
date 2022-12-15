@@ -72,6 +72,7 @@
 <style>
   .preferences{
     padding: 1em;
+    overflow-y: auto;
   }
   .setting{
     display: block;
@@ -95,7 +96,7 @@
   }
   button{
     margin: 1em;
-    padding: 1em;
+    padding: 0.5em 1em;
     border-radius: 3px;
     background-color: var(--grey-ddd);
   }

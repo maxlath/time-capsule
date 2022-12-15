@@ -7,27 +7,36 @@
   let editedBookmark
 </script>
 
-{#if editedBookmark}
-  {#if editedBookmark.cleanedTitle}
-    <div class="edited-bookmark-info">
-      <a href={editedBookmark.url} title={editedBookmark.url}>{editedBookmark.cleanedTitle}</a>
+<div class="capsules">
+  {#if editedBookmark}
+    {#if editedBookmark.cleanedTitle}
+      <div class="edited-bookmark-info">
+        <a href={editedBookmark.url} title={editedBookmark.url}>{editedBookmark.cleanedTitle}</a>
+      </div>
+    {/if}
+    <div class="editor-wrapper">
+      <div class="editor">
+        <CapsuleEditor
+          bind:bookmark={editedBookmark}
+          url={editedBookmark.url}
+          context="settings"
+          on:done={() => editedBookmark = null}
+        />
+      </div>
     </div>
+  {:else}
+    <CapsuleTable {bookmarksPromise} bind:editedBookmark />
   {/if}
-  <div class="editor-wrapper">
-    <div class="editor">
-      <CapsuleEditor
-        bind:bookmark={editedBookmark}
-        url={editedBookmark.url}
-        context="settings"
-        on:done={() => editedBookmark = null}
-      />
-    </div>
-  </div>
-{:else}
-  <CapsuleTable {bookmarksPromise} bind:editedBookmark />
-{/if}
+</div>
 
 <style>
+  .capsules{
+    flex: 1 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: auto;
+  }
   .editor-wrapper{
     display: flex;
     flex-direction: row;

@@ -55,3 +55,7 @@ export const events = {
     label: i18n('Removed'),
   },
 }
+
+export async function clearLogs () {
+  await browser.storage.local.set({ logs: [] })
+}
