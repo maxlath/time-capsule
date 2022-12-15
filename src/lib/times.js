@@ -5,6 +5,11 @@ export const week = 7 * day
 export const year = 365.25 * day
 export const month = year / 12
 
+// Due to summer/winter time changes, days and units above
+// can have different amounts of milliseconds, making adding and removing
+// time in those units more complex
+export const regularTimeUnits = new Set([ 'T', 'H' ])
+
 export const H = hour
 export const D = day
 export const W = week
@@ -91,6 +96,7 @@ export function getDateTimeLocalInputValue (date) {
   return `${localYear}-${localMonth}-${localDay}T${localTime}`
 }
 
+export const toMs = time => new Date(time).getTime()
 export const toIso = time => new Date(time).toISOString()
 
 export function getNextVisitSummary (date) {

@@ -1,4 +1,4 @@
-import { incrementByTimeUnit, timeIsInThePast } from './times.js'
+import { incrementByTimeUnit, regularTimeUnits, timeUnits, toMs } from './times.js'
 import { isPositiveIntegerString } from './utils.js'
 import { parseFrequency } from './frequency.js'
 
@@ -21,15 +21,24 @@ export const formatBookmarkTitle = ({ title, frequency, nextVisit, referenceDate
 
 export const getNextVisit = ({ frequency, referenceDate }) => {
   const { num, unit } = parseFrequency(frequency)
-  referenceDate = referenceDate || Date.now()
-  let nextVisit = incrementByTimeUnit[unit](referenceDate, num)
-  // TODO: For inner-day frequencies (minutes, hours), it could be more efficient
-  // to replace the referenceDate day by today, then iterate,
-  // to skip the potentially numerous iterations
-  while (timeIsInThePast(nextVisit)) {
+  const now = Date.now()
+  referenceDate = referenceDate || now
+  let nextVisit = referenceDate
+  if (regularTimeUnits.has(unit)) {
+    nextVisit = getQuickLastVisitTime({ referenceDate, num, unit })
+  }
+  // Add 1s margin to avoid giving a next visit date that would be just now. Mostly useful for tests.
+  while ((now + 1000) > toMs(nextVisit)) {
     nextVisit = incrementByTimeUnit[unit](nextVisit, num)
   }
   return nextVisit
+}
+
+const getQuickLastVisitTime = ({ referenceDate, num, unit }) => {
+  const referenceDateMs = new Date(referenceDate).getTime()
+  const timeSinceReferenceDate = Date.now() - referenceDateMs
+  const frequencyPeriods = Math.trunc(timeSinceReferenceDate / (num * timeUnits[unit]))
+  return referenceDateMs + frequencyPeriods * num * timeUnits[unit]
 }
 
 export const parseBookmarkTitle = title => {

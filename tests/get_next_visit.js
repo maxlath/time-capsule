@@ -5,15 +5,27 @@ import { getDay, getHours, getMinutes, getMonth, getYear, hour, minute, setDay, 
 describe('getNextVisit', () => {
   describe('minute', () => {
     it('should get the next visit date', () => {
+      const someFiveMinutesAgoMs = Date.now() - 5 * minute
+      const nextVisit = getNextVisit({
+        frequency: '10T',
+        referenceDate: someFiveMinutesAgoMs
+      })
+      const thenMs = someFiveMinutesAgoMs + 10 * minute
+      nextVisit.getTime().should.equal(thenMs)
+    })
+
+    it('should support long in the past reference dates', () => {
       const now = new Date()
+      const yearNow = getYear(now)
+      const referenceDate = setYear(now, yearNow - 1)
       const minutesNow = getMinutes(now)
-      const nextVisit = getNextVisit({ frequency: '10T', referenceDate: now })
       const then = setMinutes(now, minutesNow + 10)
+      const nextVisit = getNextVisit({ frequency: '10T', referenceDate })
       getMinutes(nextVisit).should.equal(getMinutes(then))
-      getHours(nextVisit).should.equal(getHours(now))
-      getDay(nextVisit).should.equal(getDay(now))
-      getMonth(nextVisit).should.equal(getMonth(now))
-      getYear(nextVisit).should.equal(getYear(now))
+      getHours(nextVisit).should.equal(getHours(then))
+      getDay(nextVisit).should.equal(getDay(then))
+      getMonth(nextVisit).should.equal(getMonth(then))
+      getYear(nextVisit).should.equal(getYear(then))
     })
   })
 
