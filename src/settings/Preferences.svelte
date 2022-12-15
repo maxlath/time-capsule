@@ -1,7 +1,7 @@
 <script>
   import { i18n } from '../lib/i18n.js'
   import { repeatsOptions } from '../lib/repeats.js'
-  import { getSettingStore } from '../lib/settings_store.js'
+  import { getSettingStore, restoreDefaultSettings } from '../lib/settings_store.js'
   import { range } from '../lib/utils.js'
 
   const maxCapsules = getSettingStore('settings:maxCapsules')
@@ -34,17 +34,17 @@
       {/each}
     </select>
     <label for="repeats">Default number of repeats</label>
-    <p class="help">Times a capsule should be re-opened before being automatically deleted</p>
+    <p class="help">Times a capsule should be re-opened before being automatically archived or deleted</p>
   </div>
+
+  <label class="setting">
+    <input type="checkbox" bind:checked={$keepExpiredCapsulesAsNormalBookmarks}>
+    Keep expired capsules as archived bookmarks, instead of deleting them
+  </label>
 
   <label class="setting">
     <input type="checkbox" bind:checked={$allowDuplicatedTabs}>
     Open a capsule even if its URL is already opened in a tab
-  </label>
-
-  <label class="setting">
-    <input type="checkbox" bind:checked={$keepExpiredCapsulesAsNormalBookmarks}>
-    Keep expired capsules as normal bookmarks, instead of deleting them
   </label>
 
   <hr>
@@ -59,6 +59,14 @@
     </select>
     <label for="logsMaxRecords">Maximum number of entries to keep in the logs</label>
   </div>
+
+  <hr>
+
+  <button
+    on:click={restoreDefaultSettings}
+  >
+    Restore default settings
+  </button>
 </div>
 
 <style>
@@ -84,5 +92,11 @@
   }
   h2{
     font-size: 1.2rem;
+  }
+  button{
+    margin: 1em;
+    padding: 1em;
+    border-radius: 3px;
+    background-color: var(--grey-ddd);
   }
 </style>

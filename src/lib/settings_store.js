@@ -2,14 +2,18 @@ import { writable, get } from 'svelte/store'
 
 const stores = {}
 
-const defaultValues = {
-  'popup:selectedTab': 'periodical',
+const defaultSettings = {
   'settings:allowDuplicatedTabs': false,
   'settings:defaultRepeats': '∞',
   'settings:maxCapsules': 10,
-  'settings:selectedTab': 'preferences',
   'settings:logsMaxRecords': 100,
   'settings:keepExpiredCapsulesAsNormalBookmarks': false,
+}
+
+const defaultValues = {
+  ...defaultSettings,
+  'settings:selectedTab': 'preferences',
+  'popup:selectedTab': 'periodical',
 }
 
 export function getSettingStore (key) {
@@ -59,4 +63,8 @@ export async function getSettingValue (key) {
 
 const checkKeyStatus = key => {
   if (defaultValues[key] == null) throw new Error(`unknown setting key: ${key}`)
+}
+
+export async function restoreDefaultSettings () {
+  await browser.storage.local.set(defaultSettings)
 }
