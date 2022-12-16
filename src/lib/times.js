@@ -121,3 +121,11 @@ export function getNextVisitSummary (date) {
     return ''
   }
 }
+
+const someDay = new Date().toISOString().split('T')[0]
+const dateTimeFormatter = new Intl.DateTimeFormat('default', { timeStyle: 'short' })
+
+export const formatLocalTime = time => {
+  const date = new Date(`${someDay}T${time}`)
+  return dateTimeFormatter.format(date)
+}
