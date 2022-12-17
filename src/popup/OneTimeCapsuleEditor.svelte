@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte'
   import { saveCapsule } from '../lib/actions.js'
-  import { getDateTimeLocalInputValue } from '../lib/times.js'
+  import { getDateTimeLocalInputValue, minute } from '../lib/times.js'
   import { onChange } from '../lib/svelte.js'
   import { i18n } from '../lib/i18n.js'
 
@@ -14,7 +14,7 @@
   if (bookmark) {
     nextVisit = getDateTimeLocalInputValue(bookmark.nextVisit)
   } else {
-    nextVisit = getDateTimeLocalInputValue()
+    nextVisit = getDateTimeLocalInputValue(oneMinuteFromNow())
   }
 
   async function validate () {
@@ -36,7 +36,7 @@
   }
 
   function resetNextVisit () {
-    nextVisit = getDateTimeLocalInputValue()
+    nextVisit = getDateTimeLocalInputValue(oneMinuteFromNow())
     nextVisitInputEl.focus()
   }
 
@@ -55,6 +55,10 @@
     if (key === 'Enter') validate()
   }
 
+  function oneMinuteFromNow () {
+    return Date.now() + minute
+  }
+
   $: onChange(nextVisit, udpateValidateButton)
 </script>
 
@@ -65,7 +69,7 @@
       <input
         id="nextVisit"
         type="datetime-local"
-        min={getDateTimeLocalInputValue()}
+        min={getDateTimeLocalInputValue(oneMinuteFromNow())}
         bind:value={nextVisit}
         bind:this={nextVisitInputEl}
         on:keydown={onKeydown}
