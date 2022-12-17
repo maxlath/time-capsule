@@ -2,8 +2,7 @@ import { first, partition } from './utils.js'
 import { initBookmarksFolders } from './bookmarks_init.js'
 import { formatBookmarkTitle, serializeBookmark } from './bookmark_title.js'
 import { getSettingValue } from './settings_store.js'
-import { get as getDayEnd } from './day_end.js'
-import { timeIsInThePast } from './times.js'
+import { getLocalDayEndTime, timeIsInThePast } from './times.js'
 import { createLogRecord } from './logs.js'
 
 export const getById = id => browser.bookmarks.get(id).then(first)
@@ -177,7 +176,7 @@ export async function getBookmarkById (id) {
   return bookmark
 }
 
-export const nextVisitIsToday = bookmark => bookmark?.nextVisit < getDayEnd()
+export const nextVisitIsToday = bookmark => bookmark?.nextVisit < getLocalDayEndTime()
 
 export const nextVisitIsInThePast = bookmark => timeIsInThePast(bookmark.nextVisit)
 

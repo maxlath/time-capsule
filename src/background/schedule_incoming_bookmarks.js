@@ -1,15 +1,11 @@
 import { getTodaysBookmarksData, nextVisitIsInThePast, getBookmarkById } from '../lib/bookmarks.js'
 import { schedule, cancelPending, reschedule } from './schedule.js'
 import { D as oneDay } from '../lib/times.js'
-import { set } from '../lib/day_end.js'
 import { partition } from '../lib/utils.js'
 import { getSettingValue } from '../lib/settings_store.js'
 import { processBookmarkWithoutOpening } from './open_bookmark.js'
 
 const openTodaysBookmarks = async () => {
-  // this function as the monopoly on setting the day end
-  // and every one else simply reading from it
-  set()
   const todaysBookmarks = await getTodaysBookmarksData()
   const maxCapsules = await getSettingValue('settings:maxCapsules')
   const [ bookmarksToOpenImmediately, bookmarksForLaterToday ] = partition(todaysBookmarks, nextVisitIsInThePast)
