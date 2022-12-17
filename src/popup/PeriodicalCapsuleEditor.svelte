@@ -25,6 +25,7 @@
       foundFrequency = findFrequencyPattern(lastKeys)
       if (foundFrequency) {
         selectedFrequency = foundFrequency
+        onDone()
       }
     } else if (key === 'Backspace') {
       lastKeys = lastKeys.slice(0, -1)
