@@ -1,6 +1,7 @@
 import { timeUnits } from './times.js'
 
 export const getFrequencyTime = frequency => {
+  if (!frequency) return 0
   const number = parseInt(frequency.slice(0, -1))
   const letter = frequency.at(-1)
   const total = number * timeUnits[letter]
