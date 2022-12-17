@@ -1,5 +1,5 @@
 import { enable, disable } from '../lib/icon.js'
-import { folderId, getById, getCapsuleBookmarkByUrl } from '../lib/bookmarks.js'
+import { archiveFolderId, getById, getCapsuleBookmarkByUrl } from '../lib/bookmarks.js'
 import { possiblyOutdatedBookmarkData } from './open_bookmark.js'
 import { serializeBookmark } from '../lib/bookmark_title.js'
 
@@ -9,7 +9,7 @@ export async function updateIconFromUrl ({ url, tabId }) {
 }
 
 export async function updateIconFromBookmark ({ bookmark, tabId }) {
-  if (bookmark?.parentId !== folderId) {
+  if (bookmark?.parentId === archiveFolderId) {
     disable()
     return
   }
