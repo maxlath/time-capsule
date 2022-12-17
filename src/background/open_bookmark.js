@@ -1,8 +1,9 @@
 import { createTab, getActiveTab, getTabById, urlIsAlreadyOpened } from '../lib/tabs.js'
 import { getById, removeOrArchiveBookmark, updateCapsuleData } from '../lib/bookmarks.js'
-import { getSettingValue } from '../lib/settings_store.js'
+import { getSettingValue, getSettingValues } from '../lib/settings_store.js'
 import { isCapsulableUrl } from '../lib/utils.js'
 import { createLogRecord } from '../lib/logs.js'
+import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
 
 export async function openBookmark (bookmark) {
   return processBookmark({ bookmark, open: true })
@@ -13,6 +14,20 @@ export async function processBookmarkWithoutOpening (bookmark) {
 }
 
 async function processBookmark ({ bookmark, open }) {
+  const {
+    'settings:enableBlockedWeekTimes': enableBlockedWeekTimes,
+    'settings:blockedWeekTimes': blockedWeekTimes,
+  } = await getSettingValues([
+    'settings:enableBlockedWeekTimes',
+    'settings:blockedWeekTimes',
+  ])
+
+  if (enableBlockedWeekTimes) {
+    const nextNonBlockedTime = getNextNonBlockedTime(blockedWeekTimes)
+    // Blocked until the end of the day, so nothing to schedule today
+    if (!nextNonBlockedTime) return
+  }
+
   const bookmarkData = await getById(bookmark.id)
   if (!bookmarkData) {
     console.error('bookmark data not found', bookmark)

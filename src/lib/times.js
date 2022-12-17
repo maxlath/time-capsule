@@ -139,3 +139,5 @@ export function getLocalDayEndTime () {
   date.setMilliseconds(0)
   return date.getTime()
 }
+
+export const timeUntilLocalDayEndTime = () => getLocalDayEndTime() - Date.now()

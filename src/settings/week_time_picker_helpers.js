@@ -1,4 +1,4 @@
-import { formatLocalTime } from '../lib/times.js'
+import { formatLocalTime, getLocalDayEndTime } from '../lib/times.js'
 import { range } from '../lib/utils.js'
 
 export const days = [ 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun' ]
@@ -52,4 +52,33 @@ export function toggleHighlighted ({ blockedWeekTimes, highlighted, select }) {
     }
   }
   return blockedWeekTimes
+}
+
+export function getTodayCode () {
+  // getDay uses sunday as day 0
+  const todayIndex = (new Date().getDay() + 6) % 7
+  return days[todayIndex]
+}
+
+export function getNextNonBlockedTime (blockedWeekTimes) {
+  if (!blockedWeekTimes) return Date.now()
+  const today = getTodayCode()
+  let slot = getCurrentSlotIndex()
+  while (blockedWeekTimes[today]?.[slot]) {
+    slot++
+  }
+  const date = new Date()
+  date.setHours(slot)
+  date.setMinutes(0)
+  date.setSeconds(0)
+  date.setMilliseconds(0)
+  const time = date.getTime()
+  if (time < getLocalDayEndTime()) {
+    return time
+  }
+}
+
+export function getCurrentSlotIndex () {
+  const localHour = new Date().getHours()
+  return localHour * slotsPerHour
 }

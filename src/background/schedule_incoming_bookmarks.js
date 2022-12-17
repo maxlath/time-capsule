@@ -1,11 +1,22 @@
 import { getTodaysBookmarksData, nextVisitIsInThePast, getBookmarkById } from '../lib/bookmarks.js'
-import { schedule, cancelPending, reschedule } from './schedule.js'
-import { D as oneDay } from '../lib/times.js'
+import { schedule, cancelPending, reschedule, getBlockedWeekTimes } from './schedule.js'
+import { timeUntilLocalDayEndTime } from '../lib/times.js'
 import { partition } from '../lib/utils.js'
 import { getSettingValue } from '../lib/settings_store.js'
 import { processBookmarkWithoutOpening } from './open_bookmark.js'
+import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
 
-const openTodaysBookmarks = async () => {
+const scheduleTodaysBookmarks = async () => {
+  // In any case, call this function again tomorrow at 00:00:01
+  setTimeout(scheduleTodaysBookmarks, timeUntilLocalDayEndTime() + 1000)
+
+  const blockedWeekTimes = await getBlockedWeekTimes()
+  if (blockedWeekTimes) {
+    const nextNonBlockedTime = getNextNonBlockedTime(blockedWeekTimes)
+    // Blocked until the end of the day, so nothing to schedule today
+    if (!nextNonBlockedTime) return
+  }
+
   const todaysBookmarks = await getTodaysBookmarksData()
   const maxCapsules = await getSettingValue('settings:maxCapsules')
   const [ bookmarksToOpenImmediately, bookmarksForLaterToday ] = partition(todaysBookmarks, nextVisitIsInThePast)
@@ -21,8 +32,7 @@ const openTodaysBookmarks = async () => {
   }
 }
 
-openTodaysBookmarks()
-setInterval(openTodaysBookmarks, oneDay)
+scheduleTodaysBookmarks()
 
 const rescheduleFromEvent = async (id, bookmark) => {
   // Weirdly, the bookmark data is incomplete there:

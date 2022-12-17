@@ -60,9 +60,17 @@ browser.storage.local.onChanged.addListener(changes => {
 const isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b)
 
 export async function getSettingValue (key) {
-  checkKeyStatus(key)
-  const { [key]: value } = await browser.storage.local.get(key)
-  return value != null ? value : defaultValues[key]
+  const { [key]: value } = await getSettingValues([ key ])
+  return value
+}
+
+export async function getSettingValues (keys) {
+  keys.forEach(checkKeyStatus)
+  const settings = await browser.storage.local.get(keys)
+  for (const key of keys) {
+    settings[key] = settings[key] != null ? settings[key] : defaultValues[key]
+  }
+  return settings
 }
 
 const checkKeyStatus = key => {

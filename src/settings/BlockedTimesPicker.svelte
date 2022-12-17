@@ -1,7 +1,7 @@
 <!-- Inspired by https://github.com/zhunrong/week-time-picker -->
 <script>
   import { getSettingStore } from '../lib/settings_store.js'
-  import { days, initWeekTimes, toggleHighlighted, slotIndexAsHour, slotIndexAsHourRange, slots, slotsPerHour, updateHighlighted } from './week_time_picker_helpers.js'
+  import { days, initWeekTimes, toggleHighlighted, slotIndexAsHour, slotIndexAsHourRange, slots, slotsPerHour, updateHighlighted, getNextNonBlockedTime } from './week_time_picker_helpers.js'
 
   const blockedWeekTimes = getSettingStore('settings:blockedWeekTimes')
 
