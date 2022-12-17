@@ -94,5 +94,10 @@
       "maxCapsules": { "content": "$2" }
     }
   },
+  "new_frequency": { "message": "New frequency: $value$", "placeholders": { "value": { "content": "$1" } } },
+  "old_frequency": { "message": "Old frequency: $value$", "placeholders": { "value": { "content": "$1" } } },
+  "new_url": { "message": "New URL: $value$", "placeholders": { "value": { "content": "$1" } } },
+  "old_url": { "message": "Old URL: $value$", "placeholders": { "value": { "content": "$1" } } },
+  "remaining_repeats": { "message": "$num$ remaining repeats", "placeholders": { "num": { "content": "$1" } } },
   "del_key": { "message": "Del" }
 }

@@ -1,4 +1,5 @@
 <script>
+  import { i18n } from '../lib/i18n.js'
   import { events } from '../lib/logs.js'
   export let record
 
@@ -28,9 +29,9 @@
   {#each Object.entries(changes) as [ attribute, { old: oldValue, new: newValue } ] }
     <span
       class="change"
-      title={`old ${attribute}: ${oldValue} | new ${attribute}: ${newValue}`}
+      title="{i18n(`old_${attribute}`, oldValue)} | {i18n(`new_${attribute}`, newValue)}"
     >
-      {`new ${attribute}`}: {newValue}
+      {i18n(`new_${attribute}`, newValue)}
     </span>
   {/each}
 
@@ -39,7 +40,7 @@
       <li
         class="info"
         class:warning={remainingRepeats < 1}
-      >{remainingRepeats} remaining repeats</li>
+      >{i18n('remaining_repeats', remainingRepeats)}</li>
     {/if}
   </ul>
 
