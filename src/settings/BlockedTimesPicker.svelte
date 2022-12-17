@@ -1,7 +1,8 @@
 <!-- Inspired by https://github.com/zhunrong/week-time-picker -->
 <script>
+  import BlockIcon from '../icons/BlockIcon.svelte'
   import { getSettingStore } from '../lib/settings_store.js'
-  import { days, initWeekTimes, toggleHighlighted, slotIndexAsHour, slotIndexAsHourRange, slots, slotsPerHour, updateHighlighted, getNextNonBlockedTime } from './week_time_picker_helpers.js'
+  import { days, initWeekTimes, toggleHighlighted, slotIndexAsHour, slotIndexAsHourRange, slots, slotsPerHour, updateHighlighted } from './week_time_picker_helpers.js'
 
   const blockedWeekTimes = getSettingStore('settings:blockedWeekTimes')
 
@@ -81,7 +82,11 @@
                 on:mousedown={onMousedown}
                 on:mousemove={onMousemove}
                 on:mouseup={onMouseup}
-              ></button>
+              >
+                {#if $blockedWeekTimes[day]?.[i]}
+                  <BlockIcon />
+                {/if}
+              </button>
               </li>
             {/each}
           </ul>
@@ -153,6 +158,15 @@
     padding: 0;
     margin: 0;
     background-color: transparent;
+    cursor: cell;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .day-slot button :global(svg){
+    max-height: 80%;
   }
   .day-slot button.selected{
     background-color: var(--light-blue);
