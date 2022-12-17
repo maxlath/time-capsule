@@ -1,5 +1,5 @@
 import './keep_icon_in_sync'
-import './open_bookmarks_periodically'
+import './schedule_incoming_bookmarks.js'
 
 browser.commands.onCommand.addListener(command => {
   if (command === 'open-periodicity-menu') {
