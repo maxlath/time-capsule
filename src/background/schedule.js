@@ -1,5 +1,4 @@
-import { nextVisitIsToday } from '../lib/bookmarks.js'
-import { serializeBookmark } from '../lib/bookmark_title.js'
+import { isInFolder, nextVisitIsToday } from '../lib/bookmarks.js'
 import { toIso } from '../lib/times.js'
 import { openBookmark } from './open_bookmark.js'
 
@@ -23,12 +22,15 @@ export const schedule = bookmark => {
   }
 }
 
-export const scheduleFromUnparsedBookmark = unparsedBookmark => {
-  const parsedBookmark = serializeBookmark(unparsedBookmark)
-  if (nextVisitIsToday(parsedBookmark)) schedule(parsedBookmark)
+export async function reschedule (bookmark) {
+  cancelPending(bookmark.id)
+  if (await isInFolder(bookmark) && nextVisitIsToday(bookmark)) {
+    schedule(bookmark)
+  }
 }
 
 export const cancelPending = bookmarkId => {
+  if (!timeoutIds[bookmarkId]) return
   console.log('cancelling', bookmarkId, timeoutIds[bookmarkId])
   clearTimeout(timeoutIds[bookmarkId])
 }
