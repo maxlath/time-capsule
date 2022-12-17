@@ -1,4 +1,5 @@
 import { writable, get } from 'svelte/store'
+import { initWeekTimes } from '../settings/week_time_picker_helpers.js'
 
 const stores = {}
 
@@ -9,7 +10,7 @@ const defaultSettings = {
   'settings:logsMaxRecords': 100,
   'settings:keepExpiredCapsulesAsNormalBookmarks': false,
   'settings:enableBlockedWeekTimes': false,
-  'settings:blockedWeekTimes': {},
+  'settings:blockedWeekTimes': initWeekTimes(),
 }
 
 const defaultValues = {
