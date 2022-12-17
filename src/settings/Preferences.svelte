@@ -23,8 +23,8 @@
         <option value={numOption}>{numOption}</option>
       {/each}
     </select>
-    <label for="maxCapsules">Maximum number of capsules that can be opened at once</label>
-    <p class="help">Above this threshold, only one tab will be opened, with a list of all the capsules</p>
+    <label for="maxCapsules">{i18n('maximum_number_of_capsules_that_can_be_opened_at_once')}</label>
+    <p class="help">{i18n('above_this_threshold_only_one_tab_will_be_opened_with_a_list_of_all_the_capsules')}</p>
   </div>
 
   <div class="setting">
@@ -33,18 +33,18 @@
         <option value={numOption}>{numOption}</option>
       {/each}
     </select>
-    <label for="repeats">Default number of repeats</label>
-    <p class="help">Times a periodical capsule should be re-opened before being automatically archived or deleted</p>
+    <label for="repeats">{i18n('default_number_of_repeats')}</label>
+    <p class="help">{i18n('times_a_periodical_capsule_should_be_re_opened_before_being_automatically_archived_or_deleted')}</p>
   </div>
 
   <label class="setting">
     <input type="checkbox" bind:checked={$keepExpiredCapsulesAsNormalBookmarks}>
-    Keep expired capsules as archived bookmarks, instead of deleting them
+    {i18n('keep_expired_capsules_as_archived_bookmarks_instead_of_deleting_them')}
   </label>
 
   <label class="setting">
     <input type="checkbox" bind:checked={$allowDuplicatedTabs}>
-    Open a capsule even if its URL is already opened in a tab
+    {i18n('open_a_capsule_even_if_its_url_is_already_opened_in_a_tab')}
   </label>
 
   <hr>
@@ -57,7 +57,7 @@
         <option value={numOption}>{numOption}</option>
       {/each}
     </select>
-    <label for="logsMaxRecords">Maximum number of entries to keep in the logs</label>
+    <label for="logsMaxRecords">{i18n('maximum_number_of_entries_to_keep_in_the_logs')}}</label>
   </div>
 
   <hr>
@@ -65,7 +65,7 @@
   <button
     on:click={restoreDefaultSettings}
   >
-    Restore default settings
+    {i18n('restore_default_settings')}
   </button>
 </div>
 

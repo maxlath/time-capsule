@@ -1,7 +1,5 @@
 {
-  "description": {
-    "message": "Re-ouvre vos marques-pages à la periodicité souhaitée : envoyez des capsules temporelles à votre future vous !"
-  },
+  "description": { "message": "Re-ouvre vos marques-pages à la periodicité souhaitée : envoyez des capsules temporelles à votre future vous !" },
   "minute": { "message": "minute" },
   "minutes": { "message": "minutes" },
   "hour": { "message": "heure" },
@@ -16,9 +14,6 @@
   "years": { "message": "ans" },
   "remove": { "message": "supprimer" },
   "settings": { "message": "règlages" },
-  "browse_every": {
-    "message": "Visiter tou(te)s les :"
-  },
   "browse_every_time_unit": {
     "message": "Visiter tou(te)s les $num$ $unit$",
     "placeholders": {
@@ -28,5 +23,76 @@
   },
   "next_visit": { "message": "Prochaine visite :" },
   "never": { "message": "Jamais" },
-  "custom": { "message": "Personnalisé" }
+  "custom": { "message": "Personnalisé" },
+  "url_cant_be_time_capsuled": { "message": "Cette URL ne peut pas être enregistrée en tant que capsule temporelle" },
+  "Preferences": { "message": "Préférences" },
+  "Schedule": { "message": "Horaires" },
+  "Delete": { "message": "Effacer" },
+  "Archive": { "message": "Archive" },
+  "Capsules": { "message": "Capsules" },
+  "Title": { "message": "Titre" },
+  "Frequency": { "message": "Fréquence" },
+  "Repeat": { "message": "Répéter" },
+  "Next_Visit": { "message": "Prochaine visite" },
+  "Reference_Date": { "message": "Date de référence" },
+  "Date_Created": { "message": "date créée" },
+  "Added": { "message": "Ajoutée" },
+  "Undo": { "message": "Annuler" },
+  "Edit": { "message": "Modifier" },
+  "Actions": { "message": "Actions" },
+  "Filter": { "message": "Filtre" },
+  "Logs": { "message": "Journaux" },
+  "Opened": { "message": "Ouvert" },
+  "Created": { "message": "Créé" },
+  "Updated": { "message": "Mis à jour" },
+  "Archived": { "message": "Archivé" },
+  "Removed": { "message": "Supprimé" },
+  "Skipped": { "message": "Ignoré" },
+  "Hotkey": { "message": "Raccourci" },
+  "periodical": { "message": "Périodique" },
+  "one_time": { "message": "Une fois" },
+  "advanced": { "message": "Avancé" },
+  "prevent_time_capsule_from_opening_during_certain_times_of_the_week" : { "message": "Empêchez l'ouverture de Time Capsule à certains moments de la semaine" },
+  "maximum_number_of_capsules_that_can_be_opened_at_once" : { "message": "Nombre maximum de Capsules pouvant être ouvertes à la fois" },
+  "above_this_threshold_only_one_tab_will_be_opened_with_a_list_of_all_the_capsules" : { "message": "Au dessus de ce seuil, un seul onglet sera ouvert, avec une liste de toutes les capsules" },
+  "default_number_of_repeats": { "message": "Nombre de répétitions par défaut" },
+  "times_a_periodical_capsule_should_be_re_opened_before_being_automatically_archived_or_deleted": { "message": "Nombre de fois qu'une capsule périodique doit être rouverte avant d'être automatiquement archivée ou supprimée" },
+  "keep_expired_capsules_as_archived_bookmarks_instead_of_deleting_them": { "message": "Conservez les capsules expirées en tant que marque-pages archivés, au lieu de les supprimer" },
+  "open_a_capsule_even_if_its_url_is_already_opened_in_a_tab": { "message": "Ouvrir une capsule même si son URL est déjà ouverte dans un onglet" },
+  "maximum_number_of_entries_to_keep_in_the_logs": { "message": "Nombre maximum d'entrées à conserver dans les journaux" },
+  "restore_default_settings": { "message": "Restaurer les réglages par défaut" },
+  "log_entries": {
+    "message": "$num$ entrées dans le journal",
+    "placeholders": {
+      "num": { "content": "$1" }
+    }
+  },
+  "clear_logs": { "message": "Effacer les journaux" },
+  "mon": { "message": "Lundi" },
+  "tue": { "message": "Mardi" },
+  "wed": { "message": "Mercredi" },
+  "thu": { "message": "Jeudi" },
+  "fri": { "message": "Vendredi" },
+  "sat": { "message": "Samedi" },
+  "sun": { "message": "Dimanche" },
+  "re_open_once": { "message": "Ré-ouvrir une seule fois le :" },
+  "reset": { "message": "réinitialiser" },
+  "Validate": { "message": "Valider" },
+  "this_tab_was_opened_because_of_a_capsule_set_on_the_following_url": { "message": "Cet onglet a été ouvert en raison d'une capsule définie sur l'URL suivante :" },
+  "but_then_the_tab_url_changed_to": { "message": "Mais ensuite, l'URL de l'onglet est devenue :" },
+  "delete_capsule": { "message": "Supprimer la capsule" },
+  "update_capsule_url_to_possible_update_url": {
+    "message": "Mettre à jour l'URL de la capsule vers $url$l$",
+    "placeholders": {
+      "url": { "content": "$1" }
+    }
+  },
+  "overflow_explainer": {
+    "message": "<strong>$bookmarksCount$ Capsules</strong> doivent être ouvertes, ce qui est supérieur au maximum ($maxCapsules$) défini dans vos <a href='/settings/settings.html?tab=preferences' target=' _blank'>préférences</a>, donc au lieu d'ouvrir $bookmarksCount$ onglets, voici la liste :",
+    "placeholders": {
+      "bookmarksCount": { "content": "$1" },
+      "maxCapsules": { "content": "$2" }
+    }
+  },
+  "del_key": { "message": "Suppr" }
 }

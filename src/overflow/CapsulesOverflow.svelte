@@ -4,6 +4,7 @@
   import Capsules from '../settings/Capsules.svelte'
   import NavBar from '../settings/NavBar.svelte'
   import { getSettingValue } from '../lib/settings_store.js'
+  import { i18n } from '../lib/i18n.js'
 
   const ids = new URLSearchParams(window.location.search).get('ids').split('|')
 
@@ -26,7 +27,7 @@
 
 <p>
   {#if bookmarksCount && maxCapsules}
-    <strong>{bookmarksCount} Capsules</strong> are due to be open, which is more than the maximum ({maxCapsules}) set in your <a href="/settings/settings.html?tab=preferences" target="_blank">preferences</a>, so instead of opening {bookmarksCount} tabs, here is the list:
+    {@html i18n('overflow_explainer', [ bookmarksCount, maxCapsules ])}
   {/if}
 </p>
 

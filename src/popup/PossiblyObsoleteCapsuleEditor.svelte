@@ -1,5 +1,6 @@
 <script>
   import { removeOrArchiveBookmark, updateCapsuleData } from '../lib/bookmarks.js'
+  import { i18n } from '../lib/i18n.js'
 
   export let bookmark, possibleUpdate, activeTab
 
@@ -31,27 +32,25 @@
 </script>
 
 <div class="possibly-obsolete-capsule-editor">
-  <p>This tab was opened because of a Capsule set on the following URL:</p>
+  <p>{i18n('this_tab_was_opened_because_of_a_capsule_set_on_the_following_url')}</p>
   <pre>{bookmark.url}</pre>
-  <p>But then the tab URL changed to:</p>
+  <p>{i18n('but_then_the_tab_url_changed_to')}</p>
   <pre>{possibleUpdate.url}</pre>
 
   <div class="buttons">
     <button
       class="update"
-      title={`Update Capsule URL to ${possibleUpdate.url}`}
       on:click={() => update(possibleUpdate)}
     >
-      Update Capsule URL to {possibleUpdate.url}
+      {i18n('update_capsule_url_to_possible_update_url', possibleUpdate.url)}
     </button>
 
     {#if activeTab.url !== possibleUpdate.url}
       <button
         class="update"
-        title={`Update Capsule URL to ${activeTab.url}`}
         on:click={() => update(activeTab)}
       >
-        Update Capsule URL to {activeTab.url}
+        {i18n('update_capsule_url_to_possible_update_url', activeTab.url)}
       </button>
     {/if}
 
@@ -59,7 +58,7 @@
       class="delete"
       on:click={deleteBookmark}
     >
-      Delete Capsule
+      {i18n('delete_capsule')}
     </button>
   </div>
 </div>

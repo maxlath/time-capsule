@@ -1,4 +1,5 @@
 <script>
+  import { i18n } from '../lib/i18n.js'
   import { getSettingStore } from '../lib/settings_store.js'
   import BlockedTimesPicker from './BlockedTimesPicker.svelte'
   const enableBlockedWeekTimes = getSettingStore('settings:enableBlockedWeekTimes')
@@ -7,7 +8,7 @@
 <div class="schedule">
   <label class="setting">
     <input type="checkbox" bind:checked={$enableBlockedWeekTimes}>
-    Prevent Time Capsule from opening during certain times of the week
+    {i18n('prevent_time_capsule_from_opening_during_certain_times_of_the_week')}
   </label>
 
   {#if $enableBlockedWeekTimes}

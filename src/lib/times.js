@@ -123,7 +123,7 @@ export function getNextVisitSummary (date) {
 }
 
 const someDay = new Date().toISOString().split('T')[0]
-const dateTimeFormatter = new Intl.DateTimeFormat('default', { timeStyle: 'short' })
+const dateTimeFormatter = new Intl.DateTimeFormat('lookup', { timeStyle: 'short' })
 
 export const formatLocalTime = time => {
   const date = new Date(`${someDay}T${time}`)

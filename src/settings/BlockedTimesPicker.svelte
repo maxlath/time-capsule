@@ -1,6 +1,7 @@
 <!-- Inspired by https://github.com/zhunrong/week-time-picker -->
 <script>
   import BlockIcon from '../icons/BlockIcon.svelte'
+  import { i18n } from '../lib/i18n.js'
   import { getSettingStore } from '../lib/settings_store.js'
   import { days, initWeekTimes, toggleHighlighted, slotIndexAsHour, slotIndexAsHourRange, slots, slotsPerHour, updateHighlighted } from './week_time_picker_helpers.js'
 
@@ -53,7 +54,7 @@
   <div class="week-time-picker">
     <ul class="header">
       {#each days as day}
-        <li class="header-day">{day}</li>
+        <li class="header-day">{i18n(day)}</li>
       {/each}
     </ul>
 
@@ -73,7 +74,7 @@
               <button
                 class:selected={$blockedWeekTimes[day]?.[i]}
                 class:highlighted={highlighted[day]?.[i]}
-                title={`${day} ${slotIndexAsHourRange(i)}`}
+                title={`${i18n(day)} ${slotIndexAsHourRange(i)}`}
                 data-day={day}
                 data-slot={i}
                 on:click={() => toggleSelection({ day, slot: i })}

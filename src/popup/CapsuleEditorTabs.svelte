@@ -10,7 +10,7 @@
     title="[{i18n('Hotkey')}: p]"
     class:active={$selectedTab === 'periodical'}
   >
-    Periodical
+    {i18n('periodical')}
   </button>
 
   <button
@@ -18,7 +18,7 @@
     title="[{i18n('Hotkey')}: o]"
     class:active={$selectedTab === 'one-time'}
   >
-    One Time
+    {i18n('one_time')}
   </button>
 
   <button
@@ -26,7 +26,7 @@
     title="[{i18n('Hotkey')}: d]"
     class:active={$selectedTab === 'advanced'}
   >
-    Advanced
+    {i18n('advanced')}
   </button>
 </div>
 

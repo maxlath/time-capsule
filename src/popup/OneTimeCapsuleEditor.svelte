@@ -3,6 +3,7 @@
   import { saveCapsule } from '../lib/actions.js'
   import { getDateTimeLocalInputValue } from '../lib/times.js'
   import { onChange } from '../lib/svelte.js'
+  import { i18n } from '../lib/i18n.js'
 
   export let url, bookmark, context, flash
 
@@ -59,7 +60,7 @@
 
 <div class="one-time-capsule-editor">
   <div class="option-group">
-    <label for="nextVisit">Re-open once:</label>
+    <label for="nextVisit">{i18n('re_open_once')}</label>
     <div class="input-group">
       <input
         id="nextVisit"
@@ -73,7 +74,7 @@
         class="reset-next-visit"
         on:click={resetNextVisit}
         title="Reset the date to today"
-      >reset</button>
+      >{i18n('reset')}</button>
     </div>
   </div>
 
@@ -82,7 +83,7 @@
     disabled={!canValidate}
     on:click={validate}
   >
-    Validate
+    {i18n('Validate')}
   </button>
 </div>
 

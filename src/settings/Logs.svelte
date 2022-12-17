@@ -4,6 +4,7 @@
   import { logsStore } from '../lib/logs_store.js'
   import { getSettingStore } from '../lib/settings_store.js'
   import { clearLogs } from '../lib/logs.js'
+  import { i18n } from '../lib/i18n.js'
 
   const logsMaxRecords = getSettingStore('settings:logsMaxRecords')
 
@@ -22,12 +23,12 @@
 
 <div class="controls">
   {#if displayedRecords}
-    {displayedRecords.length} log entries
+    {i18n('log_entries', displayedRecords.length)}
   {/if}
   <button
     on:click={clearLogs}
   >
-    Clear logs
+    {i18n('clear_logs')}
   </button>
 </div>
 
