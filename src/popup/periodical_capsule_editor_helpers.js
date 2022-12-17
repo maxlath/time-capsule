@@ -18,4 +18,4 @@ export function getMatchingPart (str) {
   return match ? match[0] : ''
 }
 
-export const isKeyboardSelectorKey = key => /^[\d.HDWMYT]{1}$/.test(key)
+export const isKeyboardSelectorKey = key => /^[\d.HDWMYT]{1}$/i.test(key)

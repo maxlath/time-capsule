@@ -23,7 +23,7 @@
 
   <button
     on:click={() => $selectedTab = 'advanced'}
-    title="[{i18n('Hotkey')}: d]"
+    title="[{i18n('Hotkey')}: v]"
     class:active={$selectedTab === 'advanced'}
   >
     {i18n('advanced')}

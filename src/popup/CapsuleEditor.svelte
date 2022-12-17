@@ -42,7 +42,7 @@
     else if (key === 'a' && bookmark) archive()
     else if (key === 'o') $selectedTab = 'one-time'
     else if (key === 'p') $selectedTab = 'periodical'
-    else if (key === 'd') $selectedTab = 'advanced'
+    else if (key === 'v') $selectedTab = 'advanced'
   }
 
   let animationIsDone
