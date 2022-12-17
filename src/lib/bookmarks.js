@@ -1,4 +1,4 @@
-import { first, partition } from './utils.js'
+import { first, isCapsulableUrl, partition } from './utils.js'
 import { initBookmarksFolders } from './bookmarks_init.js'
 import { formatBookmarkTitle, serializeBookmark } from './bookmark_title.js'
 import { getSettingValue } from './settings_store.js'
@@ -158,8 +158,12 @@ async function ensureBookmarkFolderIsManagedFolder (bookmark) {
 export async function getBookmarks () {
   await waitForFolders
   const [ { children: bookmarks } ] = await browser.bookmarks.getSubTree(folderId)
-  return bookmarks.map(serializeBookmark)
+  return bookmarks
+  .filter(isValidCapsuleBookmark)
+  .map(serializeBookmark)
 }
+
+const isValidCapsuleBookmark = bookmark => isCapsulableUrl(bookmark.url)
 
 export async function getTodaysBookmarksData () {
   const bookmarks = await getBookmarks()
