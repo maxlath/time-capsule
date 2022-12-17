@@ -9,8 +9,14 @@
 
   function toggleSelection (e) {
     if (!e.currentTarget) return
-    const { day, slot } = e.currentTarget.dataset
-    $blockedWeekTimes[day][slot] = !$blockedWeekTimes[day][slot]
+    if (startingCell) {
+      // If a startingCell is set, assume that the mouseup event was not detected
+      // and that the click tries to correct that
+      onMouseup(e)
+    } else {
+      const { day, slot } = e.currentTarget.dataset
+      $blockedWeekTimes[day][slot] = !$blockedWeekTimes[day][slot]
+    }
   }
 
   function toggleSelectionOnKeydown (e) {
