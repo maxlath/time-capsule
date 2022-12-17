@@ -1,10 +1,11 @@
-const folderName = 'Time Capsules [managed folder]'
-const archiveFolderName = 'Time Capsules [Archive][managed folder]'
+const folderTag = '[managed folder]'
+const folderName = `Time Capsules ${folderTag}`
+const archiveFolderName = `Time Capsules [Archive]${folderTag}`
 
 export async function initBookmarksFolders () {
-  const nodes = await browser.bookmarks.getTree()
-  const mainFolder = findMatch(nodes, folderName) || await createFolder(folderName)
-  const archiveFolder = findMatch(nodes, archiveFolderName) || await createFolder(archiveFolderName)
+  const nodes = await browser.bookmarks.search({ query: folderTag })
+  const mainFolder = findMatch(nodes, folderName) || (await createFolder(folderName))
+  const archiveFolder = findMatch(nodes, archiveFolderName) || (await createFolder(archiveFolderName))
   return {
     mainFolder,
     archiveFolder,
