@@ -8,6 +8,7 @@ const defaultSettings = {
   'settings:maxCapsules': 10,
   'settings:logsMaxRecords': 100,
   'settings:keepExpiredCapsulesAsNormalBookmarks': false,
+  'settings:enableNoCapsuleTimes': false,
   'settings:blockedWeekTimes': {},
 }
 

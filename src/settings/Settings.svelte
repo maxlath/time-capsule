@@ -5,10 +5,12 @@
   import { getSettingStore } from '../lib/settings_store.js'
   import NavBar from './NavBar.svelte'
   import Logs from './Logs.svelte'
+  import Schedule from './Schedule.svelte'
 
   // New tab: logs/opened lately, with the possibility to edit/delete/recreate capsules from those logs
   const tabs = [
     { key: 'preferences', label: i18n('Preferences') },
+    { key: 'schedule', label: i18n('Schedule') },
     { key: 'capsules', label: i18n('Capsules') },
     { key: 'logs', label: i18n('Logs') },
   ]
@@ -46,6 +48,7 @@
   {#if currentTab}
     {#if currentTab.key === 'preferences'}<Preferences />
     {:else if currentTab.key === 'capsules'}<Capsules />
+    {:else if currentTab.key === 'schedule'}<Schedule />
     {:else if currentTab.key === 'logs'}<Logs />
     {/if}
   {/if}
