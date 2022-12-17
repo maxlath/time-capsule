@@ -8,6 +8,7 @@ const defaultSettings = {
   'settings:maxCapsules': 10,
   'settings:logsMaxRecords': 100,
   'settings:keepExpiredCapsulesAsNormalBookmarks': false,
+  'settings:blockedWeekTimes': {},
 }
 
 const defaultValues = {
@@ -50,10 +51,12 @@ browser.storage.local.onChanged.addListener(changes => {
   for (const [ key, { newValue } ] of Object.entries(changes)) {
     if (stores[key] != null) {
       const currentValue = get(stores[key])
-      if (currentValue !== newValue) stores[key].set(newValue)
+      if (!isEqual(currentValue, newValue)) stores[key].set(newValue)
     }
   }
 })
+
+const isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b)
 
 export async function getSettingValue (key) {
   checkKeyStatus(key)

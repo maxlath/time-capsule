@@ -6,11 +6,12 @@ export const slotsPerHour = 1
 export const slots = range(0, 24 * slotsPerHour - 1)
 export const slotMinutes = 60 / slotsPerHour
 
-export function initWeektime (weektime) {
+export function initWeekTimes (weekTimes) {
+  weekTimes = weekTimes || {}
   for (const day of days) {
-    weektime[day] = weektime[day] || {}
+    weekTimes[day] = weekTimes[day] || {}
   }
-  return weektime
+  return weekTimes
 }
 
 export const slotIndexAsHour = i => {
@@ -26,7 +27,7 @@ export const slotIndexAsHourRange = i => `${slotIndexAsHour(i)}-${slotIndexAsHou
 
 export function updateHighlighted ({ startingCell, mouseoverCell }) {
   const highlighted = {}
-  initWeektime(highlighted)
+  initWeekTimes(highlighted)
   const dayRange = [
     days.indexOf(startingCell.day),
     days.indexOf(mouseoverCell.day),
@@ -44,11 +45,11 @@ export function updateHighlighted ({ startingCell, mouseoverCell }) {
 
 const increasingly = (a, b) => a - b
 
-export function toggleHighlighted ({ weektime, highlighted, select }) {
+export function toggleHighlighted ({ blockedWeekTimes, highlighted, select }) {
   for (const day of days) {
     for (const slot of slots) {
-      if (highlighted[day][slot]) weektime[day][slot] = select
+      if (highlighted[day][slot]) blockedWeekTimes[day][slot] = select
     }
   }
-  return weektime
+  return blockedWeekTimes
 }

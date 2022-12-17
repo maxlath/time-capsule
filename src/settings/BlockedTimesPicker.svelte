@@ -1,18 +1,16 @@
 <!-- Inspired by https://github.com/zhunrong/week-time-picker -->
 <script>
-  import { days, initWeektime, toggleHighlighted, slotIndexAsHour, slotIndexAsHourRange, slots, slotsPerHour, updateHighlighted } from './week_time_picker_helpers.js'
+  import { getSettingStore } from '../lib/settings_store.js'
+  import { days, initWeekTimes, toggleHighlighted, slotIndexAsHour, slotIndexAsHourRange, slots, slotsPerHour, updateHighlighted } from './week_time_picker_helpers.js'
 
-  export let weektime = {}
+  const blockedWeekTimes = getSettingStore('settings:blockedWeekTimes')
 
-  let highlighted = {}
-
-  initWeektime(weektime)
-  initWeektime(highlighted)
+  let highlighted = initWeekTimes()
 
   function toggleSelection (e) {
     if (!e.currentTarget) return
     const { day, slot } = e.currentTarget.dataset
-    weektime[day][slot] = !weektime[day][slot]
+    $blockedWeekTimes[day][slot] = !$blockedWeekTimes[day][slot]
   }
 
   function toggleSelectionOnKeydown (e) {
@@ -27,7 +25,7 @@
     const { day, slot } = e.currentTarget.dataset
     startingCell = { day, slot }
     highlighted = {}
-    initWeektime(highlighted)
+    initWeekTimes(highlighted)
   }
   function onMousemove (e) {
     if (!startingCell) return
@@ -37,53 +35,55 @@
     highlighted = updateHighlighted({ startingCell, mouseoverCell })
   }
   function onMouseup (e) {
-    const select = weektime[startingCell.day][startingCell.slot] !== true
-    weektime = toggleHighlighted({ weektime, highlighted, select })
+    const select = $blockedWeekTimes[startingCell.day][startingCell.slot] !== true
+    $blockedWeekTimes = toggleHighlighted({ blockedWeekTimes: $blockedWeekTimes, highlighted, select })
     highlighted = {}
     startingCell = null
   }
 </script>
 
-<div class="week-time-picker">
-  <ul class="header">
-    {#each days as day}
-      <li class="header-day">{day}</li>
-    {/each}
-  </ul>
+{#if $blockedWeekTimes}
+  <div class="week-time-picker">
+    <ul class="header">
+      {#each days as day}
+        <li class="header-day">{day}</li>
+      {/each}
+    </ul>
 
-  <ul class="slots">
-    {#each slots as slot, i}
-      <li class="slot-row">
-        {#if i % slotsPerHour === 0 && i !== 24 * slotsPerHour}
-          <div class="slot-label">
-            <span>{slotIndexAsHour(i)}</span>
-          </div>
-        {:else}
-          <div class="slot-label-placeholder"></div>
-        {/if}
-        <ul class="slot-days">
-          {#each days as day}
-            <li class="day-slot">
-            <button
-              class:selected={weektime[day]?.[i]}
-              class:highlighted={highlighted[day]?.[i]}
-              title={`${day} ${slotIndexAsHourRange(i)}`}
-              data-day={day}
-              data-slot={i}
-              on:click={() => toggleSelection({ day, slot: i })}
-              on:click={toggleSelection}
-              on:keydown={e => toggleSelectionOnKeydown({ e, day, slot: i })}
-              on:mousedown={onMousedown}
-              on:mousemove={onMousemove}
-              on:mouseup={onMouseup}
-            ></button>
-            </li>
-          {/each}
-        </ul>
-      </li>
-    {/each}
-  </ul>
-</div>
+    <ul class="slots">
+      {#each slots as slot, i}
+        <li class="slot-row">
+          {#if i % slotsPerHour === 0 && i !== 24 * slotsPerHour}
+            <div class="slot-label">
+              <span>{slotIndexAsHour(i)}</span>
+            </div>
+          {:else}
+            <div class="slot-label-placeholder"></div>
+          {/if}
+          <ul class="slot-days">
+            {#each days as day}
+              <li class="day-slot">
+              <button
+                class:selected={$blockedWeekTimes[day]?.[i]}
+                class:highlighted={highlighted[day]?.[i]}
+                title={`${day} ${slotIndexAsHourRange(i)}`}
+                data-day={day}
+                data-slot={i}
+                on:click={() => toggleSelection({ day, slot: i })}
+                on:click={toggleSelection}
+                on:keydown={e => toggleSelectionOnKeydown({ e, day, slot: i })}
+                on:mousedown={onMousedown}
+                on:mousemove={onMousemove}
+                on:mouseup={onMouseup}
+              ></button>
+              </li>
+            {/each}
+          </ul>
+        </li>
+      {/each}
+    </ul>
+  </div>
+{/if}
 
 <style>
   .week-time-picker{
