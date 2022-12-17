@@ -1,16 +1,16 @@
 <script>
   import { getSettingStore } from '../lib/settings_store.js'
   import BlockedTimesPicker from './BlockedTimesPicker.svelte'
-  const enableNoCapsuleTimes = getSettingStore('settings:enableNoCapsuleTimes')
+  const enableBlockedWeekTimes = getSettingStore('settings:enableBlockedWeekTimes')
 </script>
 
 <div class="schedule">
   <label class="setting">
-    <input type="checkbox" bind:checked={$enableNoCapsuleTimes}>
+    <input type="checkbox" bind:checked={$enableBlockedWeekTimes}>
     Prevent Time Capsule from opening during certain times of the week
   </label>
 
-  {#if $enableNoCapsuleTimes}
+  {#if $enableBlockedWeekTimes}
     <div class="blocked-times-picker-wrapper">
       <BlockedTimesPicker />
     </div>
