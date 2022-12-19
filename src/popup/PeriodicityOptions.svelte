@@ -152,17 +152,20 @@
     justify-content: center;
   }
   .category-header{
-    font-size: 1.1em;
+    font-size: 1em;
     text-align: center;
   }
   h2{
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: center;
     margin: 0;
   }
   h3{
     margin-top: 0.8em;
     margin-bottom: 0;
+  }
+  h2, h3, ul{
+    width: 17em;
   }
   ul{
     margin: 0 auto;
