@@ -10,7 +10,7 @@
   const logsMaxRecords = getSettingStore('settings:logsMaxRecords')
   const keepExpiredCapsulesAsNormalBookmarks = getSettingStore('settings:keepExpiredCapsulesAsNormalBookmarks')
 
-  const maxCapsulesOptions = range(1, 10).concat([ 15, 20, 25, 30, 40, 50 ])
+  const maxCapsulesOptions = range(0, 10).concat([ 15, 20, 25, 30, 40, 50 ])
   const logsMaxRecordsOptions = [ 10, 100, 1000, 10000 ]
 </script>
 
