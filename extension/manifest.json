@@ -15,9 +15,33 @@
   ],
   "browser_action": {
     "default_icon": {
+      "16": "icons/time-capsule-disabled-16.png",
       "32": "icons/time-capsule-disabled-32.png",
+      "48": "icons/time-capsule-disabled-48.png",
       "92": "icons/time-capsule-disabled-92.png"
     },
+    "theme_icons": [
+      {
+        "light": "icons/time-capsule-disabled-light-16.png",
+        "dark": "icons/time-capsule-disabled-16.png",
+        "size": 16
+      },
+      {
+        "light": "icons/time-capsule-disabled-light-32.png",
+        "dark": "icons/time-capsule-disabled-32.png",
+        "size": 32
+      },
+      {
+        "light": "icons/time-capsule-disabled-light-48.png",
+        "dark": "icons/time-capsule-disabled-48.png",
+        "size": 48
+      },
+      {
+        "light": "icons/time-capsule-disabled-light-92.png",
+        "dark": "icons/time-capsule-disabled-92.png",
+        "size": 92
+      }
+    ],
     "default_title": "Time Capsule",
     "default_popup": "popup/popup.html",
     "browser_style": true
