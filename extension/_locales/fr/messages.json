@@ -21,7 +21,6 @@
       "unit": { "content": "$2" }
     }
   },
-  "next_visit": { "message": "Prochaine visite :" },
   "never": { "message": "Jamais" },
   "custom": { "message": "Personnalisé" },
   "url_cant_be_time_capsuled": { "message": "Cette URL ne peut pas être enregistrée en tant que capsule temporelle" },
