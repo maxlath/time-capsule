@@ -29,6 +29,7 @@
     "eslint-plugin-import": "^2.24.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^3.4.2",
+    "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-svelte3": "^3.2.0",
     "git-hooks": "^1.1.8",
     "mocha": "^10.1.0",
