@@ -44,3 +44,7 @@ export const partition = (collection, splitFn) => {
 // Filter-out URLs such as (about|chrome|file|data):*
 // See https://bugzilla.mozilla.org/show_bug.cgi?id=1352835
 export const isCapsulableUrl = url => url?.startsWith('http')
+
+export function usesDarkMode () {
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches
+}

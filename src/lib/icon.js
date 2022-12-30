@@ -1,5 +1,6 @@
 import { getActiveTabId } from './tabs.js'
 import { getNextVisitSummary } from './times.js'
+import { usesDarkMode } from './utils.js'
 const darkGrey = '#333333'
 const warningBgColor = '#ffd402'
 
@@ -43,6 +44,8 @@ const setStatusIcon = substring => tabId => {
   })
 }
 
+const useLightIcons = usesDarkMode()
+
 const setPeriodicCapsuleIcon = setStatusIcon('')
 const setOneTimeCapsuleIcon = setStatusIcon('yellow-')
-const setDisableIcon = setStatusIcon('disabled-')
+const setDisableIcon = setStatusIcon(useLightIcons ? 'disabled-light-' : 'disabled-')
