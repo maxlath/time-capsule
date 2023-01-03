@@ -13,6 +13,18 @@
       ;({ activeTab, bookmark, possibleUpdate } = res)
     })
     .catch(err => flash = err)
+
+  // The popup is coupled to the URL when it was opened so
+  // - if the tab changes, it should be closed
+  browser.tabs.onActivated.addListener(({ tabId }) => {
+    if (activeTab?.id !== tabId) window.close()
+  })
+  // - if the current tab url changes, it should be closed
+  browser.tabs.onUpdated.addListener((tabId, { url }) => {
+    if (activeTab?.id === tabId && activeTab.url !== url) {
+      window.close()
+    }
+  })
 </script>
 
 <SettingsCogButton context="popup" />
