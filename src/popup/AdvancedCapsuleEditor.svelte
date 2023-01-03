@@ -4,7 +4,7 @@
   import { saveCapsule } from '../lib/actions.js'
   import { parseFrequency } from '../lib/frequency.js'
   import { getDateTimeLocalInputValue, unitsLabels } from '../lib/times.js'
-  import { range } from '../lib/utils.js'
+  import { range, repeatNum } from '../lib/utils.js'
   import { repeatsOptions } from '../lib/repeats.js'
   import { getSettingValue } from '../lib/settings_store.js'
   import { getNextVisit } from '../lib/bookmark_title.js'
@@ -44,7 +44,7 @@
         url,
         bookmark,
         nextVisit,
-        frequency: repeat > 0 ? `${frequencyNum}${frequencyUnit}` : null,
+        frequency: repeatNum(repeat) > 0 ? `${frequencyNum}${frequencyUnit}` : null,
         repeat,
         context,
       })

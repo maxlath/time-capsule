@@ -48,3 +48,10 @@ export const isCapsulableUrl = url => url?.startsWith('http')
 export function usesDarkMode () {
   return window.matchMedia?.('(prefers-color-scheme: dark)').matches
 }
+
+export const repeatNum = repeat => {
+  if (typeof repeat === 'number') return repeat
+  if (repeat === '∞') return Infinity
+  if (typeof repeat === 'string') return parseInt(repeat)
+  return 0
+}
