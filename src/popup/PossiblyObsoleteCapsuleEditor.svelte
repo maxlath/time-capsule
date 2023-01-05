@@ -70,6 +70,9 @@
     max-width: 40em;
     overflow: hidden;
   }
+  pre{
+    max-width: 36em;
+  }
   .buttons{
     display: flex;
     flex-direction: column;
@@ -82,6 +85,9 @@
     padding: 0.5em;
     margin: 0.5em;
     border-radius: 3px;
+    max-width: 30em;
+    white-space: normal;
+    word-break: break-all;
   }
   .update{
     background-color: var(--light-blue);
