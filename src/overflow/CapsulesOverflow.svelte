@@ -26,7 +26,7 @@
 </NavBar>
 
 <p>
-  {#if bookmarksCount && maxCapsules}
+  {#if bookmarksCount && maxCapsules != null}
     {@html i18n('overflow_explainer', [ bookmarksCount, maxCapsules ])}
   {/if}
 </p>
