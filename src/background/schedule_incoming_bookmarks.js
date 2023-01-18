@@ -3,7 +3,7 @@ import { schedule, cancelPending, reschedule, getBlockedWeekTimes } from './sche
 import { timeUntilLocalDayEndTime } from '../lib/times.js'
 import { partition } from '../lib/utils.js'
 import { getSettingValue } from '../lib/settings_store.js'
-import { processBookmarkWithoutOpening } from './open_bookmark.js'
+import { openOverflowMenu } from './open_bookmark.js'
 import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
 
 const scheduleTodaysBookmarks = async () => {
@@ -22,11 +22,9 @@ const scheduleTodaysBookmarks = async () => {
   const [ bookmarksToOpenImmediately, bookmarksForLaterToday ] = partition(todaysBookmarks, nextVisitIsInThePast)
   console.log("today's program", { bookmarksToOpenImmediately, bookmarksForLaterToday })
   if (bookmarksToOpenImmediately.length > maxCapsules) {
-    const ids = bookmarksToOpenImmediately.map(bookmark => bookmark.id)
     bookmarksForLaterToday.forEach(schedule)
-    // TODO: Add corresponding log record
-    await Promise.all(bookmarksToOpenImmediately.map(processBookmarkWithoutOpening))
-    browser.tabs.create({ url: `/overflow/overflow.html?ids=${ids.join('|')}` })
+    // TODO: Only open at nextNonBlockedTime
+    await openOverflowMenu(bookmarksToOpenImmediately)
   } else {
     todaysBookmarks.forEach(schedule)
   }

@@ -2,7 +2,7 @@ import { isInFolder, nextVisitIsToday } from '../lib/bookmarks.js'
 import { getSettingValues } from '../lib/settings_store.js'
 import { toIso } from '../lib/times.js'
 import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
-import { openBookmark } from './open_bookmark.js'
+import { openSingleBookmarkOrOverflowMenu } from './open_bookmark.js'
 
 const timeoutIds = {}
 
@@ -25,12 +25,12 @@ export async function schedule (bookmark) {
   const time = nextVisitTime - now
   if (time <= 0) {
     console.log('passed date, opening now:', bookmark)
-    openBookmark(bookmark)
+    await openSingleBookmarkOrOverflowMenu(bookmark)
   } else {
     console.log('in the coming 24 hours:', time, bookmark)
     const { id: bookmarkId } = bookmark
-    const openAndClean = () => {
-      openBookmark(bookmark)
+    const openAndClean = async () => {
+      await openSingleBookmarkOrOverflowMenu(bookmark)
       delete timeoutIds[bookmarkId]
     }
     console.log('scheduling', { bookmark, time, now: toIso(now), then: toIso(now + time) })

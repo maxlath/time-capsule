@@ -55,3 +55,8 @@ export const repeatNum = repeat => {
   if (typeof repeat === 'string') return parseInt(repeat)
   return 0
 }
+
+export function forceArray (array) {
+  if (array instanceof Array) return array
+  else return [ array ]
+}

@@ -1,7 +1,7 @@
 import { createTab, getActiveTab, getTabById, urlIsAlreadyOpened } from '../lib/tabs.js'
 import { getById, removeOrArchiveBookmark, updateCapsuleData } from '../lib/bookmarks.js'
 import { getSettingValue, getSettingValues } from '../lib/settings_store.js'
-import { isCapsulableUrl } from '../lib/utils.js'
+import { forceArray, isCapsulableUrl } from '../lib/utils.js'
 import { createLogRecord } from '../lib/logs.js'
 import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
 
@@ -9,7 +9,7 @@ export async function openBookmark (bookmark) {
   return processBookmark({ bookmark, open: true })
 }
 
-export async function processBookmarkWithoutOpening (bookmark) {
+async function processBookmarkWithoutOpening (bookmark) {
   return processBookmark({ bookmark, open: false })
 }
 
@@ -86,3 +86,20 @@ browser.runtime.onMessage.addListener(({ event, tabId }) => {
     delete possiblyOutdatedBookmarkData[tabId]
   }
 })
+
+export async function openOverflowMenu (bookmarks) {
+  bookmarks = forceArray(bookmarks)
+  // TODO: Add corresponding log record
+  await Promise.all(bookmarks.map(processBookmarkWithoutOpening))
+  const ids = bookmarks.map(bookmark => bookmark.id)
+  browser.tabs.create({ url: `/overflow/overflow.html?ids=${ids.join('|')}` })
+}
+
+export async function openSingleBookmarkOrOverflowMenu (bookmark) {
+  const maxCapsules = await getSettingValue('settings:maxCapsules')
+  if (maxCapsules === 0) {
+    openOverflowMenu(bookmark)
+  } else {
+    openBookmark(bookmark)
+  }
+}
