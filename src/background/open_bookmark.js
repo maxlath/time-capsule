@@ -92,14 +92,14 @@ export async function openOverflowMenu (bookmarks) {
   // TODO: Add corresponding log record
   await Promise.all(bookmarks.map(processBookmarkWithoutOpening))
   const ids = bookmarks.map(bookmark => bookmark.id)
-  browser.tabs.create({ url: `/overflow/overflow.html?ids=${ids.join('|')}` })
+  await browser.tabs.create({ url: `/overflow/overflow.html?ids=${ids.join('|')}` })
 }
 
 export async function openSingleBookmarkOrOverflowMenu (bookmark) {
   const maxCapsules = await getSettingValue('settings:maxCapsules')
   if (maxCapsules === 0) {
-    openOverflowMenu(bookmark)
+    await openOverflowMenu(bookmark)
   } else {
-    openBookmark(bookmark)
+    await openBookmark(bookmark)
   }
 }
