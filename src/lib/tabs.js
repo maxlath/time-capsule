@@ -2,9 +2,6 @@ import { getLastFocusedWindowId } from './windows.js'
 import { getBookmarkById, getCapsuleBookmarkByUrl } from './bookmarks.js'
 import { isCapsulableUrl } from './utils.js'
 
-export const createTab = browser.tabs.create.bind(browser.tabs)
-export const getTabById = browser.tabs.get.bind(browser.tabs)
-
 // Replacing the deprecated getSelected
 // see https://developer.chrome.com/extensions/tabs#method-getSelected
 export async function getActiveTab () {

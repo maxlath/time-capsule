@@ -1,4 +1,4 @@
-import { createTab, getActiveTab, getTabById, urlIsAlreadyOpened } from '../lib/tabs.js'
+import { getActiveTab, urlIsAlreadyOpened } from '../lib/tabs.js'
 import { getById, removeOrArchiveBookmark, updateCapsuleData } from '../lib/bookmarks.js'
 import { getSettingValue, getSettingValues } from '../lib/settings_store.js'
 import { forceArray, isCapsulableUrl } from '../lib/utils.js'
@@ -55,7 +55,7 @@ async function openBookmarkIfNeeded (bookmark) {
     urlIsAlreadyOpened(url),
   ])
   if (!bookmarkUrlIsAlreadyOpened || allowDuplicatedTabs) {
-    const tab = await createTab({ url, active: false })
+    const tab = await browser.tabs.create({ url, active: false })
     setTimeout(checkTabState({ tab, bookmark }), 500)
     await createLogRecord({ event: 'opened-bookmark', bookmark })
   } else {
@@ -65,7 +65,7 @@ async function openBookmarkIfNeeded (bookmark) {
 
 const checkTabState = ({ tab, bookmark, attempt = 0 }) => async () => {
   if (attempt > 10) return
-  const currentTabData = await getTabById(tab.id)
+  const currentTabData = await browser.tabs.get(tab.id)
   // Check that the URL isn't browser intermediary URL (such as about: or chrome:)
   if (isCapsulableUrl(currentTabData.url) && currentTabData.url !== bookmark.url) {
     possiblyOutdatedBookmarkData[currentTabData.id] = {
@@ -92,7 +92,10 @@ export async function openOverflowMenu (bookmarks) {
   // TODO: Add corresponding log record
   await Promise.all(bookmarks.map(processBookmarkWithoutOpening))
   const ids = bookmarks.map(bookmark => bookmark.id)
-  await browser.tabs.create({ url: `/overflow/overflow.html?ids=${ids.join('|')}` })
+  await browser.tabs.create({
+    url: `/overflow/overflow.html?ids=${ids.join('|')}`,
+    active: false
+  })
 }
 
 export async function openSingleBookmarkOrOverflowMenu (bookmark) {
