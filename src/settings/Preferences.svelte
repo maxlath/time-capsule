@@ -57,7 +57,7 @@
         <option value={numOption}>{numOption}</option>
       {/each}
     </select>
-    <label for="logsMaxRecords">{i18n('maximum_number_of_entries_to_keep_in_the_logs')}}</label>
+    <label for="logsMaxRecords">{i18n('maximum_number_of_entries_to_keep_in_the_logs')}</label>
   </div>
 
   <hr>
