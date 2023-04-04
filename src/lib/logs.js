@@ -2,20 +2,32 @@ import { getSettingValue } from './settings_store.js'
 import { i18n } from '../lib/i18n.js'
 import { serializeBookmark } from './bookmark_title.js'
 
-export async function createLogRecord ({ event, bookmark, changes }) {
-  if (bookmark.cleanedTitle == null) {
-    bookmark = serializeBookmark(bookmark)
-  }
-  console.log(event, bookmark)
+export async function createLogRecord ({ event, bookmark, changes, url, bookmarks }) {
   const record = {
     event,
     timestamp: Date.now(),
-    bookmarkId: bookmark.id,
-    url: bookmark.url,
-    title: bookmark.cleanedTitle,
-    frequency: bookmark.frequency,
-    remainingRepeats: bookmark.repeat,
-    changes,
+  }
+  if (bookmark) {
+    if (bookmark.cleanedTitle == null) {
+      bookmark = serializeBookmark(bookmark)
+    }
+    console.log(event, bookmark)
+    Object.assign(record, {
+      id: `${bookmark.id}:${record.timestamp}`,
+      bookmarkId: bookmark.id,
+      url: bookmark.url,
+      title: bookmark.cleanedTitle,
+      frequency: bookmark.frequency,
+      remainingRepeats: bookmark.repeat,
+      changes,
+    })
+  } else {
+    // Only case: 'opened-overflow-menu'
+    Object.assign(record, {
+      id: `${url}:${record.timestamp}`,
+      url,
+      title: bookmarks.map(({ cleanedTitle }) => cleanedTitle).join(', ')
+    })
   }
   let logs = await getLogRecords()
   logs.unshift(record)
@@ -41,6 +53,9 @@ export const events = {
   },
   'skipped-already-opened-bookmark': {
     label: i18n('Skipped'),
+  },
+  'opened-overflow-menu': {
+    label: i18n('Overflow'),
   },
   'created-bookmark': {
     label: i18n('Created'),

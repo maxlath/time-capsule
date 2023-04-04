@@ -92,10 +92,12 @@ export async function openOverflowMenu (bookmarks) {
   // TODO: Add corresponding log record
   await Promise.all(bookmarks.map(processBookmarkWithoutOpening))
   const ids = bookmarks.map(bookmark => bookmark.id)
+  const url = `/overflow/overflow.html?ids=${ids.join('|')}`
   await browser.tabs.create({
-    url: `/overflow/overflow.html?ids=${ids.join('|')}`,
+    url,
     active: false
   })
+  await createLogRecord({ event: 'opened-overflow-menu', bookmarks, url })
 }
 
 export async function openSingleBookmarkOrOverflowMenu (bookmark) {

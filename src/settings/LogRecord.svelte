@@ -12,6 +12,7 @@
   <span
     class="event"
     class:opened={event === 'opened-bookmark'}
+    class:overflow={event === 'opened-overflow-menu'}
     class:skipped={event === 'skipped-already-opened-bookmark'}
     class:created={event === 'created-bookmark'}
     class:updated={event === 'updated-bookmark'}
@@ -23,7 +24,9 @@
 
   <div class="bookmark-url">
     <a href={url}>{title}</a>
-    <span class="hostname">{new URL(url).hostname}</span>
+    {#if url[0] !== '/'}
+      <span class="hostname">{new URL(url).hostname}</span>
+    {/if}
   </div>
 
   {#each Object.entries(changes) as [ attribute, { old: oldValue, new: newValue } ] }
@@ -67,6 +70,9 @@
   }
   .opened{
     background-color: var(--success-color);
+  }
+  .overflow{
+    background-color: var(--warning-color);
   }
   .skipped{
     background-color: var(--grey-ddd);

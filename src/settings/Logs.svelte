@@ -13,7 +13,7 @@
 
 {#if displayedRecords}
   <ul>
-    {#each displayedRecords as record (record.bookmarkId + record.timestamp)}
+    {#each displayedRecords as record (record.id)}
       <LogRecord {record} />
     {/each}
   </ul>
