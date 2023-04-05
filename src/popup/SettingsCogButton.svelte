@@ -1,6 +1,7 @@
 <script>
-  export let context
   import CogIcon from '../icons/CogIcon.svelte'
+
+  export let context = null
 
   function showSettings () {
     browser.tabs.create({ url: '/settings/settings.html' })
