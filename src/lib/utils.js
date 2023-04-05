@@ -60,3 +60,7 @@ export function forceArray (array) {
   if (array instanceof Array) return array
   else return [ array ]
 }
+
+export function compact (array) {
+  return array.filter(el => el != null)
+}

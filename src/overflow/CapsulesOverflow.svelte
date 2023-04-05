@@ -1,5 +1,5 @@
 <script>
-  import { getBookmarksByIds } from '../lib/bookmarks.js'
+  import { getStillExistingBookmarks } from '../lib/bookmarks.js'
   import SettingsCogButton from '../popup/SettingsCogButton.svelte'
   import Capsules from '../settings/Capsules.svelte'
   import NavBar from '../settings/NavBar.svelte'
@@ -8,7 +8,7 @@
 
   const ids = new URLSearchParams(window.location.search).get('ids').split('|')
 
-  const bookmarksPromise = getBookmarksByIds(ids)
+  const bookmarksPromise = getStillExistingBookmarks(ids)
 
   let bookmarksCount
   bookmarksPromise.then(bookmarks => bookmarksCount = bookmarks.length)

@@ -1,4 +1,4 @@
-import { first, isCapsulableUrl, partition } from './utils.js'
+import { compact, first, isCapsulableUrl, partition } from './utils.js'
 import { initBookmarksFolders } from './bookmarks_init.js'
 import { formatBookmarkTitle, serializeBookmark } from './bookmark_title.js'
 import { getSettingValue } from './settings_store.js'
@@ -176,6 +176,21 @@ export async function getBookmarksByIds (ids) {
 export async function getBookmarkById (id) {
   const [ bookmark ] = await getBookmarksByIds(id)
   return bookmark
+}
+
+/** A function to be used when the bookmarks might not exist anymore */
+export async function getStillExistingBookmarks (ids) {
+  const bookmarks = await Promise.all(ids.map(getBookmarkByIdOrReturnEmpty))
+  return compact(bookmarks).map(serializeBookmark)
+}
+
+async function getBookmarkByIdOrReturnEmpty (id) {
+  try {
+    const [ bookmark ] = await browser.bookmarks.get(id)
+    return bookmark
+  } catch (err) {
+    console.error(id, err)
+  }
 }
 
 export const nextVisitIsToday = bookmark => bookmark?.nextVisit < getLocalDayEndTime()
