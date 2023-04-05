@@ -2,10 +2,12 @@
   import { i18n } from '../lib/i18n.js'
   import Preferences from './Preferences.svelte'
   import Capsules from './Capsules.svelte'
-  import { getSettingStore } from '../lib/settings_store.js'
+  import { getSettingStore, getSettingValue } from '../lib/settings_store.js'
   import NavBar from './NavBar.svelte'
   import Logs from './Logs.svelte'
   import Schedule from './Schedule.svelte'
+  import { onChange } from '../lib/svelte.js'
+  import Flash from '../popup/Flash.svelte'
 
   // New tab: logs/opened lately, with the possibility to edit/delete/recreate capsules from those logs
   const tabs = [
@@ -15,28 +17,37 @@
     { key: 'logs', label: i18n('Logs') },
   ]
 
-  const selectedTab = getSettingStore('settings:selectedTab')
+  let currentTab, flash
 
-  let currentTab
-  $: {
-    if ($selectedTab) {
-      currentTab = tabs.find(tab => tab.key === $selectedTab)
-      document.title = `Time Capsule - ${currentTab.label}`
+  function initTab (lastSelectedTab) {
+    const tabFromUrl = new URLSearchParams(window.location.search).get('tab')
+    const tabKey = tabFromUrl || lastSelectedTab
+    currentTab = tabs.find(tab => tab.key === tabKey)
+    document.title = `Time Capsule - ${currentTab.label}`
+  }
+
+  getSettingValue('settings:selectedTab')
+  .then(initTab)
+  .catch(err => flash = err)
+
+  const selectedTabStore = getSettingStore('settings:selectedTab')
+  function updateLastSelectedTab () {
+    if (currentTab) {
+      $selectedTabStore = currentTab.key
     }
   }
 
-  setTimeout(() => {
-    const tabFromUrl = new URLSearchParams(window.location.search).get('tab')
-    if (tabFromUrl) $selectedTab = tabFromUrl
-  }, 200)
+  $: onChange(currentTab, updateLastSelectedTab)
 </script>
+
+<Flash state={flash} />
 
 <NavBar>
   <div slot="start">
     {#each tabs as tab}
       <button
-        on:click={() => $selectedTab = tab.key}
-        class:active={tab.key === $selectedTab}
+        on:click={() => currentTab = tab}
+        class:active={tab.key === currentTab?.key}
       >
         {tab.label}
       </button>
