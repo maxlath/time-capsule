@@ -1,38 +1,36 @@
 import { getSettingValue } from './settings_store.js'
 import { i18n } from '../lib/i18n.js'
 import { serializeBookmark } from './bookmark_title.js'
+import { pluck } from './utils.js'
 
-export async function createLogRecord ({ event, bookmark, changes, url, bookmarks }) {
+export async function createLogRecord ({ event, bookmarks, bookmark, changes }) {
+  if (bookmark) bookmarks = [ bookmark ]
+  const bookmarksIds = pluck(bookmarks, 'ids')
+  const timestamp = Date.now()
   const record = {
+    id: `${bookmarksIds.join('|')}:${timestamp}`,
     event,
-    timestamp: Date.now(),
-  }
-  if (bookmark) {
-    if (bookmark.cleanedTitle == null) {
-      bookmark = serializeBookmark(bookmark)
-    }
-    console.log(event, bookmark)
-    Object.assign(record, {
-      id: `${bookmark.id}:${record.timestamp}`,
-      bookmarkId: bookmark.id,
-      url: bookmark.url,
-      title: bookmark.cleanedTitle,
-      frequency: bookmark.frequency,
-      remainingRepeats: bookmark.repeat,
-      changes,
-    })
-  } else {
-    // Only case: 'opened-overflow-menu'
-    Object.assign(record, {
-      id: `${url}:${record.timestamp}`,
-      url,
-      title: bookmarks.map(({ cleanedTitle }) => cleanedTitle).join(', ')
-    })
+    timestamp,
+    changes,
+    bookmarks: bookmarks.map(serializeBookmarkLogRecord),
   }
   let logs = await getLogRecords()
   logs.unshift(record)
   logs = await enforceRecordsLimits(logs)
   await browser.storage.local.set({ logs })
+}
+
+function serializeBookmarkLogRecord (bookmark) {
+  if (bookmark.cleanedTitle == null) {
+    bookmark = serializeBookmark(bookmark)
+  }
+  return {
+    id: bookmark.id,
+    url: bookmark.url,
+    title: bookmark.cleanedTitle,
+    frequency: bookmark.frequency,
+    remainingRepeats: bookmark.repeat,
+  }
 }
 
 export async function getLogRecords () {

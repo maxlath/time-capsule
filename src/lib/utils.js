@@ -64,3 +64,7 @@ export function forceArray (array) {
 export function compact (array) {
   return array.filter(el => el != null)
 }
+
+export function pluck (array, attribute) {
+  return array.map(({ [attribute]: value }) => value)
+}

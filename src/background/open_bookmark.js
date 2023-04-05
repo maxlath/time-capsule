@@ -97,7 +97,7 @@ export async function openOverflowMenu (bookmarks) {
     url,
     active: false
   })
-  await createLogRecord({ event: 'opened-overflow-menu', bookmarks, url })
+  await createLogRecord({ event: 'opened-overflow-menu', bookmarks })
 }
 
 export async function openSingleBookmarkOrOverflowMenu (bookmark) {

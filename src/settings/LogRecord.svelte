@@ -3,12 +3,17 @@
   import { events } from '../lib/logs.js'
   export let record
 
-  const { event, url, title, timestamp, remainingRepeats, changes = {} } = record
+  const { event, bookmarks, timestamp } = record
+
+  let remainingRepeats, changes = {}
+  if (bookmarks.length === 1) {
+    ;({ remainingRepeats, changes = {} } = record)
+  }
   const eventLabel = events[event].label
   const displayRepeats = !/^(removed|archived)/.test(event)
 </script>
 
-<li>
+<li class="log-record">
   <span
     class="event"
     class:opened={event === 'opened-bookmark'}
@@ -22,12 +27,14 @@
     {eventLabel}
   </span>
 
-  <div class="bookmark-url">
-    <a href={url}>{title}</a>
-    {#if url[0] !== '/'}
-      <span class="hostname">{new URL(url).hostname}</span>
-    {/if}
-  </div>
+  <ul class="bookmarks">
+    {#each bookmarks as bookmark (bookmark.id)}
+      <li class="bookmark">
+        <a href={bookmark.url}>{bookmark.title}</a>
+        <span class="hostname">{new URL(bookmark.url).hostname}</span>
+      </li>
+    {/each}
+  </ul>
 
   {#each Object.entries(changes) as [ attribute, { old: oldValue, new: newValue } ] }
     <span
@@ -51,7 +58,7 @@
 </li>
 
 <style>
-  li{
+  .log-record{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -89,7 +96,7 @@
   .removed{
     background-color: var(--danger-color);
   }
-  .bookmark-url{
+  .bookmark{
     min-width: min(90vw, 15em);
     display: flex;
     flex-direction: row;
