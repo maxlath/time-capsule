@@ -145,6 +145,12 @@ export async function getCapsuleBookmarkByUrl (url) {
   if (capsulesBookmark) return serializeBookmark(capsulesBookmark)
 }
 
+export async function getCapsuleOrArchivedBookmarkByUrl (url) {
+  const { capsulesBookmark, archivedBookmark } = await getBookmarksByUrl(url)
+  if (capsulesBookmark) return serializeBookmark(capsulesBookmark)
+  if (archivedBookmark) return serializeBookmark(archivedBookmark)
+}
+
 async function ensureBookmarkFolderIsManagedFolder (bookmark) {
   await waitForFolders
   if (bookmark.parent !== folderId) {

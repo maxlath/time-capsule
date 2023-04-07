@@ -1,5 +1,5 @@
 import { getLastFocusedWindowId } from './windows.js'
-import { getBookmarkById, getCapsuleBookmarkByUrl } from './bookmarks.js'
+import { getBookmarkById, getCapsuleOrArchivedBookmarkByUrl } from './bookmarks.js'
 import { isCapsulableUrl } from './utils.js'
 
 // Replacing the deprecated getSelected
@@ -31,7 +31,7 @@ export async function getActiveTabBookmarkData () {
     }
   }
   if (isCapsulableUrl(activeTabUrl)) {
-    res.bookmark = await getCapsuleBookmarkByUrl(activeTabUrl)
+    res.bookmark = await getCapsuleOrArchivedBookmarkByUrl(activeTabUrl)
   }
   if (res.bookmark) return res
 
