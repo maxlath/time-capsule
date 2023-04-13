@@ -89,7 +89,6 @@ browser.runtime.onMessage.addListener(({ event, tabId }) => {
 
 export async function openOverflowMenu (bookmarks) {
   bookmarks = forceArray(bookmarks)
-  // TODO: Add corresponding log record
   await Promise.all(bookmarks.map(processBookmarkWithoutOpening))
   const ids = bookmarks.map(bookmark => bookmark.id)
   const url = `/overflow/overflow.html?ids=${ids.join('|')}`

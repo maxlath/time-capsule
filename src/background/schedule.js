@@ -4,7 +4,7 @@ import { toIso } from '../lib/times.js'
 import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
 import { openSingleBookmarkOrOverflowMenu } from './open_bookmark.js'
 
-const timeoutIds = {}
+let timeoutIds = {}
 
 export async function schedule (bookmark) {
   const blockedWeekTimes = await getBlockedWeekTimes()
@@ -45,10 +45,18 @@ export async function reschedule (bookmark) {
   }
 }
 
-export const cancelPending = bookmarkId => {
+export function cancelPending (bookmarkId) {
   if (!timeoutIds[bookmarkId]) return
   console.log('cancelling', bookmarkId, timeoutIds[bookmarkId])
   clearTimeout(timeoutIds[bookmarkId])
+}
+
+export function cancelAllPendingBookmarks () {
+  console.log('cancelling all pending bookmarks', timeoutIds)
+  for (const timeout of Object.values(timeoutIds)) {
+    clearTimeout(timeout)
+  }
+  timeoutIds = {}
 }
 
 export async function getBlockedWeekTimes () {
