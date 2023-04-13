@@ -99,5 +99,7 @@
   "new_url": { "message": "New URL: $value$", "placeholders": { "value": { "content": "$1" } } },
   "old_url": { "message": "Old URL: $value$", "placeholders": { "value": { "content": "$1" } } },
   "remaining_repeats": { "message": "$num$ remaining repeats", "placeholders": { "num": { "content": "$1" } } },
+  "Next visit": { "message": "Next visit" },
+  "Repeats": { "message": "Repeats" },
   "del_key": { "message": "Del" }
 }

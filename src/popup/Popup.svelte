@@ -38,6 +38,7 @@
     <CapsuleEditor
       bind:bookmark
       url={activeTab.url}
+      {activeTab}
       context="popup"
       on:done={() => window.close()}
       />

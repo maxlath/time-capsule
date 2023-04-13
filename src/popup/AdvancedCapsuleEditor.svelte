@@ -9,15 +9,15 @@
   import { getSettingValue } from '../lib/settings_store.js'
   import { getNextVisit } from '../lib/bookmark_title.js'
   import { onChange } from '../lib/svelte.js'
+  import { i18n } from '../lib/i18n.js'
 
-  export let url, bookmark, context, flash
+  export let url, activeTab = null, bookmark, context, flash
 
   const dispatch = createEventDispatcher()
 
-  let repeat
   let frequencyNum = 1
   let frequencyUnit = 'M'
-  let nextVisit
+  let repeat, nextVisit, title
 
   if (bookmark) {
     nextVisit = getDateTimeLocalInputValue(bookmark.nextVisit)
@@ -25,9 +25,14 @@
       ;({ num: frequencyNum, unit: frequencyUnit } = parseFrequency(bookmark.frequency))
     }
     if (bookmark.repeat != null) repeat = bookmark.repeat
+    // Title metadata will be recoverd on save
+    title = bookmark.cleanedTitle
   } else {
     nextVisit = getDateTimeLocalInputValue()
+    title = activeTab.title
   }
+
+  const initialTitle = title
 
   getSettingValue('settings:defaultRepeats')
   .then(defaultRepeatValue => {
@@ -42,6 +47,7 @@
       dispatch('celebrate')
       await saveCapsule({
         url,
+        title,
         bookmark,
         nextVisit,
         frequency: repeatNum(repeat) > 0 ? `${frequencyNum}${frequencyUnit}` : null,
@@ -78,7 +84,20 @@
 
 <div class="options-selector-advanced">
   <div class="option-group">
-    <label for="nextVisit">Next visit</label>
+    <span>{i18n('Title')}</span>
+    <div class="input-group">
+      <input type="text" bind:value={title}>
+      <button
+        class="reset"
+        disabled={title === initialTitle}
+        on:click={() => title = initialTitle}
+        title={`Reset the title to its initial value: ${initialTitle}`}
+      >reset</button>
+    </div>
+  </div>
+
+  <div class="option-group">
+    <label for="nextVisit">{i18n('Next visit')}</label>
     <div class="input-group">
       <input
         id="nextVisit"
@@ -88,7 +107,7 @@
         bind:this={nextVisitInputEl}
       >
       <button
-        class="reset-next-visit"
+        class="reset"
         on:click={resetNextVisit}
         title="Reset the date for the next visit, using the selected frequency"
       >reset</button>
@@ -96,7 +115,7 @@
   </div>
 
   <label class="option-group">
-    <span>Repeats</span>
+    <span>{i18n('Repeats')}</span>
     <select bind:value={repeat}>
       {#each repeatsOptions as numOption}
         <option value={numOption}>{numOption}</option>
@@ -109,7 +128,7 @@
       class="option-group"
       transition:slide|local={{ duration: 200 }}
     >
-      <legend>Frequency</legend>
+      <legend>{i18n('Frequency')}</legend>
 
       <select bind:value={frequencyNum}>
         {#each frequencyNumOptions as numOption}
@@ -130,7 +149,7 @@
     disabled={!canValidate}
     on:click={validate}
   >
-    Validate
+    {i18n('Validate')}
   </button>
 </div>
 
@@ -151,9 +170,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
   }
-  .reset-next-visit{
+  .input-group input{
+    flex: 1;
+  }
+  .reset{
     margin-inline-start: 1em;
     margin-block-end: 0.3em;
     text-decoration: underline;
@@ -162,8 +184,10 @@
     border: 1px solid red;
   }
   .validate{
+    display: block;
     padding: 0.5em;
     border-radius: 3px;
     background-color: var(--success-color);
+    margin: 2em auto;
   }
 </style>

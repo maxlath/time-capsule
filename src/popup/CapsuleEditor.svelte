@@ -13,7 +13,7 @@
   import TrashIcon from '../icons/TrashIcon.svelte'
   import Flash from './Flash.svelte'
 
-  export let bookmark, url, context = null
+  export let bookmark, url, activeTab = null, context = null
 
   const dispatch = createEventDispatcher()
 
@@ -95,6 +95,7 @@
     <AdvancedCapsuleEditor
       bind:bookmark
       {url}
+      {activeTab}
       {context}
       bind:flash
       on:celebrate={celebrate}
