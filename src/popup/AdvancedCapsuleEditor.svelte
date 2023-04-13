@@ -164,6 +164,6 @@
   .validate{
     padding: 0.5em;
     border-radius: 3px;
-    background-color: var(--grey-ddd);
+    background-color: var(--success-color);
   }
 </style>
