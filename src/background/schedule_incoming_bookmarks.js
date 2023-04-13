@@ -1,7 +1,7 @@
 import { getTodaysBookmarksData, nextVisitIsInThePast, getBookmarkById } from '../lib/bookmarks.js'
 import { schedule, cancelPending, reschedule, getBlockedWeekTimes } from './schedule.js'
 import { timeUntilLocalDayEndTime } from '../lib/times.js'
-import { partition } from '../lib/utils.js'
+import { isRegroupable, partition } from '../lib/utils.js'
 import { getSettingValue } from '../lib/settings_store.js'
 import { openOverflowMenu } from './open_bookmark.js'
 import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
@@ -20,11 +20,13 @@ const scheduleTodaysBookmarks = async () => {
   const todaysBookmarks = await getTodaysBookmarksData()
   const maxCapsules = await getSettingValue('settings:maxCapsules')
   const [ bookmarksToOpenImmediately, bookmarksForLaterToday ] = partition(todaysBookmarks, nextVisitIsInThePast)
+  const [ regroupableBookmarks, nonRegroupableBookmarks ] = partition(bookmarksToOpenImmediately, isRegroupable)
   console.log("today's program", { bookmarksToOpenImmediately, bookmarksForLaterToday })
-  if (bookmarksToOpenImmediately.length > maxCapsules) {
+  if (regroupableBookmarks.length > maxCapsules) {
     bookmarksForLaterToday.forEach(schedule)
+    nonRegroupableBookmarks.forEach(schedule)
     // TODO: Only open at nextNonBlockedTime
-    await openOverflowMenu(bookmarksToOpenImmediately)
+    await openOverflowMenu(regroupableBookmarks)
   } else {
     todaysBookmarks.forEach(schedule)
   }

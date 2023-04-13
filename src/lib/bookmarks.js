@@ -9,7 +9,7 @@ export const getById = id => browser.bookmarks.get(id).then(first)
 
 export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
-export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit, newUrl, newTitle }) {
+export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit, newUrl, newTitle, noRegrouping }) {
   // NB: bookmarkData can be an archived bookmark, which will miss title metadata
   const { id, url, title, frequency, referenceDate } = bookmarkData
   const oldFrequency = frequency
@@ -22,6 +22,7 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
       repeat = defaultRepeats
     }
   }
+  if (noRegrouping == null) noRegrouping = bookmarkData.noRegrouping
   const updatedTitle = formatBookmarkTitle({
     title: newTitle || title,
     frequency: newFrequency !== undefined ? newFrequency : frequency,
@@ -29,6 +30,7 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
     nextVisit,
     repeat,
     updating: true,
+    noRegrouping,
   })
   const updateData = { title: updatedTitle }
   if (newUrl) updateData.url = newUrl
@@ -83,7 +85,7 @@ export const waitForFolders = initBookmarksFolders()
   })
   .catch(console.error)
 
-export async function addCapsule ({ url, title, frequency, repeat, nextVisit }) {
+export async function addCapsule ({ url, title, frequency, repeat, nextVisit, noRegrouping }) {
   const defaultRepeats = await getSettingValue('settings:defaultRepeats')
   if (frequency === undefined && (repeat !== 0 || nextVisit == null)) {
     throw new Error('a frequency or a next visit date is required')
@@ -95,6 +97,7 @@ export async function addCapsule ({ url, title, frequency, repeat, nextVisit }) 
       frequency,
       nextVisit,
       repeat: repeat != null ? repeat : defaultRepeats,
+      noRegrouping,
     })
   })
 }

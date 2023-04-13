@@ -68,3 +68,7 @@ export function compact (array) {
 export function pluck (array, attribute) {
   return array.map(({ [attribute]: value }) => value)
 }
+
+export function isRegroupable (bookmark) {
+  return bookmark.noRegrouping !== true
+}

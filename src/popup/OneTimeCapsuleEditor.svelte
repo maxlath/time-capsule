@@ -5,7 +5,7 @@
   import { onChange } from '../lib/svelte.js'
   import { i18n } from '../lib/i18n.js'
 
-  export let url, bookmark, context, flash
+  export let url, bookmark, flash
 
   const dispatch = createEventDispatcher()
 
@@ -27,7 +27,6 @@
         nextVisit,
         frequency: null,
         repeat: 0,
-        context,
       })
       dispatch('done')
     } catch (err) {

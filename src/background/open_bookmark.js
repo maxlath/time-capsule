@@ -1,7 +1,7 @@
 import { getActiveTab, urlIsAlreadyOpened } from '../lib/tabs.js'
 import { getById, removeOrArchiveBookmark, updateCapsuleData } from '../lib/bookmarks.js'
 import { getSettingValue, getSettingValues } from '../lib/settings_store.js'
-import { forceArray, isCapsulableUrl } from '../lib/utils.js'
+import { forceArray, isCapsulableUrl, isRegroupable } from '../lib/utils.js'
 import { createLogRecord } from '../lib/logs.js'
 import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
 
@@ -102,7 +102,7 @@ export async function openOverflowMenu (bookmarks) {
 
 export async function openSingleBookmarkOrOverflowMenu (bookmark) {
   const maxCapsules = await getSettingValue('settings:maxCapsules')
-  if (maxCapsules === 0) {
+  if (maxCapsules === 0 && isRegroupable(bookmark)) {
     await openOverflowMenu(bookmark)
   } else {
     await openBookmark(bookmark)

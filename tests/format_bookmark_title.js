@@ -1,4 +1,4 @@
-import 'should'
+import should from 'should'
 import { formatBookmarkTitle, parseBookmarkTitle } from '../src/lib/bookmark_title.js'
 
 describe('formatBookmarkTitle', () => {
@@ -23,7 +23,21 @@ describe('formatBookmarkTitle', () => {
     const nextVisit = new Date(nextVisitTime).toISOString()
     const title = formatBookmarkTitle({ title: 'foo', frequency: null, nextVisit, repeat: 0 })
     const data = parseBookmarkTitle(title)
-    data.frequency.should.equal(0)
+    should(data.frequency).not.be.ok()
     data.repeat.should.equal(0)
+  })
+
+  it('should support regrouping=true setting', () => {
+    const now = new Date().toISOString()
+    const title = formatBookmarkTitle({ title: 'foo', frequency: '1M', referenceDate: now, noRegrouping: true })
+    const data = parseBookmarkTitle(title)
+    data.noRegrouping.should.be.true()
+  })
+
+  it('should support regrouping=false setting', () => {
+    const now = new Date().toISOString()
+    const title = formatBookmarkTitle({ title: 'foo', frequency: '1M', referenceDate: now, noRegrouping: false })
+    const data = parseBookmarkTitle(title)
+    data.noRegrouping.should.be.false()
   })
 })

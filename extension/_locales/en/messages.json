@@ -101,5 +101,7 @@
   "remaining_repeats": { "message": "$num$ remaining repeats", "placeholders": { "num": { "content": "$1" } } },
   "Next visit": { "message": "Next visit" },
   "Repeats": { "message": "Repeats" },
+  "Always open alone": { "message": "Always open alone" },
+  "Opt-out from regrouping this capsule with others, when the amont of capsules to open is above the maximum allowed (\"overflow\")": { "message": "Opt-out from regrouping this capsule with others, when the amont of capsules to open is above the maximum allowed (\"overflow\")" },
   "del_key": { "message": "Del" }
 }

@@ -77,7 +77,6 @@
     <OneTimeCapsuleEditor
       bind:bookmark
       {url}
-      {context}
       bind:flash
       on:celebrate={celebrate}
       on:done={onEditorDone}
@@ -86,7 +85,6 @@
     <PeriodicalCapsuleEditor
       bind:bookmark
       {url}
-      {context}
       bind:flash
       on:celebrate={celebrate}
       on:done={onEditorDone}
@@ -96,7 +94,6 @@
       bind:bookmark
       {url}
       {activeTab}
-      {context}
       bind:flash
       on:celebrate={celebrate}
       on:done={onEditorDone}

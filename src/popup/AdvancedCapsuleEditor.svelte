@@ -11,12 +11,13 @@
   import { onChange } from '../lib/svelte.js'
   import { i18n } from '../lib/i18n.js'
 
-  export let url, activeTab = null, bookmark, context, flash
+  export let url, activeTab = null, bookmark, flash
 
   const dispatch = createEventDispatcher()
 
   let frequencyNum = 1
   let frequencyUnit = 'M'
+  let noRegrouping = false
   let repeat, nextVisit, title
 
   if (bookmark) {
@@ -27,6 +28,7 @@
     if (bookmark.repeat != null) repeat = bookmark.repeat
     // Title metadata will be recoverd on save
     title = bookmark.cleanedTitle
+    noRegrouping = bookmark.noRegrouping
   } else {
     nextVisit = getDateTimeLocalInputValue()
     title = activeTab.title
@@ -52,7 +54,7 @@
         nextVisit,
         frequency: repeatNum(repeat) > 0 ? `${frequencyNum}${frequencyUnit}` : null,
         repeat,
-        context,
+        noRegrouping,
       })
       dispatch('done')
     } catch (err) {
@@ -144,6 +146,14 @@
     </fieldset>
   {/if}
 
+  <label
+    class="option-group input-group has-checkbox"
+    title={i18n('Opt-out from regrouping this capsule with others, when the amont of capsules to open is above the maximum allowed ("overflow")')}
+  >
+    <input type="checkbox" bind:checked={noRegrouping}>
+    <span>{i18n('Always open alone')}</span>
+  </label>
+
   <button
     class="validate"
     disabled={!canValidate}
@@ -169,10 +179,18 @@
   .input-group{
     display: flex;
     flex-direction: row;
+  }
+  .input-group:not(.has-checkbox){
     align-items: center;
     justify-content: space-between;
   }
-  .input-group input{
+  .has-checkbox{
+    margin: 1.5em auto;
+  }
+  .option-group.has-checkbox span{
+    margin: 0 0.5em;
+  }
+  input[type="text"], input[type="datetime-local"]{
     flex: 1;
   }
   .reset{

@@ -6,7 +6,7 @@
   import { saveCapsule } from '../lib/actions.js'
   import { getCapsuleBookmarkByUrl } from '../lib/bookmarks.js'
 
-  export let bookmark, url, context, flash
+  export let bookmark, url, flash
 
   const dispatch = createEventDispatcher()
 
@@ -45,7 +45,6 @@
           bookmark: await getCapsuleBookmarkByUrl(url),
           url,
           frequency: selectedFrequency,
-          context
         })
         bookmark = bookmark ? Object.assign(bookmark, newBookmark) : newBookmark
         dispatch('done')
