@@ -1,7 +1,7 @@
 {
   "name": "time-capsule",
   "type": "module",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A reboot of the awesome Browse Periodically",
   "main": "index.js",
   "scripts": {
