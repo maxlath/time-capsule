@@ -88,7 +88,11 @@
   <div class="option-group">
     <span>{i18n('Title')}</span>
     <div class="input-group">
-      <input type="text" bind:value={title}>
+      <input type="text"
+        bind:value={title}
+        on:keydown|stopPropagation
+        on:keyup|stopPropagation
+      >
       <button
         class="reset"
         disabled={title === initialTitle}
@@ -107,6 +111,8 @@
         min={getDateTimeLocalInputValue()}
         bind:value={nextVisit}
         bind:this={nextVisitInputEl}
+        on:keydown|stopPropagation
+        on:keyup|stopPropagation
       >
       <button
         class="reset"
@@ -132,7 +138,11 @@
     >
       <legend>{i18n('Frequency')}</legend>
 
-      <select bind:value={frequencyNum}>
+      <select
+        bind:value={frequencyNum}
+        on:keydown|stopPropagation
+        on:keyup|stopPropagation
+      >
         {#each frequencyNumOptions as numOption}
           <option value={numOption}>{numOption}</option>
         {/each}
