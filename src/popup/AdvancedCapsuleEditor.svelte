@@ -35,6 +35,7 @@
   }
 
   const initialTitle = title
+  const initialUrl = url
 
   getSettingValue('settings:defaultRepeats')
   .then(defaultRepeatValue => {
@@ -98,6 +99,23 @@
 </script>
 
 <div class="options-selector-advanced">
+  <div class="option-group">
+    <span>{i18n('URL')}</span>
+    <div class="input-group">
+      <input type="text"
+        bind:value={url}
+        on:keydown|stopPropagation
+        on:keyup|stopPropagation
+      >
+      <button
+        class="reset"
+        disabled={url === initialUrl}
+        on:click={() => url = initialUrl}
+        title={`Reset the URL to its initial value: ${initialUrl}`}
+      >reset</button>
+    </div>
+  </div>
+
   <div class="option-group">
     <span>{i18n('Title')}</span>
     <div class="input-group">

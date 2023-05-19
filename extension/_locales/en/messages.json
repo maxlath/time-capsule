@@ -29,6 +29,7 @@
   "Delete": { "message": "Delete" },
   "Archive": { "message": "Archive" },
   "Capsules": { "message": "Capsules" },
+  "URL": { "message": "URL" },
   "Title": { "message": "Title" },
   "Frequency": { "message": "Frequency" },
   "Repeat": { "message": "Repeat" },

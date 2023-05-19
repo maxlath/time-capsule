@@ -17,6 +17,7 @@ export async function saveCapsule ({ url, title, bookmark, nextVisit, frequency,
     if (title) bookmarkData.title = title
     return updateCapsuleData({
       bookmarkData,
+      newUrl: bookmarkData.url !== url ? url : null,
       nextVisit,
       repeat,
       newFrequency: frequency,
