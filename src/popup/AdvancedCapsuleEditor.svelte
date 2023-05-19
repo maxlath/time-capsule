@@ -18,7 +18,7 @@
   let frequencyNum = 1
   let frequencyUnit = 'M'
   let noRegrouping = false
-  let repeat, nextVisit, title
+  let repeat, nextVisit, title, autoNextVisit
 
   if (bookmark) {
     nextVisit = getDateTimeLocalInputValue(bookmark.nextVisit)
@@ -30,7 +30,7 @@
     title = bookmark.cleanedTitle
     noRegrouping = bookmark.noRegrouping
   } else {
-    nextVisit = getDateTimeLocalInputValue()
+    autoNextVisit = nextVisit = getDateTimeLocalInputValue()
     title = activeTab.title
   }
 
@@ -52,7 +52,7 @@
         title,
         bookmark,
         nextVisit,
-        frequency: repeatNum(repeat) > 0 ? `${frequencyNum}${frequencyUnit}` : null,
+        frequency: repeatNum(repeat) > 0 ? frequency : null,
         repeat,
         noRegrouping,
       })
@@ -62,12 +62,17 @@
     }
   }
 
-  function resetNextVisit () {
-    const frequency = `${frequencyNum}${frequencyUnit}`
+  $: frequency = `${frequencyNum}${frequencyUnit}`
+
+  function resetNextVisitFromFrequency () {
     nextVisit = getDateTimeLocalInputValue(getNextVisit({
       frequency,
       referenceDate: Date.now()
     }))
+    autoNextVisit = nextVisit
+  }
+  function resetAndFocusNextVisit () {
+    resetNextVisitFromFrequency()
     nextVisitInputEl.focus()
   }
 
@@ -76,12 +81,20 @@
     canValidate = nextVisitInputEl?.validity.valid
   }
 
+  function onNextVisitChange () {
+    udpateValidateButton()
+  }
+  function onFrequencyChange () {
+    if (frequency && autoNextVisit === nextVisit) resetNextVisitFromFrequency()
+  }
+
   onMount(() => {
     udpateValidateButton()
     nextVisitInputEl.focus()
   })
 
-  $: onChange(nextVisit, udpateValidateButton)
+  $: onChange(nextVisit, onNextVisitChange)
+  $: onChange(frequency, onFrequencyChange)
 </script>
 
 <div class="options-selector-advanced">
@@ -98,26 +111,6 @@
         disabled={title === initialTitle}
         on:click={() => title = initialTitle}
         title={`Reset the title to its initial value: ${initialTitle}`}
-      >reset</button>
-    </div>
-  </div>
-
-  <div class="option-group">
-    <label for="nextVisit">{i18n('Next visit')}</label>
-    <div class="input-group">
-      <input
-        id="nextVisit"
-        type="datetime-local"
-        min={getDateTimeLocalInputValue()}
-        bind:value={nextVisit}
-        bind:this={nextVisitInputEl}
-        on:keydown|stopPropagation
-        on:keyup|stopPropagation
-      >
-      <button
-        class="reset"
-        on:click={resetNextVisit}
-        title="Reset the date for the next visit, using the selected frequency"
       >reset</button>
     </div>
   </div>
@@ -155,6 +148,26 @@
       </select>
     </fieldset>
   {/if}
+
+  <div class="option-group">
+    <label for="nextVisit">{i18n('Next visit')}</label>
+    <div class="input-group">
+      <input
+        id="nextVisit"
+        type="datetime-local"
+        min={getDateTimeLocalInputValue()}
+        bind:value={nextVisit}
+        bind:this={nextVisitInputEl}
+        on:keydown|stopPropagation
+        on:keyup|stopPropagation
+      >
+      <button
+        class="reset"
+        on:click={resetAndFocusNextVisit}
+        title="Reset the date for the next visit, using the selected frequency"
+      >reset</button>
+    </div>
+  </div>
 
   <label
     class="option-group input-group has-checkbox"
