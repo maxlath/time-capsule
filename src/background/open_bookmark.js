@@ -87,22 +87,54 @@ browser.runtime.onMessage.addListener(({ event, tabId }) => {
   }
 })
 
+let overflowTab, overflowTabPromise
+
 export async function openOverflowMenu (bookmarks) {
   bookmarks = forceArray(bookmarks)
   await Promise.all(bookmarks.map(processBookmarkWithoutOpening))
   const ids = bookmarks.map(bookmark => bookmark.id)
-  const url = `/overflow/overflow.html?ids=${ids.join('|')}`
-  await browser.tabs.create({
-    url,
-    active: false
-  })
+  overflowTab = overflowTab || await overflowTabPromise
+  if (overflowTab?.id) {
+    // The tab object returned by browser.tabs.create might have the wrong url
+    // Ex: "about:blank" in Firefox, thus the need to refresh its data
+    overflowTabPromise = browser.tabs.get(overflowTab.id)
+    overflowTab = await overflowTabPromise
+  }
+  if (overflowTab?.url.startsWith(`${location.origin}/overflow/overflow.html`)) {
+    await updateOverflowMenu(ids)
+  } else {
+    await createOverflowMenu(ids)
+  }
   await createLogRecord({ event: 'opened-overflow-menu', bookmarks })
 }
 
+async function createOverflowMenu (ids) {
+  const url = `/overflow/overflow.html?ids=${ids.join('|')}`
+  overflowTabPromise = browser.tabs.create({
+    url,
+    active: false
+  })
+  overflowTab = await overflowTabPromise
+}
+
+async function updateOverflowMenu (ids) {
+  const querystring = overflowTab.url.split('?')[1]
+  const previousIds = new URLSearchParams(querystring).get('ids')?.split('|') || []
+  const newIds = ids.filter(id => !previousIds.includes(id))
+  const url = `/overflow/overflow.html?ids=${previousIds.concat(newIds).join('|')}`
+  await browser.tabs.update(overflowTab.id, {
+    url,
+    active: false
+  })
+}
+
+let previousOverflowMenuPromise
 export async function openSingleBookmarkOrOverflowMenu (bookmark) {
   const maxCapsules = await getSettingValue('settings:maxCapsules')
   if (maxCapsules === 0 && isRegroupable(bookmark)) {
-    await openOverflowMenu(bookmark)
+    // Prevent opening several overflow menus at once
+    await previousOverflowMenuPromise
+    previousOverflowMenuPromise = await openOverflowMenu(bookmark)
   } else {
     await openBookmark(bookmark)
   }
