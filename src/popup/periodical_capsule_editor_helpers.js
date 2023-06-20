@@ -1,5 +1,5 @@
 // leading figure can't be 0
-const frequencyPattern = /^[^\d.]?([1-9][\d.]{0,2})([HDWMYT])$/i
+export const frequencyPattern = /^[^\d.]?([1-9][\d.]{0,2})([HDWMYT])$/i
 const frequencyStartPattern = /([1-9][\d.]{0,2})([HDWMYT])?$/i
 
 export function findFrequencyPattern (lastKeys) {
