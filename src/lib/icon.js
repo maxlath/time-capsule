@@ -1,8 +1,9 @@
 import { getActiveTabId } from './tabs.js'
 import { getNextVisitSummary } from './times.js'
-import { usesDarkMode } from './utils.js'
+import { sleep, usesDarkMode } from './utils.js'
 const darkGrey = '#333333'
 const warningBgColor = '#ffd402'
+const successBgColor = '#00ff00'
 
 // It could theorically be possible to check a lastFrequency variable to know
 // if an update is needed, but this would involve manipulating this variable
@@ -33,7 +34,10 @@ export async function disable () {
   browser.browserAction.setBadgeText({ tabId, text: '' })
 }
 
-const setStatusIcon = substring => tabId => {
+let lastIcon
+const setStatusIcon = substring => async tabId => {
+  lastIcon = substring
+  // TODO: also set title with browser.browserAction.setTitle
   browser.browserAction.setIcon({
     tabId,
     path: {
@@ -49,3 +53,30 @@ const useLightIcons = usesDarkMode()
 const setPeriodicCapsuleIcon = setStatusIcon('')
 const setOneTimeCapsuleIcon = setStatusIcon('yellow-')
 const setDisableIcon = setStatusIcon(useLightIcons ? 'disabled-light-' : 'disabled-')
+
+export async function flashSuccessIcon () {
+  const tabId = await getActiveTabId()
+  const currentStatusIcon = lastIcon
+  const [
+    text,
+    color,
+    bgColor,
+  ] = await Promise.all([
+    browser.browserAction.getBadgeText({ tabId }),
+    browser.browserAction.getBadgeTextColor({ tabId }),
+    browser.browserAction.getBadgeBackgroundColor({ tabId }),
+  ])
+  await Promise.all([
+    setPeriodicCapsuleIcon(tabId),
+    browser.browserAction.setBadgeText({ tabId, text: '✔' }),
+    browser.browserAction.setBadgeTextColor({ tabId, color: '#ffffff' }),
+    browser.browserAction.setBadgeBackgroundColor({ tabId, color: successBgColor }),
+  ])
+  await sleep(500)
+  await Promise.all([
+    setStatusIcon(currentStatusIcon)(tabId),
+    browser.browserAction.setBadgeText({ tabId, text }),
+    browser.browserAction.setBadgeTextColor({ tabId, color }),
+    browser.browserAction.setBadgeBackgroundColor({ tabId, color: bgColor }),
+  ])
+}

@@ -1,9 +1,10 @@
 import { getCapsuleBookmarkByUrl } from '../lib/bookmarks.js'
 import { i18n } from '../lib/i18n.js'
-import { range } from '../lib/utils.js'
+import { isCapsulableUrl, range } from '../lib/utils.js'
 import { allOptions } from '../popup/options.js'
 import { saveCapsule } from '../lib/actions.js'
 import { frequencyPattern } from '../popup/periodical_capsule_editor_helpers.js'
+import { flashSuccessIcon } from '../lib/icon.js'
 
 const menuIdBase = 'time-capsule-menu'
 // TODO: make configurable in settings
@@ -56,6 +57,10 @@ browser.menus.onClicked.addListener(async info => {
   if (!parentMenuItemId.startsWith(menuIdBase)) return
   const frequency = menuItemId.split('-').at(-1)
   if (!frequencyPattern.test(frequency)) return
+  if (!isCapsulableUrl(url)) {
+    console.log('url can not be used for a Time Capsule', url)
+    return
+  }
   const bookmark = await getCapsuleBookmarkByUrl(url)
   await saveCapsule({
     bookmark,
@@ -63,5 +68,5 @@ browser.menus.onClicked.addListener(async info => {
     frequency,
     title: bookmark?.title || title || url,
   })
-  // TODO: Animate browser action for success
+  await flashSuccessIcon()
 })
