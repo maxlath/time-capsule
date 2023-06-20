@@ -5,15 +5,16 @@ import { allOptions } from '../popup/options.js'
 import { saveCapsule } from '../lib/actions.js'
 import { frequencyPattern } from '../popup/periodical_capsule_editor_helpers.js'
 
-const menuId = 'time-capsule-menu'
+const menuIdBase = 'time-capsule-menu'
 // TODO: make configurable in settings
 const extendedOptions = false
 
-export function initContextMenu () {
+function initContextMenu ({ context, title }) {
+  const menuId = `${menuIdBase}-${context}`
   browser.menus.create({
     id: menuId,
-    contexts: [ 'link' ],
-    title: i18n('Create Time Capsule'),
+    contexts: [ context ],
+    title,
     icons: {
       '16': 'icons/time-capsule-16.png',
       '32': 'icons/time-capsule-32.png',
@@ -27,7 +28,7 @@ export function initContextMenu () {
       browser.menus.create({
         id: categoryMenuId,
         parentId: menuId,
-        contexts: [ 'link' ],
+        contexts: [ context ],
         title: i18n(category),
       })
       for (const num of nums) {
@@ -35,7 +36,7 @@ export function initContextMenu () {
         browser.menus.create({
           id: `${categoryMenuId}-${frequency}`,
           parentId: categoryMenuId,
-          contexts: [ 'link' ],
+          contexts: [ context ],
           title: num.toString(),
         })
       }
@@ -43,9 +44,16 @@ export function initContextMenu () {
   }
 }
 
+export function initContextMenus () {
+  initContextMenu({ context: 'link', title: i18n('Bookmark link as a Time Capsule') })
+  initContextMenu({ context: 'image', title: i18n('Bookmark image as a Time Capsule') })
+  initContextMenu({ context: 'page', title: i18n('Bookmark page as a Time Capsule') })
+}
+
 browser.menus.onClicked.addListener(async info => {
-  const { parentMenuItemId, menuItemId, linkUrl: url, linkText: title } = info
-  if (!parentMenuItemId.startsWith(menuId)) return
+  const { parentMenuItemId, menuItemId, linkText: title } = info
+  const url = info.linkUrl || info.srcUrl || info.pageUrl
+  if (!parentMenuItemId.startsWith(menuIdBase)) return
   const frequency = menuItemId.split('-').at(-1)
   if (!frequencyPattern.test(frequency)) return
   const bookmark = await getCapsuleBookmarkByUrl(url)
@@ -53,6 +61,7 @@ browser.menus.onClicked.addListener(async info => {
     bookmark,
     url,
     frequency,
-    title: bookmark?.title || title,
+    title: bookmark?.title || title || url,
   })
+  // TODO: Animate browser action for success
 })

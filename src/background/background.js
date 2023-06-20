@@ -1,4 +1,4 @@
-import { initContextMenu } from './context_menu.js'
+import { initContextMenus } from './context_menu.js'
 import './keep_icon_in_sync'
 import './schedule_incoming_bookmarks.js'
 
@@ -10,4 +10,4 @@ browser.commands.onCommand.addListener(command => {
   }
 })
 
-initContextMenu()
+initContextMenus()
