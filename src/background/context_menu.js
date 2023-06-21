@@ -46,9 +46,9 @@ function initContextMenu ({ context, title }) {
 }
 
 export function initContextMenus () {
-  initContextMenu({ context: 'link', title: i18n('Bookmark link as a Time Capsule') })
-  initContextMenu({ context: 'image', title: i18n('Bookmark image as a Time Capsule') })
-  initContextMenu({ context: 'page', title: i18n('Bookmark page as a Time Capsule') })
+  initContextMenu({ context: 'link', title: i18n('Bookmark_link_as_a_Time_Capsule') })
+  initContextMenu({ context: 'image', title: i18n('Bookmark_image_as_a_Time_Capsule') })
+  initContextMenu({ context: 'page', title: i18n('Bookmark_page_as_a_Time_Capsule') })
 }
 
 browser.menus.onClicked.addListener(async info => {

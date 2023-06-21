@@ -168,7 +168,7 @@
   {/if}
 
   <div class="option-group">
-    <label for="nextVisit">{i18n('Next visit')}</label>
+    <label for="nextVisit">{i18n('Next_visit')}</label>
     <div class="input-group">
       <input
         id="nextVisit"
@@ -189,10 +189,10 @@
 
   <label
     class="option-group input-group has-checkbox"
-    title={i18n('Opt-out from regrouping this capsule with others, when the amont of capsules to open is above the maximum allowed ("overflow")')}
+    title={i18n('opt_out_from_regrouping_this_capsule')}
   >
     <input type="checkbox" bind:checked={noRegrouping}>
-    <span>{i18n('Always open alone')}</span>
+    <span>{i18n('Always_open_alone')}</span>
   </label>
 
   <button

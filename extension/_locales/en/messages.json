@@ -100,12 +100,12 @@
   "new_url": { "message": "New URL: $value$", "placeholders": { "value": { "content": "$1" } } },
   "old_url": { "message": "Old URL: $value$", "placeholders": { "value": { "content": "$1" } } },
   "remaining_repeats": { "message": "$num$ remaining repeats", "placeholders": { "num": { "content": "$1" } } },
-  "Next visit": { "message": "Next visit" },
+  "Next_visit": { "message": "Next visit" },
   "Repeats": { "message": "Repeats" },
-  "Always open alone": { "message": "Always open alone" },
-  "Bookmark link as a Time Capsule": { "message": "Bookmark link as a Time Capsule" },
-  "Bookmark image as a Time Capsule": { "message": "Bookmark image as a Time Capsule" },
-  "Bookmark page as a Time Capsule": { "message": "Bookmark page as a Time Capsule" },
-  "Opt-out from regrouping this capsule with others, when the amont of capsules to open is above the maximum allowed (\"overflow\")": { "message": "Opt-out from regrouping this capsule with others, when the amont of capsules to open is above the maximum allowed (\"overflow\")" },
+  "Always_open_alone": { "message": "Always open alone" },
+  "Bookmark_link_as_a_Time_Capsule": { "message": "Bookmark link as a Time Capsule" },
+  "Bookmark_image_as_a_Time_Capsule": { "message": "Bookmark image as a Time Capsule" },
+  "Bookmark_page_as_a_Time_Capsule": { "message": "Bookmark page as a Time Capsule" },
+  "opt_out_from_regrouping_this_capsule": { "message": "Opt-out from regrouping this capsule with others, when the amont of capsules to open is above the maximum allowed (\"overflow\")" },
   "del_key": { "message": "Del" }
 }
