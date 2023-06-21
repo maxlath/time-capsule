@@ -4,7 +4,7 @@ import { isCapsulableUrl, range } from '../lib/utils.js'
 import { allOptions } from '../popup/options.js'
 import { saveCapsule } from '../lib/actions.js'
 import { frequencyPattern } from '../popup/periodical_capsule_editor_helpers.js'
-import { flashSuccessIcon } from '../lib/icon.js'
+import { flashFailureIcon, flashSuccessIcon } from '../lib/icon.js'
 
 const menuIdBase = 'time-capsule-menu'
 // TODO: make configurable in settings
@@ -59,6 +59,7 @@ browser.menus.onClicked.addListener(async info => {
   if (!frequencyPattern.test(frequency)) return
   if (!isCapsulableUrl(url)) {
     console.log('url can not be used for a Time Capsule', url)
+    await flashFailureIcon()
     return
   }
   const bookmark = await getCapsuleBookmarkByUrl(url)
