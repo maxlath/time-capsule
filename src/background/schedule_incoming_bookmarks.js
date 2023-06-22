@@ -10,7 +10,7 @@ import debounce from 'lodash.debounce'
 let nextDayTimeout, nextNonBlockedTimeTimeout
 
 const scheduleTodaysBookmarks = async () => {
-  cancelAllScheduledEvents()
+  await cancelAllScheduledEvents()
 
   // In any case, call this function again tomorrow at 00:00:01
   nextDayTimeout = setTimeout(scheduleTodaysBookmarks, timeUntilLocalDayEndTime() + 1000)
@@ -46,10 +46,10 @@ const scheduleTodaysBookmarks = async () => {
   }
 }
 
-function cancelAllScheduledEvents () {
+async function cancelAllScheduledEvents () {
   if (nextDayTimeout) clearTimeout(nextDayTimeout)
   if (nextNonBlockedTimeTimeout) clearTimeout(nextNonBlockedTimeTimeout)
-  cancelAllPendingBookmarks()
+  await cancelAllPendingBookmarks()
 }
 
 const rescheduleFromEvent = async (id, bookmark) => {

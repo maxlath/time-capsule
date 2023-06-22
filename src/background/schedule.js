@@ -1,10 +1,8 @@
-import { isInFolder, nextVisitIsToday } from '../lib/bookmarks.js'
+import { getBookmarkById, isInFolder, nextVisitIsToday } from '../lib/bookmarks.js'
 import { getSettingValues } from '../lib/settings_store.js'
 import { toIso } from '../lib/times.js'
 import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
 import { openSingleBookmarkOrOverflowMenu } from './open_bookmark.js'
-
-let timeoutIds = {}
 
 export async function schedule (bookmark) {
   const blockedWeekTimes = await getBlockedWeekTimes()
@@ -28,35 +26,36 @@ export async function schedule (bookmark) {
     await openSingleBookmarkOrOverflowMenu(bookmark)
   } else {
     console.log('in the coming 24 hours:', time, bookmark)
-    const { id: bookmarkId } = bookmark
-    const openAndClean = async () => {
-      await openSingleBookmarkOrOverflowMenu(bookmark)
-      delete timeoutIds[bookmarkId]
-    }
     console.log('scheduling', { bookmark, time, now: toIso(now), then: toIso(now + time) })
-    timeoutIds[bookmarkId] = setTimeout(openAndClean, time)
+    await browser.alarms.create(getAlarmName('open', bookmark.id), { when: nextVisitTime })
   }
 }
+
+const getAlarmName = (action, bookmarkId) => `${action}:${bookmarkId}`
+
+browser.alarms.onAlarm.addListener(async ({ name }) => {
+  const [ action, bookmarkId ] = name.split(':')
+  if (action === 'open') {
+    const bookmark = await getBookmarkById(bookmarkId)
+    await openSingleBookmarkOrOverflowMenu(bookmark)
+  }
+})
 
 export async function reschedule (bookmark) {
-  cancelPending(bookmark.id)
+  await cancelPending(bookmark.id)
   if (await isInFolder(bookmark) && nextVisitIsToday(bookmark)) {
-    schedule(bookmark)
+    await schedule(bookmark)
   }
 }
 
-export function cancelPending (bookmarkId) {
-  if (!timeoutIds[bookmarkId]) return
-  console.log('cancelling', bookmarkId, timeoutIds[bookmarkId])
-  clearTimeout(timeoutIds[bookmarkId])
+export async function cancelPending (bookmarkId) {
+  console.log('cancelling', bookmarkId)
+  await browser.alarms.clear(getAlarmName('open', bookmarkId))
 }
 
-export function cancelAllPendingBookmarks () {
-  console.log('cancelling all pending bookmarks', timeoutIds)
-  for (const timeout of Object.values(timeoutIds)) {
-    clearTimeout(timeout)
-  }
-  timeoutIds = {}
+export async function cancelAllPendingBookmarks () {
+  console.log('cancelling all pending bookmarks', await browser.alarms.getAll())
+  await browser.alarms.clearAll()
 }
 
 export async function getBlockedWeekTimes () {

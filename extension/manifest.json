@@ -9,6 +9,7 @@
     "92": "icons/time-capsule-92.png"
   },
   "permissions": [
+    "alarms",
     "bookmarks",
     "menus",
     "storage",
