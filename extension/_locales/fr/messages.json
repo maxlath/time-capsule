@@ -32,7 +32,7 @@
   "Title": { "message": "Titre" },
   "Frequency": { "message": "Fréquence" },
   "Repeat": { "message": "Répéter" },
-  "Next_Visit": { "message": "Prochaine visite" },
+  "Next_visit": { "message": "Prochaine visite" },
   "Reference_Date": { "message": "Date de référence" },
   "Date_Created": { "message": "date créée" },
   "Added": { "message": "Ajoutée" },

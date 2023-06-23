@@ -2,7 +2,7 @@ export const columns = [
   { label: 'Title', field: 'title' },
   { label: 'Frequency', field: 'frequency' },
   { label: 'Repeat', field: 'repeat' },
-  { label: 'Next_Visit', field: 'nextVisit' },
+  { label: 'Next_visit', field: 'nextVisit' },
   { label: 'Actions' },
 ]
 
