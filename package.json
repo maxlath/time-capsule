@@ -15,7 +15,7 @@
     "lint:src": "eslint src",
     "lint:src:fix": "eslint src --fix",
     "lint:extension": "web-ext lint",
-    "sign": "echo 'For private extension only' && web-ext sign -s extension -a web-ext-artifacts",
+    "sign": "echo 'For private extension only' && npm run lint:extension && web-ext sign -s extension -a web-ext-artifacts",
     "update-toc": "npx doctoc README.md",
     "postversion": "./scripts/postversion",
     "get-repository-zip": "./scripts/get_repository_zip"
