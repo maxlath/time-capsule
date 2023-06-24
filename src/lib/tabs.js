@@ -39,8 +39,12 @@ export async function getActiveTabBookmarkData () {
 
   const { bookmarkId, possibleUpdate } = possiblyOutdatedBookmarkData[activeTabId] || {}
   if (bookmarkId) {
-    res.bookmark = await getBookmarkById(bookmarkId)
-    res.possibleUpdate = possibleUpdate
+    try {
+      res.bookmark = await getBookmarkById(bookmarkId)
+    } catch (err) {
+      if (!err.message.includes('not found')) throw err
+    }
+    if (res.bookmark) res.possibleUpdate = possibleUpdate
   }
   return res
 }
