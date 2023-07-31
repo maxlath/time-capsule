@@ -2,7 +2,14 @@
 
 set -eu
 
-version=$(cat package.json | jq .version -r)
+# Expects extension/manifest.json version to have been incremented, by running `npm version <level>`,
+# which would have triggered scripts/postversion
+version=$(jq '.version' -r < extension/manifest.json)
+
+npm run lint
+npm run build
+git push origin main
+git push --tags
 
 cd extension
 # Remove previous build if any
@@ -30,3 +37,13 @@ mv ../manifest.json.bak ./manifest.json
 mv ../popup.html.bak ./popup/popup.html
 mv ../settings.html.bak ./settings/settings.html
 rm ./browser-polyfill.min.js
+
+cd ..
+
+sleep 2
+
+wget "https://github.com/maxlath/time-capsule/archive/refs/tags/v${version}.zip" --output-document "./github-artifacts/v${version}.zip"
+
+echo "Now you would need to upload packages/time-capsule.firefox.$version.zip
+to https://addons.mozilla.org/fr/developers/addon/time-capsule/versions/submit/"
+echo "It will also ask you for the source code: you can then upload ./github-artifacts/v${version}.zip"

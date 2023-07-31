@@ -9,7 +9,6 @@
     "test": "mocha ./tests",
     "build": "rollup -c",
     "build-icons": "./scripts/build-icons",
-    "package": "npm run build && ./scripts/build_package",
     "watch": "rollup -c -w",
     "lint": "npm run lint:src && npm run lint:extension",
     "lint:src": "eslint src",
@@ -18,6 +17,7 @@
     "sign": "echo 'For private extension only' && npm run lint:extension && web-ext sign -s extension -a web-ext-artifacts",
     "update-toc": "npx doctoc README.md",
     "postversion": "./scripts/postversion",
+    "prepare-publication": "./scripts/prepare_publication",
     "get-repository-zip": "./scripts/get_repository_zip"
   },
   "author": "maxlath",
