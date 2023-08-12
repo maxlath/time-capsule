@@ -46,7 +46,7 @@
   "Updated": { "message": "Mis à jour" },
   "Archived": { "message": "Archivé" },
   "Removed": { "message": "Supprimé" },
-  "Skipped": { "message": "Ignoré" },
+  "Skipped (already opened)": { "message": "Ignoré (déjà ouvert)" },
   "Hotkey": { "message": "Raccourci" },
   "periodical": { "message": "Périodique" },
   "one_time": { "message": "Une fois" },

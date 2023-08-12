@@ -47,7 +47,7 @@
   "Updated": { "message": "Updated" },
   "Archived": { "message": "Archived" },
   "Removed": { "message": "Removed" },
-  "Skipped": { "message": "Skipped" },
+  "Skipped (already opened)": { "message": "Skipped (already opened)" },
   "Hotkey": { "message": "Hotkey" },
   "periodical": { "message": "Periodical" },
   "one_time": { "message": "One Time" },
