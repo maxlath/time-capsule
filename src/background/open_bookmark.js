@@ -1,7 +1,7 @@
 import { getActiveTab, urlIsAlreadyOpened } from '../lib/tabs.js'
-import { getBookmarkById, removeOrArchiveBookmark, updateCapsuleData } from '../lib/bookmarks.js'
+import { getBookmarkById, removeOrArchiveBookmark, updateCapsuleData, isRegroupable } from '../lib/bookmarks.js'
 import { getSettingValue, getSettingValues } from '../lib/settings_store.js'
-import { forceArray, isCapsulableUrl, isRegroupable } from '../lib/utils.js'
+import { forceArray, isCapsulableUrl } from '../lib/utils.js'
 import { createLogRecord } from '../lib/logs.js'
 import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
 
@@ -130,8 +130,14 @@ async function updateOverflowMenu (ids) {
 
 let previousOverflowMenuPromise
 export async function openSingleBookmarkOrOverflowMenu (bookmark) {
-  const maxCapsules = await getSettingValue('settings:maxCapsules')
-  if (maxCapsules === 0 && isRegroupable(bookmark)) {
+  const {
+    'settings:maxCapsules': maxCapsules,
+    'settings:keepExpiredCapsulesAsNormalBookmarks': keepExpiredCapsulesAsNormalBookmarks,
+  } = await getSettingValues([
+    'settings:maxCapsules',
+    'settings:keepExpiredCapsulesAsNormalBookmarks',
+  ])
+  if (maxCapsules === 0 && isRegroupable({ bookmark, keepExpiredCapsulesAsNormalBookmarks })) {
     // Prevent opening several overflow menus at once
     await previousOverflowMenuPromise
     previousOverflowMenuPromise = await openOverflowMenu(bookmark)

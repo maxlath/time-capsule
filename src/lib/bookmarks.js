@@ -221,3 +221,12 @@ async function getBookmarkByIdOrReturnEmpty (id) {
 export const nextVisitIsToday = bookmark => bookmark?.nextVisit < getLocalDayEndTime()
 
 export const nextVisitIsInThePast = bookmark => timeIsInThePast(bookmark.nextVisit)
+
+export function isRegroupable ({ bookmark, keepExpiredCapsulesAsNormalBookmarks }) {
+  // Prevent opening a one-time bookmark in the overflow menu if the capsules are not archived as bookmarks
+  // as the overflow menu would then not be able to access the bookmark data
+  if (!keepExpiredCapsulesAsNormalBookmarks && bookmark.repeat === 0) {
+    return false
+  }
+  return bookmark.noRegrouping !== true
+}

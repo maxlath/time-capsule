@@ -1,8 +1,8 @@
-import { getTodaysBookmarksData, nextVisitIsInThePast, getBookmarkById } from '../lib/bookmarks.js'
+import { getTodaysBookmarksData, nextVisitIsInThePast, getBookmarkById, isRegroupable } from '../lib/bookmarks.js'
 import { schedule, cancelPending, reschedule, getBlockedWeekTimes, cancelAllPendingBookmarks } from './schedule.js'
 import { timeUntilLocalDayEndTime, toIso } from '../lib/times.js'
-import { isRegroupable, partition } from '../lib/utils.js'
-import { getSettingValue, getSettingStore } from '../lib/settings_store.js'
+import { partition } from '../lib/utils.js'
+import { getSettingStore, getSettingValues } from '../lib/settings_store.js'
 import { openOverflowMenu } from './open_bookmark.js'
 import { getNextNonBlockedTime } from '../settings/week_time_picker_helpers.js'
 import debounce from 'lodash.debounce'
@@ -33,9 +33,15 @@ const scheduleTodaysBookmarks = async () => {
   }
 
   const todaysBookmarks = await getTodaysBookmarksData()
-  const maxCapsules = await getSettingValue('settings:maxCapsules')
+  const {
+    'settings:maxCapsules': maxCapsules,
+    'settings:keepExpiredCapsulesAsNormalBookmarks': keepExpiredCapsulesAsNormalBookmarks,
+  } = await getSettingValues([
+    'settings:maxCapsules',
+    'settings:keepExpiredCapsulesAsNormalBookmarks',
+  ])
   const [ bookmarksToOpenImmediately, bookmarksForLaterToday ] = partition(todaysBookmarks, nextVisitIsInThePast)
-  const [ regroupableBookmarks, nonRegroupableBookmarks ] = partition(bookmarksToOpenImmediately, isRegroupable)
+  const [ regroupableBookmarks, nonRegroupableBookmarks ] = partition(bookmarksToOpenImmediately, bookmark => isRegroupable({ bookmark, keepExpiredCapsulesAsNormalBookmarks }))
   console.log("today's program", { bookmarksToOpenImmediately, bookmarksForLaterToday })
   if (regroupableBookmarks.length > maxCapsules) {
     bookmarksForLaterToday.forEach(schedule)
