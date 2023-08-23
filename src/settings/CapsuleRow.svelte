@@ -32,20 +32,24 @@
     }
   }
 
-  let repeat, nextVisit
+  let repeat, nextVisit, nextVisitPassed
   $: {
+    nextVisitPassed = bookmark.nextVisit && bookmark.nextVisit < Date.now()
+    if (nextVisitPassed) {
+      nextVisit = i18n('None')
+    } else {
+      nextVisit = new Date(bookmark.nextVisit).toLocaleString()
+    }
+  }
+  $: {
+    if (nextVisitPassed) repeat = null
     if (bookmark.repeat != null) repeat = bookmark.repeat
     else if (bookmark.nextVisit) repeat = '∞'
     else repeat = null
-    if (bookmark.nextVisit && bookmark.nextVisit > Date.now()) {
-      nextVisit = new Date(bookmark.nextVisit).toLocaleString()
-    } else {
-      nextVisit = i18n('None')
-    }
   }
 </script>
 
-<tr class:deleted={bookmark.deleted} class:last-repeat={repeat == null || repeat === 0}>
+<tr class:deleted={bookmark.deleted} class:last-repeat={repeat == null || repeat === 0} class:removed={nextVisitPassed}>
   <td class="title">
     <a href={bookmark.url} title={bookmark.cleanedTitle}>
       {bookmark.cleanedTitle || bookmark.title || bookmark.url}
@@ -112,6 +116,9 @@
     background-color: var(--grey-eee);
   }
   tr.last-repeat{
+    background-color: var(--warning-color);
+  }
+  tr.removed{
     background-color: var(--danger-color);
   }
   tr.last-repeat .next-visit{
