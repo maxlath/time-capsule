@@ -93,5 +93,6 @@
       "maxCapsules": { "content": "$2" }
     }
   },
-  "del_key": { "message": "Suppr" }
+  "del_key": { "message": "Suppr" },
+  "None": { "message": "Aucune" }
 }

@@ -205,8 +205,3 @@ async function getBookmarkByIdOrReturnEmpty (id) {
 export const nextVisitIsToday = bookmark => bookmark?.nextVisit < getLocalDayEndTime()
 
 export const nextVisitIsInThePast = bookmark => timeIsInThePast(bookmark.nextVisit)
-
-export async function archiveById (id) {
-  await waitForFolders
-  return browser.bookmarks.move(id, { parentId: archiveFolderId })
-}

@@ -31,18 +31,25 @@
       bookmark.deleted = true
     }
   }
+
+  let repeat
+  $: {
+    if (bookmark.repeat) repeat = bookmark.repeat
+    else if (bookmark.nextVisit) repeat = '∞'
+    else repeat = null
+  }
 </script>
 
-<tr class:deleted={bookmark.deleted}>
+<tr class:deleted={bookmark.deleted} class:last-repeat={repeat == null}>
   <td class="title">
     <a href={bookmark.url} title={bookmark.cleanedTitle}>
-      {bookmark.cleanedTitle}
+      {bookmark.cleanedTitle || bookmark.title || bookmark.url}
     </a>
     <span class="hostname">{new URL(bookmark.url).hostname}</span>
   </td>
   <td class="frequency" title={bookmark.frequencyLabel}>{bookmark.frequency || ''}</td>
-  <td class="repeat">{bookmark.repeat != null ? bookmark.repeat : '∞'}</td>
-  <td class="nextVisit">{new Date(bookmark.nextVisit).toLocaleString()}</td>
+  <td class="repeat">{repeat != null ? repeat : ''}</td>
+  <td class="next-visit">{bookmark.nextVisit ? new Date(bookmark.nextVisit).toLocaleString() : i18n('None')}</td>
   <td class="actions">
     {#if bookmark.deleted}
       <button class="undelete" on:click={undeleteBookmark}>{i18n('Undo')}</button>
@@ -78,7 +85,7 @@
     color: var(--grey-444);
     font-size: 0.8rem;
   }
-  .nextVisit{
+  .next-visit{
     padding: 0 0.5em;
   }
   button{
@@ -96,6 +103,12 @@
   tr.deleted{
     opacity: 0.8;
     background-color: var(--grey-eee);
+  }
+  tr.last-repeat{
+    background-color: var(--danger-color);
+  }
+  tr.last-repeat .next-visit{
+    text-align: start;
   }
   td{
     padding: 0.5em;

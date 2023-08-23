@@ -24,6 +24,7 @@
   --warning-color: #ffd402aa;
   --body-bg-color: #f0f0f0;
   --active-settings-tab: #592acb;
+  --one-time-capsule-yellow: #ffff00;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -48,6 +49,7 @@
     --body-bg-color: #090e12;
     --active-settings-tab: #924bff;
     --warning-color: #ca9f00aa;
+    --danger-color: #ff2e2e;
     --success-color: #1ca700;
   }
   a{

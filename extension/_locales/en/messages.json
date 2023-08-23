@@ -106,5 +106,6 @@
   "Bookmark_image_as_a_Time_Capsule": { "message": "Bookmark image as a Time Capsule" },
   "Bookmark_page_as_a_Time_Capsule": { "message": "Bookmark page as a Time Capsule" },
   "opt_out_from_regrouping_this_capsule": { "message": "Opt-out from regrouping this capsule with others, when the amont of capsules to open is above the maximum allowed (\"overflow\")" },
-  "del_key": { "message": "Del" }
+  "del_key": { "message": "Del" },
+  "None": { "message": "None" }
 }
