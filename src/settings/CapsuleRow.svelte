@@ -32,15 +32,20 @@
     }
   }
 
-  let repeat
+  let repeat, nextVisit
   $: {
-    if (bookmark.repeat) repeat = bookmark.repeat
+    if (bookmark.repeat != null) repeat = bookmark.repeat
     else if (bookmark.nextVisit) repeat = '∞'
     else repeat = null
+    if (bookmark.nextVisit && bookmark.nextVisit > Date.now()) {
+      nextVisit = new Date(bookmark.nextVisit).toLocaleString()
+    } else {
+      nextVisit = i18n('None')
+    }
   }
 </script>
 
-<tr class:deleted={bookmark.deleted} class:last-repeat={repeat == null}>
+<tr class:deleted={bookmark.deleted} class:last-repeat={repeat == null || repeat === 0}>
   <td class="title">
     <a href={bookmark.url} title={bookmark.cleanedTitle}>
       {bookmark.cleanedTitle || bookmark.title || bookmark.url}
@@ -49,13 +54,15 @@
   </td>
   <td class="frequency" title={bookmark.frequencyLabel}>{bookmark.frequency || ''}</td>
   <td class="repeat">{repeat != null ? repeat : ''}</td>
-  <td class="next-visit">{bookmark.nextVisit ? new Date(bookmark.nextVisit).toLocaleString() : i18n('None')}</td>
+  <td class="next-visit">{nextVisit}</td>
   <td class="actions">
     {#if bookmark.deleted}
       <button class="undelete" on:click={undeleteBookmark}>{i18n('Undo')}</button>
     {:else}
       <button class="edit" on:click={edit}>{i18n('Edit')}</button>
-      <button class="delete" on:click={deleteBookmark}>{i18n('Delete')}</button>
+      {#if !bookmark.removed}
+        <button class="delete" on:click={deleteBookmark}>{i18n('Delete')}</button>
+      {/if}
     {/if}
   </td>
 </tr>

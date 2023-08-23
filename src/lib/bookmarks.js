@@ -52,8 +52,23 @@ export async function removeOrArchiveBookmark (bookmark) {
   }
 }
 
+let deletedBookmarksById
+function saveDeletedBookmarksById () {
+  if (deletedBookmarksById) {
+    localStorage.setItem('deletedBookmarksById', JSON.stringify(deletedBookmarksById))
+  }
+}
+deletedBookmarksById = JSON.parse(localStorage.getItem('deletedBookmarksById') || '{}')
+if (deletedBookmarksById.created && deletedBookmarksById.created < (Date.now() - 24 * 60 * 60 * 1000)) {
+  deletedBookmarksById = {}
+  saveDeletedBookmarksById()
+}
+
 export async function removeBookmark (bookmark) {
   await browser.bookmarks.remove(bookmark.id)
+  bookmark.removed = true
+  deletedBookmarksById[bookmark.id] = bookmark
+  saveDeletedBookmarksById()
   await createLogRecord({ event: 'removed-bookmark', bookmark })
 }
 
@@ -182,7 +197,7 @@ export async function getBookmarksByIds (ids) {
 
 export async function getBookmarkById (id) {
   const [ bookmark ] = await getBookmarksByIds(id)
-  return bookmark
+  return bookmark || deletedBookmarksById[id]
 }
 
 /** A function to be used when the bookmarks might not exist anymore */
@@ -193,10 +208,13 @@ export async function getStillExistingBookmarks (ids) {
 
 async function getBookmarkByIdOrReturnEmpty (id) {
   try {
-    const [ bookmark ] = await browser.bookmarks.get(id)
-    return bookmark
+    return await getBookmarkById(id)
   } catch (err) {
-    console.error(id, err)
+    if (err.message === 'Bookmark not found' && deletedBookmarksById[id]) {
+      return deletedBookmarksById[id]
+    } else {
+      console.error(id, err)
+    }
   }
 }
 
