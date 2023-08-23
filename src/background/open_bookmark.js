@@ -1,5 +1,5 @@
 import { getActiveTab, urlIsAlreadyOpened } from '../lib/tabs.js'
-import { getById, removeOrArchiveBookmark, updateCapsuleData } from '../lib/bookmarks.js'
+import { getBookmarkById, removeOrArchiveBookmark, updateCapsuleData } from '../lib/bookmarks.js'
 import { getSettingValue, getSettingValues } from '../lib/settings_store.js'
 import { forceArray, isCapsulableUrl, isRegroupable } from '../lib/utils.js'
 import { createLogRecord } from '../lib/logs.js'
@@ -28,7 +28,7 @@ async function processBookmark ({ bookmark, open }) {
     if (!nextNonBlockedTime) return
   }
 
-  const bookmarkData = await getById(bookmark.id)
+  const bookmarkData = await getBookmarkById(bookmark.id)
   if (!bookmarkData) {
     console.error('bookmark data not found', bookmark)
     return

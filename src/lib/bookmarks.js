@@ -1,11 +1,9 @@
-import { compact, first, isCapsulableUrl, partition } from './utils.js'
+import { compact, isCapsulableUrl, partition } from './utils.js'
 import { initBookmarksFolders } from './bookmarks_init.js'
 import { formatBookmarkTitle, serializeBookmark } from './bookmark_title.js'
 import { getSettingValue } from './settings_store.js'
 import { getLocalDayEndTime, timeIsInThePast } from './times.js'
 import { createLogRecord } from './logs.js'
-
-export const getById = id => browser.bookmarks.get(id).then(first)
 
 export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
