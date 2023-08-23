@@ -9,7 +9,7 @@
 
   const dispatch = createEventDispatcher()
 
-  let nextVisit
+  let nextVisit, newBookmark
 
   if (bookmark) {
     nextVisit = getDateTimeLocalInputValue(bookmark.nextVisit)
@@ -21,13 +21,14 @@
     try {
       if (!canValidate) return
       dispatch('celebrate')
-      await saveCapsule({
+      newBookmark = await saveCapsule({
         url,
         bookmark,
         nextVisit,
         frequency: null,
         repeat: 0,
       })
+      bookmark = bookmark ? Object.assign(bookmark, newBookmark) : newBookmark
       dispatch('done')
     } catch (err) {
       flash = err

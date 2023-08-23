@@ -18,7 +18,7 @@
   let frequencyNum = 1
   let frequencyUnit = 'M'
   let noRegrouping = false
-  let repeat, nextVisit, title, autoNextVisit
+  let repeat, nextVisit, title, autoNextVisit, newBookmark
 
   if (bookmark) {
     nextVisit = getDateTimeLocalInputValue(bookmark.nextVisit)
@@ -48,7 +48,7 @@
     try {
       if (!canValidate) return
       dispatch('celebrate')
-      await saveCapsule({
+      newBookmark = await saveCapsule({
         url,
         title,
         bookmark,
@@ -57,6 +57,7 @@
         repeat,
         noRegrouping,
       })
+      bookmark = bookmark ? Object.assign(bookmark, newBookmark) : newBookmark
       dispatch('done')
     } catch (err) {
       flash = err
