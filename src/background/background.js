@@ -13,4 +13,7 @@ browser.commands.onCommand.addListener(command => {
   }
 })
 
-initContextMenus()
+// browser.menus is missing in Chromium browsers
+if (browser.menus) {
+  initContextMenus()
+}

@@ -51,7 +51,7 @@ export function initContextMenus () {
   initContextMenu({ context: 'page', title: i18n('Bookmark_page_as_a_Time_Capsule') })
 }
 
-browser.menus.onClicked.addListener(async info => {
+browser.menus?.onClicked.addListener(async info => {
   const { parentMenuItemId, menuItemId, linkText: title } = info
   const url = info.linkUrl || info.srcUrl || info.pageUrl
   if (!parentMenuItemId.startsWith(menuIdBase)) return
