@@ -29,7 +29,7 @@ The best person to send you links matching your interests is a time traveling ve
 * [Firefox](https://addons.mozilla.org/en-US/firefox/addon/time-capsule/)
 * [Chrome](https://chrome.google.com/webstore/detail/time-capsule/mmpajmbpehdbemfblpmkfmmdampljkdi)
 
-If you use a different browser that implements WebExtension, that shouldn't be hard to make it work for you too: make a request in the [issues](http://github.com/maxlath/time-capsule/issues) or on [twitter](https://twitter.com/maxlath) to let me know, and I will see if that's possible.
+If you use a different browser that implements WebExtension, that shouldn't be hard to make it work for you too: make a request in the [issues](http://github.com/maxlath/time-capsule/issues) or on [mastodon](https://mastodon.social/@maxlath) to let me know, and I will see if that's possible.
 
 ## Context
 
