@@ -50,7 +50,7 @@ export const events = {
     label: i18n('Opened'),
   },
   'skipped-already-opened-bookmark': {
-    label: i18n('Skipped (already opened)'),
+    label: i18n('Skipped_already_opened)'),
   },
   'opened-overflow-menu': {
     label: i18n('Overflow'),
