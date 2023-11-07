@@ -89,23 +89,39 @@ browser.runtime.onMessage.addListener(({ event, tabId }) => {
 
 let overflowTab, overflowTabPromise
 
+const overflowTabTitle = 'Time Capsule - Overflow'
+const overflowTabUrl = `${location.origin}/overflow/overflow.html`
+
 export async function openOverflowMenu (bookmarks) {
   bookmarks = forceArray(bookmarks)
   await Promise.all(bookmarks.map(processBookmarkWithoutOpening))
   const ids = bookmarks.map(bookmark => bookmark.id)
-  overflowTab = overflowTab || await overflowTabPromise
+  // This will fail now that we use background script "persistent": false
+  if (!overflowTab) {
+    if (overflowTabPromise) {
+      overflowTab = await overflowTabPromise
+    } else {
+      overflowTab = await findOverflowTab()
+    }
+  }
   if (overflowTab?.id) {
     // The tab object returned by browser.tabs.create might have the wrong url
     // Ex: "about:blank" in Firefox, thus the need to refresh its data
     overflowTabPromise = browser.tabs.get(overflowTab.id)
     overflowTab = await overflowTabPromise
   }
-  if (overflowTab?.url.startsWith(`${location.origin}/overflow/overflow.html`)) {
+  if (overflowTab?.url.startsWith(overflowTabUrl)) {
     await updateOverflowMenu(ids)
   } else {
     await createOverflowMenu(ids)
   }
   await createLogRecord({ event: 'opened-overflow-menu', bookmarks })
+}
+
+async function findOverflowTab () {
+  const tabs = await browser.tabs.query({ title: overflowTabTitle })
+  const overflowTab = tabs.filter(({ url }) => url.startsWith(overflowTabUrl))[0]
+  return overflowTab
 }
 
 async function createOverflowMenu (ids) {
