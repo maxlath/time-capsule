@@ -90,7 +90,8 @@ browser.runtime.onMessage.addListener(({ event, tabId }) => {
 let overflowTab, overflowTabPromise
 
 const overflowTabTitle = 'Time Capsule - Overflow'
-const overflowTabUrl = `${location.origin}/overflow/overflow.html`
+const overflowTabPathname = '/overflow/overflow.html'
+const overflowTabUrl = `${location.origin}${overflowTabPathname}`
 
 export async function openOverflowMenu (bookmarks) {
   bookmarks = forceArray(bookmarks)
@@ -125,7 +126,7 @@ async function findOverflowTab () {
 }
 
 async function createOverflowMenu (ids) {
-  const url = `/overflow/overflow.html?ids=${ids.join('|')}`
+  const url = `${overflowTabPathname}?ids=${ids.join('|')}`
   overflowTabPromise = browser.tabs.create({
     url,
     active: false
@@ -137,7 +138,7 @@ async function updateOverflowMenu (ids) {
   const querystring = overflowTab.url.split('?')[1]
   const previousIds = new URLSearchParams(querystring).get('ids')?.split('|') || []
   const newIds = ids.filter(id => !previousIds.includes(id))
-  const url = `/overflow/overflow.html?ids=${previousIds.concat(newIds).join('|')}`
+  const url = `${overflowTabPathname}?ids=${previousIds.concat(newIds).join('|')}`
   await browser.tabs.update(overflowTab.id, {
     url,
     active: false
