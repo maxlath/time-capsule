@@ -71,23 +71,23 @@
           <ul class="slot-days">
             {#each days as day}
               <li class="day-slot">
-              <button
-                class:selected={$blockedWeekTimes[day]?.[i]}
-                class:highlighted={highlighted[day]?.[i]}
-                title={`${i18n(day)} ${slotIndexAsHourRange(i)}`}
-                data-day={day}
-                data-slot={i}
-                on:click={() => toggleSelection({ day, slot: i })}
-                on:click={toggleSelection}
-                on:keydown={e => toggleSelectionOnKeydown({ e, day, slot: i })}
-                on:mousedown={onMousedown}
-                on:mousemove={onMousemove}
-                on:mouseup={onMouseup}
-              >
-                {#if $blockedWeekTimes[day]?.[i]}
-                  <BlockIcon />
-                {/if}
-              </button>
+                <button
+                  class:selected={$blockedWeekTimes[day]?.[i]}
+                  class:highlighted={highlighted[day]?.[i]}
+                  title={`${i18n(day)} ${slotIndexAsHourRange(i)}`}
+                  data-day={day}
+                  data-slot={i}
+                  on:click={() => toggleSelection({ day, slot: i })}
+                  on:click={toggleSelection}
+                  on:keydown={e => toggleSelectionOnKeydown({ e, day, slot: i })}
+                  on:mousedown={onMousedown}
+                  on:mousemove={onMousemove}
+                  on:mouseup={onMouseup}
+                >
+                  {#if $blockedWeekTimes[day]?.[i]}
+                    <BlockIcon />
+                  {/if}
+                </button>
               </li>
             {/each}
           </ul>
