@@ -165,6 +165,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    fill: white;
   }
   .day-slot button :global(svg){
     max-height: 80%;
