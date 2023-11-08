@@ -113,7 +113,7 @@
   }
 
   /* Large screens */
-  @media screen and (min-width: 801px) {
+  @media screen and (min-width: 1001px) {
     .title{
       display: flex;
       flex-direction: row;
@@ -133,7 +133,7 @@
     }
   }
   /* Small screens */
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1000px) {
     tr{
       display: block;
       margin: 1em;
