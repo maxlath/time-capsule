@@ -130,6 +130,8 @@ async function createBookmark ({ url, title }) {
     title,
   })
   await createLogRecord({ event: 'created-bookmark', bookmark })
+  bookmark.deleted = false
+  bookmark.removed = false
   return bookmark
 }
 

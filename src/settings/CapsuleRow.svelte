@@ -25,7 +25,7 @@
     bookmark.deleted = false
     try {
       const newBookmark = await recover(bookmark)
-      Object.assign(bookmark, newBookmark)
+      bookmark = Object.assign(bookmark, newBookmark)
     } catch (err) {
       console.error(err)
       bookmark.deleted = true
