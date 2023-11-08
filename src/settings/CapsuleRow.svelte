@@ -131,9 +131,6 @@
     .next-visit{
       padding: 0 0.5em;
     }
-    tr.last-repeat .next-visit{
-      text-align: start;
-    }
   }
   /* Small screens */
   @media screen and (max-width: 800px) {
