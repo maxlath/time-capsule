@@ -158,4 +158,14 @@
   tr:nth-child(even) {
     background: var(--grey-eee);
   }
+
+  /* Small screens */
+  @media screen and (max-width: 800px){
+    table{
+      table-layout: fixed;
+    }
+    thead{
+      display: none;
+    }
+  }
 </style>

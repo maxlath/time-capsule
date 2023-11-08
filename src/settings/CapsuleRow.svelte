@@ -50,16 +50,18 @@
 </script>
 
 <tr class:deleted={bookmark.deleted} class:last-repeat={repeat == null || repeat === 0} class:removed={nextVisitPassed}>
-  <td class="title">
+  <td class="title" data-label={i18n('Title')}>
     <a href={bookmark.url} title={bookmark.cleanedTitle}>
       {bookmark.cleanedTitle || bookmark.title || bookmark.url}
     </a>
     <span class="hostname">{new URL(bookmark.url).hostname}</span>
   </td>
-  <td class="frequency" title={bookmark.frequencyLabel}>{bookmark.frequency || ''}</td>
-  <td class="repeat">{repeat != null ? repeat : ''}</td>
-  <td class="next-visit">{nextVisit}</td>
-  <td class="actions">
+  <td class="frequency" title={bookmark.frequencyLabel} data-label={i18n('Frequency')}>
+    {bookmark.frequency || ''}
+  </td>
+  <td class="repeat" data-label={i18n('Repeat')}>{repeat != null ? repeat : ''}</td>
+  <td class="next-visit" data-label={i18n('Next_visit')}>{nextVisit}</td>
+  <td class="actions" data-label={i18n('Actions')}>
     {#if bookmark.deleted}
       <button class="undelete" on:click={undeleteBookmark}>{i18n('Undo')}</button>
     {:else}
@@ -77,27 +79,10 @@
     padding: 0.2em;
     text-align: right;
   }
-  .title{
-    text-align: left;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: flex-start;
-    max-width: 45em;
-  }
-  .title a{
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
   .hostname{
-    margin-left: 0.5em;
+    margin-inline-start: 0.5em;
     color: var(--grey-444);
     font-size: 0.8rem;
-  }
-  .next-visit{
-    padding: 0 0.5em;
   }
   button{
     background-color: transparent;
@@ -121,10 +106,57 @@
   tr.removed{
     background-color: var(--danger-color);
   }
-  tr.last-repeat .next-visit{
-    text-align: start;
-  }
   td{
     padding: 0.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Large screens */
+  @media screen and (min-width: 801px) {
+    .title{
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      text-align: start;
+      justify-content: flex-start;
+      max-width: 45em;
+    }
+    .title a{
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .next-visit{
+      padding: 0 0.5em;
+    }
+    tr.last-repeat .next-visit{
+      text-align: start;
+    }
+  }
+  /* Small screens */
+  @media screen and (max-width: 800px) {
+    tr{
+      display: block;
+      margin: 1em;
+      border: 1px solid var(--grey-ccc);
+      border-radius: 3px;
+      background-color: var(--grey-eee);
+    }
+    td{
+      border-bottom: 1px solid var(--grey-ccc);
+      display: block;
+      text-align: end;
+    }
+    td::before{
+      /* Inspired by https://codepen.io/AllThingsSmitty/pen/MyqmdM */
+      content: attr(data-label);
+      float: left;
+      color: var(--grey-444);
+    }
+    .title{
+      justify-content: flex-end;
+    }
   }
 </style>
