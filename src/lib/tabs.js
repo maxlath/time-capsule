@@ -16,9 +16,9 @@ export const getActiveTabId = () => getActiveTab().then(tab => tab.id)
 
 export const getActiveTabUrl = () => getActiveTab().then(tab => tab.url)
 
-export async function urlIsAlreadyOpened (url) {
+export async function getTabByUrl (url) {
   const tabs = await browser.tabs.query({ url })
-  return tabs.length > 0
+  return tabs[0]
 }
 
 export async function getActiveTabBookmarkData () {

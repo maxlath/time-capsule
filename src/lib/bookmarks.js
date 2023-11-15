@@ -7,7 +7,7 @@ import { createLogRecord } from './logs.js'
 
 export const search = browser.bookmarks.search.bind(browser.bookmarks)
 
-export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit, newUrl, newTitle, noRegrouping }) {
+export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, nextVisit, newUrl, newTitle, noRegrouping, openAsActiveTab }) {
   // NB: bookmarkData can be an archived bookmark, which will miss title metadata
   const { id, url, title, frequency, referenceDate } = bookmarkData
   const oldFrequency = frequency
@@ -21,6 +21,7 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
     }
   }
   if (noRegrouping == null) noRegrouping = bookmarkData.noRegrouping
+  if (openAsActiveTab == null) openAsActiveTab = bookmarkData.openAsActiveTab
   const updatedTitle = formatBookmarkTitle({
     title: newTitle || title,
     frequency: newFrequency !== undefined ? newFrequency : frequency,
@@ -29,6 +30,7 @@ export async function updateCapsuleData ({ bookmarkData, newFrequency, repeat, n
     repeat,
     updating: true,
     noRegrouping,
+    openAsActiveTab,
   })
   const updateData = { title: updatedTitle }
   if (newUrl) updateData.url = newUrl
@@ -98,7 +100,7 @@ export const waitForFolders = initBookmarksFolders()
   })
   .catch(console.error)
 
-export async function addCapsule ({ url, title, frequency, repeat, nextVisit, noRegrouping }) {
+export async function addCapsule ({ url, title, frequency, repeat, nextVisit, noRegrouping, openAsActiveTab }) {
   const defaultRepeats = await getSettingValue('settings:defaultRepeats')
   if (frequency === undefined && (repeat !== 0 || nextVisit == null)) {
     throw new Error('a frequency or a next visit date is required')
@@ -111,6 +113,7 @@ export async function addCapsule ({ url, title, frequency, repeat, nextVisit, no
       nextVisit,
       repeat: repeat != null ? repeat : defaultRepeats,
       noRegrouping,
+      openAsActiveTab,
     })
   })
 }

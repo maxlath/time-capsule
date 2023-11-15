@@ -40,4 +40,25 @@ describe('formatBookmarkTitle', () => {
     const data = parseBookmarkTitle(title)
     data.noRegrouping.should.be.false()
   })
+
+  it('should support openAsActiveTab=true setting', () => {
+    const now = new Date().toISOString()
+    const title = formatBookmarkTitle({ title: 'foo', frequency: '1M', referenceDate: now, openAsActiveTab: true })
+    const data = parseBookmarkTitle(title)
+    data.openAsActiveTab.should.be.true()
+  })
+
+  it('should support openAsActiveTab=false setting', () => {
+    const now = new Date().toISOString()
+    const title = formatBookmarkTitle({ title: 'foo', frequency: '1M', referenceDate: now, openAsActiveTab: false })
+    const data = parseBookmarkTitle(title)
+    data.openAsActiveTab.should.be.false()
+  })
+
+  it('should support undefined openAsActiveTab setting', () => {
+    const now = new Date().toISOString()
+    const title = formatBookmarkTitle({ title: 'foo', frequency: '1M', referenceDate: now })
+    const data = parseBookmarkTitle(title)
+    should(data.openAsActiveTab).not.be.ok()
+  })
 })

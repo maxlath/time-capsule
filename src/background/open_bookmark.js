@@ -1,4 +1,4 @@
-import { getActiveTab, urlIsAlreadyOpened } from '../lib/tabs.js'
+import { getActiveTab, getTabByUrl } from '../lib/tabs.js'
 import { getBookmarkById, removeOrArchiveBookmark, updateCapsuleData, isRegroupable } from '../lib/bookmarks.js'
 import { getSettingValue, getSettingValues } from '../lib/settings_store.js'
 import { forceArray, isCapsulableUrl } from '../lib/utils.js'
@@ -47,18 +47,23 @@ async function processBookmark ({ bookmark, open }) {
 
 async function openBookmarkIfNeeded (bookmark) {
   const { url } = bookmark
+  let { openAsActiveTab } = bookmark
   const [
     allowDuplicatedTabs,
-    openAsActiveTab,
-    bookmarkUrlIsAlreadyOpened,
+    openAllAsActiveTab,
+    alreadyOpenedTab,
   ] = await Promise.all([
     getSettingValue('settings:allowDuplicatedTabs'),
     getSettingValue('settings:openAsActiveTab'),
-    urlIsAlreadyOpened(url),
+    getTabByUrl(url),
   ])
-  if (!bookmarkUrlIsAlreadyOpened || allowDuplicatedTabs) {
+  if (openAsActiveTab == null) openAsActiveTab = openAllAsActiveTab
+  if (!alreadyOpenedTab || allowDuplicatedTabs) {
     const tab = await browser.tabs.create({ url, active: openAsActiveTab })
     setTimeout(checkTabState({ tab, bookmark }), 500)
+    await createLogRecord({ event: 'opened-bookmark', bookmark })
+  } else if (openAsActiveTab) {
+    await browser.tabs.update(alreadyOpenedTab.id, { active: true })
     await createLogRecord({ event: 'opened-bookmark', bookmark })
   } else {
     await createLogRecord({ event: 'skipped-already-opened-bookmark', bookmark })

@@ -18,7 +18,7 @@
   let frequencyNum = 1
   let frequencyUnit = 'M'
   let noRegrouping = false
-  let repeat, nextVisit, title, autoNextVisit, newBookmark
+  let repeat, nextVisit, title, autoNextVisit, newBookmark, openAsActiveTab
 
   if (bookmark) {
     nextVisit = getDateTimeLocalInputValue(bookmark.nextVisit)
@@ -29,6 +29,7 @@
     // Title metadata will be recoverd on save
     title = bookmark.cleanedTitle
     noRegrouping = bookmark.noRegrouping
+    openAsActiveTab = bookmark.openAsActiveTab
   } else {
     autoNextVisit = nextVisit = getDateTimeLocalInputValue()
     title = activeTab.title
@@ -40,6 +41,11 @@
   getSettingValue('settings:defaultRepeats')
   .then(defaultRepeatValue => {
     if (bookmark?.repeat == null) repeat = defaultRepeatValue
+  })
+
+  getSettingValue('settings:openAsActiveTab')
+  .then(globalOpenAsActiveTabValue => {
+    if (bookmark?.openAsActiveTab == null) openAsActiveTab = globalOpenAsActiveTabValue
   })
 
   const frequencyNumOptions = range(1, 100)
@@ -56,6 +62,7 @@
         frequency: repeatNum(repeat) > 0 ? frequency : null,
         repeat,
         noRegrouping,
+        openAsActiveTab,
       })
       bookmark = bookmark ? Object.assign(bookmark, newBookmark) : newBookmark
       dispatch('done')
@@ -196,6 +203,14 @@
     <span>{i18n('Always_open_alone')}</span>
   </label>
 
+  <label
+    class="option-group input-group has-checkbox"
+    title={i18n('opt_out_from_regrouping_this_capsule')}
+  >
+    <input type="checkbox" bind:checked={openAsActiveTab}>
+    <span>{i18n('open_single_capsule_as_active_tab')}</span>
+  </label>
+
   <button
     class="validate"
     disabled={!canValidate}
@@ -227,13 +242,17 @@
     justify-content: space-between;
   }
   .has-checkbox{
-    margin: 1.5em auto;
+    margin: 0.5em 0;
   }
   .option-group.has-checkbox span{
     margin: 0 0.5em;
   }
   input[type="text"], input[type="datetime-local"]{
     flex: 1;
+  }
+  label{
+    max-width: 15em;
+    white-space: break-spaces;
   }
   .reset{
     margin-inline-start: 1em;
@@ -248,6 +267,6 @@
     padding: 0.5em;
     border-radius: 3px;
     background-color: var(--success-color);
-    margin: 2em auto;
+    margin: 1em auto;
   }
 </style>

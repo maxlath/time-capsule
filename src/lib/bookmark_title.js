@@ -5,7 +5,7 @@ import { parseFrequency } from './frequency.js'
 const separator = ' /ᐒ/ '
 const pattern = /\s\/ᐒ\/\s(.*)$/
 
-export const formatBookmarkTitle = ({ title, frequency, nextVisit, referenceDate, repeat, updating, noRegrouping }) => {
+export const formatBookmarkTitle = ({ title, frequency, nextVisit, referenceDate, repeat, updating, noRegrouping, openAsActiveTab }) => {
   nextVisit = nextVisit || getNextVisit({ frequency, referenceDate })
   // cleaning old data
   if (updating) {
@@ -17,6 +17,9 @@ export const formatBookmarkTitle = ({ title, frequency, nextVisit, referenceDate
   metadata += `next=${new Date(nextVisit).toISOString()} `
   if (repeat != null) metadata += `repeat=${repeat} `
   if (noRegrouping) metadata += `nrg=1 `
+  if (typeof openAsActiveTab === 'boolean') {
+    metadata += `active=${Number(openAsActiveTab)} `
+  }
   return `${title}${separator}${metadata}`.trim()
 }
 
@@ -46,12 +49,15 @@ export const parseBookmarkTitle = title => {
   const match = title.match(pattern)
   if (match) {
     let [ , metadata ] = match
-    let frequency, referenceDate, nextVisit, repeat, noRegrouping
+    let frequency, referenceDate, nextVisit, repeat, noRegrouping, openAsActiveTab
     if (metadata.includes('=')) {
       const parsedMetadata = metadata.split(' ').reduce(parseMetadata, {})
       ;({ freq: frequency, ref: referenceDate, next: nextVisit, repeat } = parsedMetadata)
       if (isPositiveIntegerString(repeat)) repeat = parseInt(repeat)
       noRegrouping = parsedMetadata.nrg === '1'
+      if (parsedMetadata.active) {
+        openAsActiveTab = parsedMetadata.active === '1'
+      }
     } else {
       // Legacy format
       [ frequency, metadata ] = metadata.split(' ')
@@ -64,6 +70,7 @@ export const parseBookmarkTitle = title => {
       nextVisit: new Date(nextVisit).getTime(),
       repeat: repeat != null ? repeat : null,
       noRegrouping,
+      openAsActiveTab,
     }
     if (frequency) {
       const { frequencyLabel } = parseFrequency(frequency)
