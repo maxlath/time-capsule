@@ -8,6 +8,7 @@ const defaultSettings = {
   'settings:defaultRepeats': '∞',
   'settings:maxCapsules': 10,
   'settings:openAsActiveTab': false,
+  'settings:closeTabAfterCreatingCapsule': false,
   'settings:logsMaxRecords': 100,
   'settings:keepExpiredCapsulesAsNormalBookmarks': false,
   'settings:enableBlockedWeekTimes': false,

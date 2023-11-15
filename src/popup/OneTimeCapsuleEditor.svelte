@@ -20,7 +20,7 @@
   async function validate () {
     try {
       if (!canValidate) return
-      dispatch('celebrate')
+      dispatch('celebrate', { action: 'save' })
       newBookmark = await saveCapsule({
         url,
         bookmark,

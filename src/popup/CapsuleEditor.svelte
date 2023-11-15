@@ -5,7 +5,7 @@
   import { i18n } from '../lib/i18n.js'
   import { createEventDispatcher } from 'svelte'
   import CapsuleEditorTabs from './CapsuleEditorTabs.svelte'
-  import { getSettingStore } from '../lib/settings_store.js'
+  import { getSettingStore, getSettingValue } from '../lib/settings_store.js'
   import { isCapsulableUrl, sleep } from '../lib/utils.js'
   import { archiveBookmark, removeBookmark } from '../lib/bookmarks.js'
   import Celebration from './Celebration.svelte'
@@ -46,12 +46,16 @@
   }
 
   let animationIsDone
-  function celebrate (e) {
+  async function celebrate (e) {
     celebrationData = e.detail || {}
   }
 
   async function onEditorDone () {
     await animationIsDone
+    if (activeTab && celebrationData.action === 'save') {
+      const closeTabAfterCreatingCapsule = await getSettingValue('settings:closeTabAfterCreatingCapsule')
+      if (closeTabAfterCreatingCapsule) await browser.tabs.remove(activeTab.id)
+    }
     dispatch('done')
   }
 

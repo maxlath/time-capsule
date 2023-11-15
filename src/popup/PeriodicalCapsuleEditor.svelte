@@ -40,7 +40,7 @@
   async function onDone () {
     try {
       if (selectedFrequency !== bookmark?.frequency) {
-        dispatch('celebrate', { frequency: selectedFrequency })
+        dispatch('celebrate', { action: 'save', frequency: selectedFrequency })
         newBookmark = await saveCapsule({
           bookmark: await getCapsuleBookmarkByUrl(url),
           url,

@@ -25,6 +25,10 @@
       window.close()
     }
   })
+
+  async function closePopup () {
+    window.close()
+  }
 </script>
 
 <SettingsCogButton context="popup" />
@@ -40,7 +44,7 @@
       url={activeTab.url}
       {activeTab}
       context="popup"
-      on:done={() => window.close()}
+      on:done={closePopup}
       />
   {/if}
 {/await}

@@ -61,6 +61,7 @@
   "open_as_active_tab": { "message": "Switch to new tab when opening a capsule" },
   "open_single_capsule_as_active_tab": { "message": "Switch to new tab when opening" },
   "open_a_capsule_even_if_its_url_is_already_opened_in_a_tab": { "message": "Open a capsule even if its URL is already opened in a tab" },
+  "close_tab_after_creating_capsule": { "message": "Close tab after creating or updating a capsule" },
   "maximum_number_of_entries_to_keep_in_the_logs": { "message": "Maximum number of entries to keep in the logs" },
   "restore_default_settings": { "message": "Restore default settings" },
   "log_entries": {
