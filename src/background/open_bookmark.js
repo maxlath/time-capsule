@@ -49,13 +49,15 @@ async function openBookmarkIfNeeded (bookmark) {
   const { url } = bookmark
   const [
     allowDuplicatedTabs,
+    openAsActiveTab,
     bookmarkUrlIsAlreadyOpened,
   ] = await Promise.all([
     getSettingValue('settings:allowDuplicatedTabs'),
+    getSettingValue('settings:openAsActiveTab'),
     urlIsAlreadyOpened(url),
   ])
   if (!bookmarkUrlIsAlreadyOpened || allowDuplicatedTabs) {
-    const tab = await browser.tabs.create({ url, active: false })
+    const tab = await browser.tabs.create({ url, active: openAsActiveTab })
     setTimeout(checkTabState({ tab, bookmark }), 500)
     await createLogRecord({ event: 'opened-bookmark', bookmark })
   } else {
@@ -127,9 +129,10 @@ async function findOverflowTab () {
 
 async function createOverflowMenu (ids) {
   const url = `${overflowTabPathname}?ids=${ids.join('|')}`
+  const openAsActiveTab = await getSettingValue('settings:openAsActiveTab')
   overflowTabPromise = browser.tabs.create({
     url,
-    active: false
+    active: openAsActiveTab
   })
   overflowTab = await overflowTabPromise
 }
@@ -139,9 +142,10 @@ async function updateOverflowMenu (ids) {
   const previousIds = new URLSearchParams(querystring).get('ids')?.split('|') || []
   const newIds = ids.filter(id => !previousIds.includes(id))
   const url = `${overflowTabPathname}?ids=${previousIds.concat(newIds).join('|')}`
+  const openAsActiveTab = await getSettingValue('settings:openAsActiveTab')
   await browser.tabs.update(overflowTab.id, {
     url,
-    active: false
+    active: openAsActiveTab
   })
 }
 

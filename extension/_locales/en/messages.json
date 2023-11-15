@@ -58,6 +58,7 @@
   "default_number_of_repeats": { "message": "Default number of repeats" },
   "times_a_periodical_capsule_should_be_re_opened_before_being_automatically_archived_or_deleted": { "message": "Times a periodical capsule should be re-opened before being automatically archived or deleted" },
   "keep_expired_capsules_as_archived_bookmarks_instead_of_deleting_them": { "message": "Keep expired capsules as archived bookmarks, instead of deleting them" },
+  "open_as_active_tab": { "message": "Switch to new tab when opening a capsule" },
   "open_a_capsule_even_if_its_url_is_already_opened_in_a_tab": { "message": "Open a capsule even if its URL is already opened in a tab" },
   "maximum_number_of_entries_to_keep_in_the_logs": { "message": "Maximum number of entries to keep in the logs" },
   "restore_default_settings": { "message": "Restore default settings" },

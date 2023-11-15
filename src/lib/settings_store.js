@@ -7,6 +7,7 @@ const defaultSettings = {
   'settings:allowDuplicatedTabs': false,
   'settings:defaultRepeats': '∞',
   'settings:maxCapsules': 10,
+  'settings:openAsActiveTab': false,
   'settings:logsMaxRecords': 100,
   'settings:keepExpiredCapsulesAsNormalBookmarks': false,
   'settings:enableBlockedWeekTimes': false,

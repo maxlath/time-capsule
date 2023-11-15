@@ -8,6 +8,7 @@
   const allowDuplicatedTabs = getSettingStore('settings:allowDuplicatedTabs')
   const defaultRepeats = getSettingStore('settings:defaultRepeats')
   const logsMaxRecords = getSettingStore('settings:logsMaxRecords')
+  const openAsActiveTab = getSettingStore('settings:openAsActiveTab')
   const keepExpiredCapsulesAsNormalBookmarks = getSettingStore('settings:keepExpiredCapsulesAsNormalBookmarks')
 
   const maxCapsulesOptions = range(0, 10).concat([ 15, 20, 25, 30, 40, 50 ])
@@ -38,13 +39,18 @@
   </div>
 
   <label class="setting">
-    <input type="checkbox" bind:checked={$keepExpiredCapsulesAsNormalBookmarks}>
-    {i18n('keep_expired_capsules_as_archived_bookmarks_instead_of_deleting_them')}
+    <input type="checkbox" bind:checked={$allowDuplicatedTabs}>
+    {i18n('open_a_capsule_even_if_its_url_is_already_opened_in_a_tab')}
   </label>
 
   <label class="setting">
-    <input type="checkbox" bind:checked={$allowDuplicatedTabs}>
-    {i18n('open_a_capsule_even_if_its_url_is_already_opened_in_a_tab')}
+    <input type="checkbox" bind:checked={$openAsActiveTab}>
+    {i18n('open_as_active_tab')}
+  </label>
+
+  <label class="setting">
+    <input type="checkbox" bind:checked={$keepExpiredCapsulesAsNormalBookmarks}>
+    {i18n('keep_expired_capsules_as_archived_bookmarks_instead_of_deleting_them')}
   </label>
 
   <hr>
