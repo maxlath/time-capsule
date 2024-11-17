@@ -205,7 +205,6 @@
 
   <label
     class="option-group input-group has-checkbox"
-    title={i18n('opt_out_from_regrouping_this_capsule')}
   >
     <input type="checkbox" bind:checked={openAsActiveTab}>
     <span>{i18n('open_single_capsule_as_active_tab')}</span>
