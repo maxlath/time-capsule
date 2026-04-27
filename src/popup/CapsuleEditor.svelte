@@ -172,6 +172,9 @@
     justify-content: space-around;
     gap: 0.5em;
   }
+  button span{
+    margin-right: 0.5em;
+  }
   .icon-wrapper{
     flex: 0 0 1em;
     height: 1rem;

@@ -119,9 +119,10 @@
     border: 1px solid red;
   }
   .validate{
+    display: block;
+    margin: 2em auto 1em;
     padding: 0.5em;
     border-radius: 3px;
-    background-color: var(--grey-ddd);
-    margin-top: 0.5em;
+    background-color: var(--success-color);
   }
 </style>
