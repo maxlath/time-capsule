@@ -21,6 +21,10 @@ const defaultValues = {
   'popup:selectedTab': 'periodical',
 }
 
+const notPersistedAcrossSessions = [
+  'popup:selectedTab'
+]
+
 export function getSettingStore (key) {
   stores[key] = stores[key] || initStore(key)
   return stores[key]
@@ -34,16 +38,22 @@ function initStore (key) {
   }
   const store = writable(null, start)
 
-  browser.storage.local.get(key)
-  .then(({ [key]: value }) => {
-    if (value != null) store.set(value)
-    else store.set(defaultValues[key])
-  })
-  .catch(console.error)
+  if (notPersistedAcrossSessions.includes(key)) {
+    store.set(defaultValues[key])
+  } else {
+    browser.storage.local.get(key)
+    .then(({ [key]: value }) => {
+      if (value != null) store.set(value)
+      else store.set(defaultValues[key])
+    })
+    .catch(console.error)
+  }
 
   return {
     set (value) {
-      browser.storage.local.set({ [key]: value }).catch(console.error)
+      if (!notPersistedAcrossSessions.includes(key)) {
+        browser.storage.local.set({ [key]: value }).catch(console.error)
+      }
       store.set(value)
     },
     subscribe: store.subscribe,

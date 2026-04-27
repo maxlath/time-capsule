@@ -19,6 +19,14 @@
 
   const selectedTab = getSettingStore('popup:selectedTab')
 
+  if (bookmark) {
+    if (bookmark.noRegrouping || bookmark.openAsActiveTab || (typeof bookmark.repeat === 'number' && bookmark.repeat > 0)) {
+      $selectedTab = 'advanced'
+    } else if (typeof bookmark.repeat === 'number' && bookmark.repeat === 0) {
+      $selectedTab = 'one-time'
+    }
+  }
+
   let celebrationData, flash
 
   async function archive () {
