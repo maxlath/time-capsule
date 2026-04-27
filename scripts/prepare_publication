@@ -41,10 +41,24 @@ rm ./browser-polyfill.min.js
 
 cd ..
 
-sleep 2
+archive_name=time-capsule-v${version}
+mkdir $archive_name
+cp -r README.md \
+  extension \
+  img \
+  package.json \
+  pnpm-lock.yaml \
+  privacy_policy.md \
+  rollup.config.js \
+  scripts \
+  src \
+  tests \
+  $archive_name
 
-wget "https://github.com/maxlath/time-capsule/archive/refs/tags/v${version}.zip" --output-document "./github-artifacts/v${version}.zip"
+zip -r v${version}.zip $archive_name
+mv v${version}.zip ./code_archive/
+mv $archive_name /tmp/$archive_name-$RANDOM
 
 echo "Now you would need to upload packages/time-capsule.firefox.$version.zip
 to https://addons.mozilla.org/fr/developers/addon/time-capsule/versions/submit/"
-echo "It will also ask you for the source code: you can then upload ./github-artifacts/v${version}.zip"
+echo "It will also ask you for the source code: you can then upload ./code_archive/v${version}.zip"
